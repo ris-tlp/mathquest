@@ -11,7 +11,7 @@
   },
   "lint-staged": {
     "**/*.{html,ts,scss}": [
-      "prettier --write"
+      "prettier:fix"
     ]
   },
   "husky": {
