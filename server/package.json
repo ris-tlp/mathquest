@@ -10,7 +10,7 @@
     "prepare": "cd .. && husky install server/.husky"
   },
   "lint-staged": {
-    "src/**/*.{html,ts,scss}": [
+    "/**/*.{html,ts,scss}": [
       "prettier --write"
     ]
   },
