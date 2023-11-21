@@ -1,8 +1,9 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 
-import { userRouter } from './src/controllers/userController';
+import { userRouter } from "./src/controllers/userController";
+import { courseRouter } from "./src/controllers/courseController";
 
 dotenv.config();
 const app = express();
@@ -14,7 +15,8 @@ mongoose.connect(
 );
 
 // API endpoints
-app.use('/api/users', userRouter);
+app.use("/api/users", userRouter);
+app.use("/api/courses", courseRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
