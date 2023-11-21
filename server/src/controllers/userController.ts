@@ -40,3 +40,28 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+userRouter.get("/:userEmail", async (req: Request, res: Response) => {
+    try {
+        const params = req.params;
+
+        // Return everything other than password
+        const query_result = await User.findOne({
+            email: params["userEmail"],
+        })
+            .select("-password")
+            .exec();
+
+        if (!query_result) {
+            res.status(404).json({
+                error: "User not found.",
+            });
+        } else {
+            res.status(200).json({
+                query_result,
+            });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
