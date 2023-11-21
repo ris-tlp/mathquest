@@ -6,7 +6,7 @@ enum UserType {
     STUDENT = "student",
 }
 
-export interface IUser {
+interface IUser {
     firstName: string;
     lastName: string;
     email: string;
