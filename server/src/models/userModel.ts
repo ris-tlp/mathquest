@@ -1,12 +1,12 @@
-import { Schema, Types, model } from 'mongoose';
+import { Schema, Types, model } from "mongoose";
 
 enum UserType {
-    TEACHER = 'teacher',
-    ADMINISTRATOR = 'administrator',
-    STUDENT = 'student',
+    TEACHER = "teacher",
+    ADMINISTRATOR = "administrator",
+    STUDENT = "student",
 }
 
-interface IUser {
+export interface IUser {
     firstName: string;
     lastName: string;
     email: string;
@@ -26,4 +26,4 @@ const userSchema = new Schema<IUser>({
     password: { type: String, required: true },
 });
 
-export const User = model<IUser>('User', userSchema);
+export const User = model<IUser>("User", userSchema);
