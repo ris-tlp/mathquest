@@ -1,15 +1,21 @@
-import express, { Express, Request, Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+
+import { userRouter } from './src/controllers/userController';
 
 dotenv.config();
+const app = express();
 
-const app: Express = express();
-const port = process.env.PORT;
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('ayy      lmao');
-});
+mongoose.connect(
+    `mongodb://${process.env.MONGODB_IP}:${process.env.MONGODB_PORT}/${process.env.MONGODB_DATABASE}`
+);
 
-app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+// API endpoints
+app.use('/api/users', userRouter);
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
