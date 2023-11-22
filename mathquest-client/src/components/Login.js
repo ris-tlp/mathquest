@@ -101,7 +101,7 @@ const Login = () => {
         }}
         className="sm:w-full sm:h-full sm:my-0 md:w-4/12 lg:w-4/12  w-3/12 absolute bg-black md:my-20 my-28 mx-auto right-0 left-0 p-12 text-white md:rounded-lg rounded-lg sm:bg-opacity-200 bg-opacity-90 sm:h-[100vh]"
       >
-        <h1 className="font-bold text-3xl sm:my-4 my-2">
+        <h1 className="font-bold text-3xl sm:my-4 sm:ml-20 my-2">
           {isSignIn ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignIn && (
@@ -149,7 +149,7 @@ const Login = () => {
         </button>
         {isSignIn && (
           <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
-            <u>New to MathQuest? Sign up Now</u>
+            <u>New to MathQuest? Sign up now</u>
           </p>
         )}
         {!isSignIn && (
