@@ -13,9 +13,12 @@ import {
 import { auth } from "../utils/firebase";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
@@ -39,15 +42,26 @@ const Login = () => {
       )
         .then((userCrendential) => {
           const user = userCrendential.user;
+         
           updateProfile(user, {
             displayName: fullName.current.value,
             photoURL: PROFILE_PICTURE,
           })
             .then(() => {
+                const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+
               navigate("/dashboard");
             })
             .catch((error) => {
-                 setErrorMessage( error.message);
+              setErrorMessage(error.message);
             });
         })
         .catch((error) => {
