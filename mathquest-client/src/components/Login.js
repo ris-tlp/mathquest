@@ -80,7 +80,7 @@ const Login = () => {
         <Header />
       <div className="absolute">
         <img
-          className="w-screen lg:h-[120vh] md:h-screen brightness-50 sm:h-full md:h-full"
+          className="w-screen lg:h-[120vh] md:h-screen brightness-50 sm:h-full md:h-full sm:hidden"
           src={BG}
           alt="logo"
         />
@@ -90,9 +90,9 @@ const Login = () => {
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="sm:w-full sm:h-full sm:my-0 md:w-4/12 lg:w-4/12  w-3/12 absolute bg-black md:my-20 my-28 mx-auto right-0 left-0 p-12 text-white md:rounded-lg rounded-lg sm:bg-opacity-200 bg-opacity-90"
+        className="sm:w-full sm:h-full sm:my-0 md:w-4/12 lg:w-4/12  w-3/12 absolute bg-black md:my-20 my-28 mx-auto right-0 left-0 p-12 text-white md:rounded-lg rounded-lg sm:bg-opacity-200 bg-opacity-90 sm:h-[100vh]"
       >
-        <h1 className="font-bold text-3xl sm:my-8 my-2">
+        <h1 className="font-bold text-3xl sm:my-4 my-2">
           {isSignIn ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignIn && (
@@ -122,7 +122,7 @@ const Login = () => {
         <p className="text-red-500 font-bold text-lg p-2">{errorMessage}</p>
         <br />
         <button
-          className="p-4 my-4 bg-red-500 w-full rounded-lg cursor-pointer "
+          className="p-4 my-4 sm:my-2 bg-red-500 w-full rounded-lg cursor-pointer "
           onClick={handleButtonclick}
         >
           {" "}
