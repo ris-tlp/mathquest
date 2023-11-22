@@ -6,10 +6,15 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate()
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
@@ -26,17 +31,33 @@ const Login = () => {
     if (message) return;
 
     if (!isSignIn) {
-        createUserWithEmailAndPassword(auth, email.current.value, password.current.value).then((userCrendential)=>{
-            const user = userCrendential.user
-           
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCrendential) => {
+          const user = userCrendential.user;
 
-
-        }).catch((error)=>{
-            setErrorMessage(error.code + error.message)
         })
+        .catch((error) => {
+          setErrorMessage(error.code + error.message);
+        });
+        navigate("/dashboard")
       //sign Up
     } else {
-      //Sign In
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCrendential) => {
+          const user = userCrendential.user;
+        })
+        .catch((error) => {
+          setErrorMessage(error.code + error.message);
+        });
+        navigate("/dashboard")
     }
   };
 
@@ -47,6 +68,7 @@ const Login = () => {
         const name = result.user.displayName;
         const email = result.user.email;
         const profilePic = result.user.photoURL;
+        navigate("/dashboard")
       })
       .catch((e) => {
         console.log(e);
@@ -55,9 +77,10 @@ const Login = () => {
 
   return (
     <div>
+        <Header />
       <div className="absolute">
         <img
-          className="w-screen lg:h-[120vh] md:h-screen brightness-50 sm:h-full"
+          className="w-screen lg:h-[120vh] md:h-screen brightness-50 sm:h-full md:h-full"
           src={BG}
           alt="logo"
         />
@@ -67,7 +90,7 @@ const Login = () => {
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="sm:w-full sm:h-full sm:my-0 md:w-4/12 lg:w-4/12  w-3/12 absolute bg-black my-36 mx-auto right-0 left-0 p-12 text-white md:rounded-lg rounded-lg sm:bg-opacity-200 bg-opacity-90"
+        className="sm:w-full sm:h-full sm:my-0 md:w-4/12 lg:w-4/12  w-3/12 absolute bg-black md:my-20 my-28 mx-auto right-0 left-0 p-12 text-white md:rounded-lg rounded-lg sm:bg-opacity-200 bg-opacity-90"
       >
         <h1 className="font-bold text-3xl sm:my-8 my-2">
           {isSignIn ? "Sign In" : "Sign Up"}
