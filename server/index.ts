@@ -2,8 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-import { userRouter } from "./src/controllers/userController";
-import { courseRouter } from "./src/controllers/courseController";
+import { userRouter } from "./src/user/userController";
+import { courseRouter } from "./src/course/courseController";
 
 dotenv.config();
 const app = express();
