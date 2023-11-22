@@ -9,7 +9,7 @@ interface ICourse {
 }
 
 const courseSchema = new Schema<ICourse>({
-    courseName: { type: String, required: true },
+    courseName: { type: String, required: true, unique: true },
     courseDescription: { type: String, required: false },
     courseSyllabus: { type: String, required: false },
     passScore: { type: Number, required: false },

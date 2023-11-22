@@ -1,8 +1,9 @@
 import { Request, Response, Router } from "express";
 import { Course } from "./courseModel";
 
-export const courseRouter = Router();
+import { courseRouter } from "./courseRouter";
 
+// Create a course
 courseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const details = req.body;
@@ -22,12 +23,13 @@ courseRouter.post("/", async (req: Request, res: Response) => {
     }
 });
 
-courseRouter.get("/:courseId", async (req: Request, res: Response) => {
+// Get a course by CourseName
+courseRouter.get("/:courseName", async (req: Request, res: Response) => {
     try {
         const params = req.params;
 
         const queryResult = await Course.findOne({
-            _id: params["courseId"],
+            courseName: params["courseName"],
         })
             .select("-isPublished -__v")
             .exec();
@@ -46,6 +48,7 @@ courseRouter.get("/:courseId", async (req: Request, res: Response) => {
     }
 });
 
+// Update a course by CourseId
 courseRouter.put("/:courseId", async (req: Request, res: Response) => {
     try {
         const params = req.params;
