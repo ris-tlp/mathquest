@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import LOGO from "../images/logo-no-background.png"
+import LOGO from "../images/logo-no-background.png";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
@@ -7,49 +7,60 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 
 const Header = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector((store) => store.user);
-    const signOutHandler = () => {
-        signOut(auth)
-          .then(() => {})
-          .catch((error) => {});
-      };
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-          if (user) {
-            console.log(user);
-            const { uid, email, displayName, photoURL } = user;
-            dispatch(
-              addUser({
-                uid: uid,
-                email: email,
-                displayName: displayName,
-                photoURL: photoURL,
-              })
-            );
-            navigate("/dashboard");
-          } else {
-            dispatch(removeUser());
-            navigate("/");
-          }
-        });
-        return ()=> unsubscribe();
-      }, []);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((store) => {
+    console.log(store)
+    return store.user;
+  });
+  const signOutHandler = () => {
+    signOut(auth)
+      .then(() => {
+       
+        navigate('/')
+      })
+      .catch((error) => {});
+  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/dashboard");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
   return (
     <div className="absolute w-screen px-8 bg-gradient-to-b from-black py-2 z-50 flex justify-between">
-      <img className="w-28 brightness-150 sm:hidden" src={LOGO} alt="logo" />
-      {user && (
-      <div className="flex p-4">
-        <img className="w-10 h-10" src={user?.photoURL} />
-        <button
-          onClick={signOutHandler}
-          className="font-bold text-white mx-1 cursor-pointer h-10 mx-2"
-        >
-          Sign Out
-        </button>
+      <img className="w-20 brightness-150 sm:hidden" src={LOGO} alt="logo" />
+
+      <div className="flex">
+       {user &&  <button className="font-bold text-white mx-1 cursor-pointer h-10 mx-2 p-6">
+          Available Courses
+        </button>}
+        {user && (
+          <div className="flex p-4">
+            <img className="w-10 h-10" src={user?.photoURL} />
+            <button
+              onClick={signOutHandler}
+              className="font-bold text-white mx-1 cursor-pointer h-10 mx-2"
+            >
+              Sign Out
+            </button>
+          </div>
+        )}
       </div>
-    )}
     </div>
   );
 };

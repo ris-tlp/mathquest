@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { BG } from "../utils/constants";
+import { BG, PROFILE_PICTURE } from "../utils/constants";
 import { checkValidData } from "../utils/validate";
 import { GOOLGELOGO } from "../utils/constants";
 import {
@@ -7,14 +7,15 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
@@ -38,12 +39,20 @@ const Login = () => {
       )
         .then((userCrendential) => {
           const user = userCrendential.user;
-
+          updateProfile(user, {
+            displayName: fullName.current.value,
+            photoURL: PROFILE_PICTURE,
+          })
+            .then(() => {
+              navigate("/dashboard");
+            })
+            .catch((error) => {
+                 setErrorMessage( error.message);
+            });
         })
         .catch((error) => {
           setErrorMessage(error.code + error.message);
         });
-        navigate("/dashboard")
       //sign Up
     } else {
       signInWithEmailAndPassword(
@@ -57,7 +66,7 @@ const Login = () => {
         .catch((error) => {
           setErrorMessage(error.code + error.message);
         });
-        navigate("/dashboard")
+      navigate("/dashboard");
     }
   };
 
@@ -68,7 +77,7 @@ const Login = () => {
         const name = result.user.displayName;
         const email = result.user.email;
         const profilePic = result.user.photoURL;
-        navigate("/dashboard")
+        navigate("/dashboard");
       })
       .catch((e) => {
         console.log(e);
@@ -77,7 +86,7 @@ const Login = () => {
 
   return (
     <div>
-        <Header />
+      <Header />
       <div className="absolute">
         <img
           className="w-screen lg:h-[120vh] md:h-screen brightness-50 sm:h-full md:h-full sm:hidden"
