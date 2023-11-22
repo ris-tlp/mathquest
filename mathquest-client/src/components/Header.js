@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import LOGO from "../images/logo-no-background.png";
+import LOGO from "../images/logo-black.png";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
@@ -42,22 +42,23 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
   return (
-    <div className="absolute w-screen px-8 from-black py-2 z-50 flex justify-between">
-      <img className="w-20 brightness-150 sm:mx-5 sm:my-10 sm:h-16 sm:w-16" src={LOGO} alt="logo" />
+    <div className="absolute w-screen px-8 font-mono bg-gradient-to-b from-black py-2 z-50 flex justify-between">
+      <img className="w-20 rounded-full brightness-150 sm:mx-5 sm:my-10 sm:h-16 sm:w-16" src={LOGO} alt="logo" />
 
       <div className="flex">
-       {user &&  <button className="font-bold text-white mx-1 cursor-pointer h-10 mx-2 p-6">
+       {user &&  <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
           Available Courses
         </button>}
         {user && (
           <div className="flex p-4">
-            <img className="w-10 h-10" src={user?.photoURL} />
             <button
               onClick={signOutHandler}
-              className="font-bold text-white mx-1 cursor-pointer h-10 mx-2"
+              className="font-bold text-white no-underline hover:underline cursor-pointer h-10"
             >
               Sign Out
             </button>
+
+            <img className="w-10 h-10 ml-8 rounded-3xl" src={user?.photoURL} />
           </div>
         )}
       </div>

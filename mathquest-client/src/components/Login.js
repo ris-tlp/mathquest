@@ -99,7 +99,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="font-mono">
       <Header />
       <div className="absolute">
         <img
