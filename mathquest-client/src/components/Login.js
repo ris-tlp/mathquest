@@ -15,6 +15,7 @@ import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import Footer from "./Footer";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -172,6 +173,8 @@ const Login = () => {
           </p>
         )}
       </form>
+
+      
     </div>
   );
 };
