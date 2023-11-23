@@ -43,12 +43,16 @@ const Header = () => {
   }, []);
   return (
     <div className="absolute w-screen px-8 font-mono bg-gradient-to-b from-black py-2 z-50 flex justify-between">
+      
+      <Link to='/dashboard'>
       <img className="w-20 rounded-full brightness-150 sm:mx-5 sm:my-10 sm:h-16 sm:w-16" src={LOGO} alt="logo" />
+      </Link>
+      
 
       <div className="flex">
-       {user &&  <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
+       <Link to='/all-courses'>{user &&  <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
           Available Courses
-        </button>}
+        </button>}</Link>
       
         {user && (
           <div className="flex p-4">

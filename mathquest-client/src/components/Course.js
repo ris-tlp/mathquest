@@ -5,29 +5,38 @@ import Overview from "./Overview";
 import Discussion from "./Discussion";
 import Announcements from "./Announcements";
 
-
-
 const Course = () => {
   return (
     <div>
       <Header />
 
-      <div className="pt-40 mx-10 w-8/12 sm:w-[100%]">
-        {/* <iframe
+      <div className="flex">
+        <div className="pt-40 ml-10 mr-4 w-8/12 sm:w-[90%]">
+          {/* <iframe
           className="h-[600px]"
           width="100%"
           src="https://www.youtube.com/watch?v=5zi5eG5Ui-Y?controls=1"
         ></iframe> */}
 
-        <iframe
-         className="h-[600px]"
-          width="100%"
-          src="https://www.youtube.com/embed/5zi5eG5Ui-Y?si=PbLAE9ieALFQ7izX"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+          <iframe
+            className="h-[600px] px-4"
+            width="100%"
+            src="https://www.youtube.com/embed/5zi5eG5Ui-Y?si=PbLAE9ieALFQ7izX"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay;  picture-in-picture;"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <div className="pt-40 mr-4 w-4/12 sm:hidden">
+          <div className="w-[100%] h-[600px] border-2 border-stone-800">
+            <h3 className="text-2xl font-bold p-4">What you'll learn</h3>
+            <div className="flex">
+              
+            </div>
+          </div>
+        </div>
       </div>
 
       <div>
@@ -35,8 +44,6 @@ const Course = () => {
           <Tab label="Overview">
             <div className="py-4">
               <Overview />
-            
-
             </div>
           </Tab>
           <Tab label="Discussion">

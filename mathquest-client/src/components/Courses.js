@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from './Header'
+import Footer from './Footer'
 
 const Courses = () => {
   return (
-    <div>Courses</div>
+    <div>
+    <Header />
+    <Footer />
+    </div>
   )
 }
 

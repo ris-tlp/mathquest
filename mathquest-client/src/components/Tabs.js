@@ -9,7 +9,7 @@ const Tabs = ({ children }) => {
   };
 
   return (
-    <div className="w-8/12 sm:w-[100%] m-10">
+    <div className="w-8/12 sm:w-[100%] m-10 px-4">
       <div className="flex border-b border-gray-300">
         {children.map(child => (
           <button
