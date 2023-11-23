@@ -49,12 +49,12 @@ const Header = () => {
        {user &&  <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
           Available Courses
         </button>}
+
         {user && (
           <div className="flex p-4">
             <button
               onClick={signOutHandler}
-              className="font-bold text-white no-underline hover:underline cursor-pointer h-10"
-            >
+              className="font-bold text-white no-underline hover:underline cursor-pointer h-10">
               Sign Out
             </button>
 

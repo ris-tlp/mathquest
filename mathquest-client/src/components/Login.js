@@ -115,7 +115,7 @@ const Login = () => {
         }}
         className="sm:w-full sm:h-full sm:my-0 md:w-4/12 lg:w-4/12  w-3/12 absolute bg-black md:my-20 my-28 mx-auto right-0 left-0 p-12 text-white md:rounded-lg rounded-lg sm:bg-opacity-200 bg-opacity-90 sm:h-[100vh]"
       >
-        <h1 className="font-bold text-3xl sm:my-4 sm:ml-20 my-2">
+        <h1 className="text-3xl text-center sm:my-4 sm:ml-20 sm:text-white my-2">
           {isSignIn ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignIn && (
@@ -145,7 +145,7 @@ const Login = () => {
         <p className="text-red-500 font-bold text-lg p-2">{errorMessage}</p>
         <br />
         <button
-          className="p-4 my-4 sm:my-2 bg-red-500 w-full rounded-lg cursor-pointer "
+          className="p-4 my-4 sm:my-2 bg-rose-600 w-full rounded-lg cursor-pointer "
           onClick={handleButtonclick}
         >
           {" "}
@@ -155,7 +155,7 @@ const Login = () => {
         </button>
         <p className="text-center">---------- OR ---------- </p>
         <button
-          className="p-4 my-4 bg-red-500 w-full rounded-lg cursor-pointer flex justify-center"
+          className="p-4 my-4 bg-rose-600 w-full rounded-lg cursor-pointer flex justify-center"
           onClick={googleSignIn}
         >
           <img className="w-8 mx-4" src={GOOLGELOGO}></img>
