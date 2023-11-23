@@ -19,7 +19,7 @@ const Profile = () => {
               User Profile
             </h1>
             <p class="mt-1 max-w-2xl text-sm slate-900 text-xl">
-              Details and informations about {user?.displayName}
+              Details and information about {user?.displayName}
             </p>
           </div>
           <div class="border-t border-gray-200 text-center">

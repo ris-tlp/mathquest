@@ -31,15 +31,15 @@ const Footer = () => {
     listStyle: 'none',
     padding: 0,
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   };
 
   return (
     <footer className='bg-slate-700 relative' style={footerStyle}>
       <div pa>
-        <h4 className='text-2xl cursor-pointer'>Follow Us </h4>
+        <h4 className='text-2xl cursor-pointer text-decoration-line: underline'>Follow Us </h4>
         <br />
-        <ul style = {socialLinkStyle} >
+        <ul style = {socialListStyle} >
           <li>
             <a
               href="https://www.facebook.com/"
