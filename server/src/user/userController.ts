@@ -3,28 +3,7 @@ import { User } from "./userModel";
 
 export const userRouter = Router();
 
-userRouter.post("/login", async (req: Request, res: Response) => {
-    try {
-        const details = req.body;
-        const query_result = await User.findOne({
-            email: details["email"],
-            password: details["password"],
-        }).exec();
-
-        if (!query_result) {
-            res.status(404).json({
-                error: "Incorrect login details.",
-            });
-        } else {
-            res.status(200).json({
-                userId: query_result["_id"],
-            });
-        }
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
+// Used when a new user signs up through firebase auth
 userRouter.post("/signup", async (req: Request, res: Response) => {
     try {
         const details = req.body;
@@ -41,27 +20,67 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
     }
 });
 
-userRouter.get("/:userEmail", async (req: Request, res: Response) => {
+// Returns MongoDB user ID according to Firebase UID
+userRouter.get("/:firebaseId", async (req: Request, res: Response) => {
     try {
         const params = req.params;
-
-        // Return everything other than password
-        const query_result = await User.findOne({
-            email: params["userEmail"],
+        const query_result = await User.find({
+            firebaseUid: params["firebaseId"],
         })
-            .select("-password")
+            .select("_id")
             .exec();
 
-        if (!query_result) {
-            res.status(404).json({
-                error: "User not found.",
-            });
-        } else {
-            res.status(200).json({
-                query_result,
-            });
-        }
+        res.status(200).json({ query_result });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// not needed anymore
+
+// userRouter.get("/:userEmail", async (req: Request, res: Response) => {
+//     try {
+//         const params = req.params;
+
+//         // Return everything other than password
+//         const query_result = await User.findOne({
+//             email: params["userEmail"],
+//         })
+//             .select("-password")
+//             .exec();
+
+//         if (!query_result) {
+//             res.status(404).json({
+//                 error: "User not found.",
+//             });
+//         } else {
+//             res.status(200).json({
+//                 query_result,
+//             });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: "Internal Server Error" });
+//     }
+// });
+
+// userRouter.post("/login", async (req: Request, res: Response) => {
+//     try {
+//         const details = req.body;
+//         const query_result = await User.findOne({
+//             email: details["email"],
+//             password: details["password"],
+//         }).exec();
+
+//         if (!query_result) {
+//             res.status(404).json({
+//                 error: "Incorrect login details.",
+//             });
+//         } else {
+//             res.status(200).json({
+//                 userId: query_result["_id"],
+//             });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: "Internal Server Error" });
+//     }
+// });

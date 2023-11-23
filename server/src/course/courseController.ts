@@ -8,7 +8,9 @@ courseRouter.get("/", async (req: Request, res: Response) => {
     try {
         const queryResult = await Course.find({
             isPublished: true,
-        }).select("-isPublished -__v -_id");
+        })
+            .select("-isPublished -__v -_id")
+            .exec();
         res.status(200).json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
