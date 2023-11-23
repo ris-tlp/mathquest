@@ -13,6 +13,7 @@ const Header = () => {
     
     return store.user;
   });
+
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
@@ -21,6 +22,11 @@ const Header = () => {
       })
       .catch((error) => {});
   };
+
+  const profileHandler = () => {
+    navigate('/profile')
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
