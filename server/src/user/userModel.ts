@@ -11,7 +11,7 @@ interface IUser {
     lastName: string;
     email: string;
     userType: UserType;
-    password: string;
+    firebaseUid: string;
 }
 
 const userSchema = new Schema<IUser>({
@@ -23,7 +23,7 @@ const userSchema = new Schema<IUser>({
         enum: Object.values(UserType),
         default: UserType.STUDENT,
     },
-    password: { type: String, required: true },
+    firebaseUid: { type: String, required: true, unique: true },
 });
 
 export const User = model<IUser>("User", userSchema);
