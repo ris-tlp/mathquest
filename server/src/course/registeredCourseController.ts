@@ -26,3 +26,11 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// Register user in a specific course
+registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
+    try {
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});

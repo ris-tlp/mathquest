@@ -49,13 +49,13 @@ dataInitRouter.get("/createuser", async (req: Request, res: Response) => {
 });
 
 dataInitRouter.get("/registercourse", async (req: Request, res: Response) => {
-    try {
-        const rc = new RegisteredCourse({
-            courses: ["655d1d7cd361d9c5c8fd81f9", "655f164bfcadd12556b03ed4"],
-            student: "655f0ac3d423d59b65f8a663",
-        }).save();
-        res.status(200).json({});
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
-    }
+    // try {
+    //     const rc = new RegisteredCourse({
+    //         courses: ["655d1d7cd361d9c5c8fd81f9", "655f164bfcadd12556b03ed4"],
+    //         student: "655f0ac3d423d59b65f8a663",
+    //     }).save();
+    //     res.status(200).json({});
+    // } catch (error) {
+    //     res.status(500).json({ error: "Internal Server Error" });
+    // }
 });
