@@ -1,7 +1,19 @@
 import { Request, Response, Router } from "express";
 import { Course } from "./courseModel";
 
-import { courseRouter } from "./courseRouter";
+export const courseRouter = Router();
+
+// List of all available published courses
+courseRouter.get("/", async (req: Request, res: Response) => {
+    try {
+        const queryResult = await Course.find({
+            isPublished: true,
+        }).select("-isPublished -__v -_id");
+        res.status(200).json({ courses: queryResult });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 // Create a course
 courseRouter.post("/", async (req: Request, res: Response) => {

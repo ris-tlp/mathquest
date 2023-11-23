@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 import { userRouter } from "./src/user/userController";
-import { courseRouter } from "./src/course/courseRouter";
+import { courseRouter } from "./src/course/courseController";
 
 dotenv.config();
 const app = express();
