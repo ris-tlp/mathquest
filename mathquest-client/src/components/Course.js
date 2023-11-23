@@ -13,11 +13,7 @@ const Course = () => {
 
       <div className="flex">
         <div className="pt-40 ml-10 mr-4 w-8/12 sm:w-[90%]">
-          {/* <iframe
-          className="h-[600px]"
-          width="100%"
-          src="https://www.youtube.com/watch?v=5zi5eG5Ui-Y?controls=1"
-        ></iframe> */}
+         
 
           <iframe
             className="h-[600px] px-4"

@@ -7,6 +7,7 @@ import React from 'react'
 // }
 
 const Footer = () => {
+ 
   const footerStyle = {
    
     color: '#fff',
@@ -35,18 +36,18 @@ const Footer = () => {
   };
 
   return (
-    <footer className='bg-slate-700 relative' style={footerStyle}>
+    <footer className='bg-slate-700 absolute bottom-0' style={footerStyle}>
       <div pa>
-        <h4 className='text-2xl cursor-pointer text-decoration-line: underline'>Follow Us </h4>
-        <br />
-        <ul style = {socialListStyle} >
+        <h4 className='text-xl cursor-pointer'>Follow Us </h4>
+       
+        <ul style = {socialLinkStyle} >
           <li>
             <a
               href="https://www.facebook.com/"
               target="_blank"
               rel="noopener noreferrer"
               style={socialLinkStyle}
-              className='text-lg'
+              className='text-sm'
             >
               Facebook
             </a>
@@ -57,7 +58,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={socialLinkStyle}
-              className='text-lg'
+              className='text-sm'
             >
               LinkedIn
             </a>
@@ -68,12 +69,14 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={socialLinkStyle}
-              className='text-lg'
+              className='text-sm'
             >
               Instagram
             </a>
           </li>
         </ul>
+
+       
       </div>
       {/* Add other footer content here */}
     </footer>
