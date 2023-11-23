@@ -54,8 +54,7 @@ const Header = () => {
           <div className="flex p-4">
             <button
               onClick={signOutHandler}
-              className="font-bold text-white no-underline hover:underline cursor-pointer h-10"
-            >
+              className="font-bold text-white no-underline hover:underline cursor-pointer h-10">
               Sign Out
             </button>
 
