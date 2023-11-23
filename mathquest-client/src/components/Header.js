@@ -3,14 +3,14 @@ import LOGO from "../images/logo-black.png";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => {
-    console.log(store)
+    
     return store.user;
   });
   const signOutHandler = () => {
@@ -33,10 +33,10 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
-        navigate("/dashboard");
+        
       } else {
         dispatch(removeUser());
-        navigate("/");
+        
       }
     });
     return () => unsubscribe();
@@ -49,7 +49,7 @@ const Header = () => {
        {user &&  <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
           Available Courses
         </button>}
-
+      
         {user && (
           <div className="flex p-4">
             <button
