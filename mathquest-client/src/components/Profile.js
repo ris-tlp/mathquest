@@ -1,13 +1,14 @@
 import React from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
+import Footer from "./Footer";
 
 const Profile = () => {
   const user = useSelector((store) => {
     return store.user;
   });
   return (
-    <div>
+    <div className="bg-slate-900">
       <Header />
       <div className="pt-40"></div>
 
@@ -57,6 +58,8 @@ const Profile = () => {
           </div>
         </div>
       )}
+<div className="pt-20"></div>
+      <Footer />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import img2 from "../images/calculus.jpg";
 import img3 from "../images/Trigonometry.jpg";
 import img4 from "../images/probability.png";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 const Dashboard = () => {
 const navigate = useNavigate()
@@ -17,13 +18,13 @@ const navigate = useNavigate()
     navigate('/course')
   }
   return (
-    <div>
+    <div className="bg-slate-900 font-mono w-[100vw]" >
       <Header />
-      <div className="py-40 mx-16 font-mono text-black-200 ">
+      <div className="py-40 mx-16 font-mono text-black-200  ">
         {user && (
           <div>
-            <h1 className="text-5xl">Welcome {user?.displayName}!</h1>
-            <h5 className="text-2xl mt-5">Pick up where you left off</h5>
+            <h1 className="text-5xl text-white">Welcome {user?.displayName}!</h1>
+            <h5 className="text-2xl mt-5 text-white">Pick up where you left off!</h5>
 
             <section className="flex justify-between w-[100%] flex-wrap">
               
@@ -95,6 +96,7 @@ const navigate = useNavigate()
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

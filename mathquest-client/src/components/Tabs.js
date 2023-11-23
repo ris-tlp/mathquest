@@ -16,7 +16,7 @@ const Tabs = ({ children }) => {
             key={child.props.label}
             className={`${
               activeTab === child.props.label ? 'border-b-2 border-blue-500' : ''
-            } flex-1 text-black-700 text-lg font-medium py-2`}
+            } flex-1 text-white text-lg font-medium py-2`}
             onClick={e => handleClick(e, child.props.label)}
           >
             {child.props.label}

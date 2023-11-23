@@ -4,10 +4,11 @@ import { Tab, Tabs } from "./Tabs";
 import Overview from "./Overview";
 import Discussion from "./Discussion";
 import Announcements from "./Announcements";
+import Footer from "./Footer";
 
 const Course = () => {
   return (
-    <div>
+    <div className="bg-slate-900 font-mono w-[100vw]">
       <Header />
 
       <div className="flex">
@@ -31,10 +32,10 @@ const Course = () => {
 
         <div className="pt-40 mr-4 w-4/12 sm:hidden">
           <div className="w-[100%] h-[600px] border-2 border-stone-800">
-            <h3 className="text-2xl font-bold p-4">What you'll learn</h3>
-            <div className="flex">
-              
-            </div>
+            <h3 className="text-2xl font-bold text-white p-4">
+              What you'll learn
+            </h3>
+            <div className="flex"></div>
           </div>
         </div>
       </div>
@@ -58,6 +59,8 @@ const Course = () => {
           </Tab>
         </Tabs>
       </div>
+
+      <Footer />
     </div>
   );
 };
