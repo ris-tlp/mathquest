@@ -8,10 +8,13 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
-import { auth } from "../utils/firebase";
+
+import Course from "./Course";
+import Courses from "./Courses";
+import Header from "./Header";
+
 const Body = () => {
-  const dispatch = useDispatch();
+
  
   const appRouter = createBrowserRouter([
     {
@@ -22,12 +25,21 @@ const Body = () => {
       path: "/dashboard",
       element: <Dashboard />,
     },
+    {
+        path: "/course",
+        element: <Course />,
+      },
+      {
+        path: "/all-courses",
+        element: <Courses />,
+      },
   ]);
 
 
 
   return (
     <div>
+      
       <RouterProvider router={appRouter} />
     </div>
   );
