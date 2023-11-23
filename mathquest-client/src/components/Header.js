@@ -62,7 +62,11 @@ const Header = () => {
               Sign Out
             </button>
 
-            <img className="w-10 h-10 ml-8 rounded-3xl" src={user?.photoURL} />
+
+            <Link to='/profile'>
+            <img className="w-10 h-10 ml-8 rounded-3xl cursor-pointer" title="Profile" src={user?.photoURL} />
+            </Link>
+           
           </div>
         )}
       </div>

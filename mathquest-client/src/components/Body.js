@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import Course from "./Course";
 import Courses from "./Courses";
 import Header from "./Header";
+import Profile from "./Profile";
 
 const Body = () => {
 
@@ -32,6 +33,11 @@ const Body = () => {
       {
         path: "/all-courses",
         element: <Courses />,
+      },
+
+      {
+        path: "/profile",
+        element: <Profile />,
       },
   ]);
 
