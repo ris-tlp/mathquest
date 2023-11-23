@@ -13,6 +13,7 @@ const Header = () => {
     
     return store.user;
   });
+
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
@@ -21,6 +22,11 @@ const Header = () => {
       })
       .catch((error) => {});
   };
+
+  const profileHandler = () => {
+    navigate('/profile')
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -58,7 +64,7 @@ const Header = () => {
               Sign Out
             </button>
 
-            <img className="w-10 h-10 ml-8 rounded-3xl" src={user?.photoURL} />
+            <img onClick={profileHandler} className="w-10 h-10 ml-8 rounded-3xl" src={user?.photoURL} />
           </div>
         )}
       </div>
