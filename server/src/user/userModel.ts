@@ -6,7 +6,7 @@ enum UserType {
     STUDENT = "student",
 }
 
-interface IUser {
+export interface IUser {
     firstName: string;
     lastName: string;
     email: string;
@@ -17,7 +17,7 @@ interface IUser {
 const userSchema = new Schema<IUser>({
     firstName: { type: String, required: true },
     lastName: { type: String, required: false },
-    email: { type: String, required: true, unique: true, dropDups: true },
+    email: { type: String, required: true },
     userType: {
         type: String,
         enum: Object.values(UserType),

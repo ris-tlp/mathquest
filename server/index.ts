@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 import { userRouter } from "./src/user/userController";
 import { courseRouter } from "./src/course/courseController";
+import { dataInitRouter } from "./src/dataInit/dataInitController";
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,9 @@ mongoose.connect(
 // API endpoints
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
+
+// Dev API endpoints
+app.use("/api/dev", dataInitRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
