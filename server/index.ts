@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { userRouter } from "./src/user/userController";
 import { courseRouter } from "./src/course/courseController";
 import { dataInitRouter } from "./src/dataInit/dataInitController";
+import { registeredCourseRouter } from "./src/course/registeredCourseController";
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ mongoose.connect(
 // API endpoints
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
+app.use("/api/courses/registered", registeredCourseRouter);
 
 // Dev API endpoints
 app.use("/api/dev", dataInitRouter);
