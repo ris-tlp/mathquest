@@ -32,7 +32,7 @@ const Footer = () => {
     listStyle: 'none',
     padding: 0,
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   };
 
   return (
