@@ -9,20 +9,27 @@ export const registeredCourseRouter = Router();
 // Get all registered courses
 registeredCourseRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const firebaseUid = req.body["firebaseUid"];
-
+        const _email = req.body.e;
+        console.log("hello", _email);
         // Get corresponding mongo uid for firebase uid
-        const userId = await User.findOne({ firebaseUid: firebaseUid })
-            .select("_id")
+        const user = await User.findOne({ email: _email })
+            .select("email")
             .exec();
-
-        const queryResult = await RegisteredCourse.find({
-            student: userId,
+        // console.log("here", user)
+        let queryResult = await RegisteredCourse.find({
+            email: user?.email,
         })
             .select("courses")
             .populate("courses")
             .exec();
-        res.status(200).json(queryResult);
+
+        queryResult = await Course.find({
+            courseName: { $in: [...queryResult[0].courses] },
+        });
+
+        console.log(queryResult);
+
+        res.status(200).json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }

@@ -7,6 +7,7 @@ import RegisterCourseModal from "./RegisterCourseModal";
 const Courses = () => {
   const [offeredCourses, setOfferedCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   useEffect(() => {
     fetchOfferedCourses();
   }, []);
@@ -14,12 +15,20 @@ const Courses = () => {
   const fetchOfferedCourses = async () => {
     const data = await fetch("http://localhost:8001/api/courses");
     const json = await data.json();
-
+    console.log(json.courses)
     setOfferedCourses(json?.courses);
+   
+  };
+
+  const openModel = (i) => {
+    const selectedCourse = offeredCourses[i];
+    setSelectedCourse(selectedCourse);
+    setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
+    setSelectedCourse(null);
   };
 
   return (
@@ -33,9 +42,9 @@ const Courses = () => {
           </h1>
           <div className="flex flex-wrap justify-center">
             {offeredCourses.length > 0 &&
-              offeredCourses.map((c) => {
+              offeredCourses.map((c, index) => {
                 return (
-                  <div>
+                  <div key={c.courseName}>
                     <div className="my-10 mx-8 w-72 h-[530px] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
                       <img
                         className="w-[100%] h-[200px]"
@@ -55,31 +64,28 @@ const Courses = () => {
                         </p>
 
                         <button
-                          onClick={() => setShowModal(true)}
+                          onClick={() => openModel(index)}
                           className="text-white text-right underline"
                         >
                           View Details
                         </button>
-
-                       
                       </div>
                     </div>
-                    {showModal &&
-                          createPortal(
-                            <RegisterCourseModal
-                              onClose={() => setShowModal(false)}
-                            />,
-                            document.getElementById("modal")
-                          )}
                   </div>
                 );
-                
               })}
           </div>
         </div>
       </section>
-
-      {/* <Footer /> */}
+      {showModal &&
+        createPortal(
+          <RegisterCourseModal
+            data={selectedCourse}
+            onClose={() => setShowModal(false)}
+          />,
+          document.getElementById("modal")
+        )}
+      
     </div>
   );
 };

@@ -1,36 +1,68 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
-import img1 from "../images/Integration.jpg";
-import img2 from "../images/calculus.jpg";
-import img3 from "../images/Trigonometry.jpg";
-import img4 from "../images/probability.png";
+import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
+import axios from "axios";
 
 const Dashboard = () => {
-const navigate = useNavigate()
+  const navigate = useNavigate();
+
+
+  const getRegisteredCourses = async (email) => {
+    const data = await fetch("http://localhost:8014/api/courses/registered/", {
+      method: "POST",
+      body: JSON.stringify({
+        e: email,
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
+    const json = await data.json();
+    console.log(json?.courses)
+   
+  };
 
   const user = useSelector((store) => {
-    return store.user;
+    const u = store.user;
+    if(u!=null) getRegisteredCourses(u.email);
   });
-  const onCourseSelect=()=>{
-    console.log("here")
-    navigate('/course')
-  }
+
+  
+
+  const onCourseSelect = () => {
+    console.log("here");
+    navigate("/course");
+  };
   return (
-    <div className="bg-slate-900 font-mono w-[100vw] h-[100vh]" >
+    <div className="bg-slate-900 font-mono w-[100vw] h-[100vh]">
       <Header />
       <div className="py-40 mx-16 font-mono text-black-200  ">
         {user && (
           <div>
-            <h1 className="text-5xl text-white">Welcome {user?.displayName}!</h1>
+            <h1 className="text-5xl text-white">
+              Welcome {user?.displayName}!
+            </h1>
             {/* <h5 className="text-2xl mt-5 text-white">Pick up where you left off!</h5> */}
-            
-            <h5 className="text-2xl mt-5 text-white">Seems like you are not registered in a course!</h5>
-            <h5 className="text-2xl mt-5 text-white">Choose your desired course to start!</h5>
 
-           <Link to="/all-courses"> <button className="rounded-lg border-2 border-white text-white h-12 p-2 my-8 w-60  ">Offered Courses </button></Link>
+            <h5 className="text-2xl mt-5 text-white">
+              Seems like you are not registered in a course!
+            </h5>
+            <h5 className="text-2xl mt-5 text-white">
+              Choose your desired course to start!
+            </h5>
+
+            <Link to="/all-courses">
+              {" "}
+              <button className="rounded-lg border-2 border-white text-white h-12 p-2 my-8 w-60  ">
+                Offered Courses{" "}
+              </button>
+            </Link>
             {/* <section className="flex justify-between w-[100%] flex-wrap">
               
                 <div onClick={onCourseSelect} className="my-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
