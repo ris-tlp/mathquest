@@ -33,20 +33,20 @@ userRouter.get("/type", async (req: Request, res: Response) => {
 });
 
 // Returns MongoDB user ID according to Firebase UID
-// userRouter.get("/:firebaseId", async (req: Request, res: Response) => {
-//     try {
-//         const params = req.params;
-//         const queryResult = await User.find({
-//             firebaseUid: params["firebaseId"],
-//         })
-//             .select("_id")
-//             .exec();
+userRouter.get("/uidfirebase", async (req: Request, res: Response) => {
+    try {
+        const body = req.body;
+        const queryResult = await User.findOne({
+            firebaseUid: body["firebaseId"],
+        })
+            .select("_id")
+            .exec();
 
-//         res.status(200).json({ queryResult });
-//     } catch (error) {
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// });
+        res.status(200).json({ queryResult });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 // not needed anymore
 
