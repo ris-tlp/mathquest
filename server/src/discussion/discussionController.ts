@@ -65,3 +65,24 @@ discussionController.post("/threads/", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// Create a reply in a thread
+discussionController.post("/replies/", async (req: Request, res: Response) => {
+    try {
+        const body = req.body;
+
+        try {
+            const newReply = await new DiscussionReply({
+                threadId: body["threadId"],
+                createdByEmail: body["email"],
+                body: body["body"],
+            }).save();
+
+            res.status(201).json({ reply: newReply });
+        } catch (error) {
+            res.status(400).json({ error: "Missing information" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
