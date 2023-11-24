@@ -12,6 +12,7 @@ export interface IUser {
     email: string;
     userType: UserType;
     firebaseUid: string;
+    registeredCourses: Array<string>;
 }
 
 const userSchema = new Schema<IUser>({
@@ -24,6 +25,13 @@ const userSchema = new Schema<IUser>({
         default: UserType.STUDENT,
     },
     firebaseUid: { type: String, required: true, unique: true },
+    registeredCourses: [
+        {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "registeredCourses",
+        },
+    ],
 });
 
 export const User = model<IUser>("User", userSchema);

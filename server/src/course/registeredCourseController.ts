@@ -1,27 +1,41 @@
 import { Request, Response, Router } from "express";
 import { RegisteredCourse } from "./registeredCourseModel";
 import { User } from "../user/userModel";
+import { Course } from "./courseModel";
 
 export const registeredCourseRouter = Router();
 
 // Get all registered courses
-registeredCourseRouter.post("/", async (req: Request, res: Response) => {
+registeredCourseRouter.get("/", async (req: Request, res: Response) => {
     try {
         const firebaseUid = req.body["firebaseUid"];
 
         // Get corresponding mongo uid for firebase uid
-        const userId = await User.findOne({ firebaseUid: firebaseUid })
-            .select("_id")
+        const user = await User.findOne({ email: "ashwini@mathquest.com" })
+            .select("email")
             .exec();
 
-        const queryResult = await RegisteredCourse.find({
-            student: userId,
+        let queryResult = await RegisteredCourse.find({
+            email: user?.email,
         })
             .select("courses")
             .populate("courses")
             .exec();
-        console.log(queryResult);
-        res.status(200).json(queryResult);
+
+        let resArray: Array<any> = [];
+
+        queryResult.forEach(async (e) => {
+            const res = await Course.findOne({
+                courseName: e.courses,
+            });
+            console.log("res", res);
+            resArray.push(res);
+            console.log("resArray", resArray);
+        });
+
+        setTimeout(() => {
+            res.status(200).send(JSON.stringify(resArray));
+        }, 0);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
