@@ -6,15 +6,15 @@ import { Course } from "./courseModel";
 export const registeredCourseRouter = Router();
 
 // Get all registered courses
-registeredCourseRouter.get("/", async (req: Request, res: Response) => {
+registeredCourseRouter.post("/", async (req: Request, res: Response) => {
     try {
-        const firebaseUid = req.body["firebaseUid"];
-
+        const _email = req.body.e;
+        console.log("hello", _email);
         // Get corresponding mongo uid for firebase uid
-        const user = await User.findOne({ email: "ashwini@mathquest.com" })
+        const user = await User.findOne({ email: _email })
             .select("email")
             .exec();
-
+        // console.log("here", user)
         let queryResult = await RegisteredCourse.find({
             email: user?.email,
         })
@@ -22,20 +22,13 @@ registeredCourseRouter.get("/", async (req: Request, res: Response) => {
             .populate("courses")
             .exec();
 
-        let resArray: Array<any> = [];
-
-        queryResult.forEach(async (e) => {
-            const res = await Course.findOne({
-                courseName: e.courses,
-            });
-            console.log("res", res);
-            resArray.push(res);
-            console.log("resArray", resArray);
+        queryResult = await Course.find({
+            courseName: { $in: [...queryResult[0].courses] },
         });
 
-        setTimeout(() => {
-            res.status(200).send(JSON.stringify(resArray));
-        }, 0);
+        console.log(queryResult);
+
+        res.status(200).json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
