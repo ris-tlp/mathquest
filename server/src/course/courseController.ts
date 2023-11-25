@@ -1,18 +1,44 @@
 import { Request, Response, Router } from "express";
 import { Course } from "./courseModel";
+import { RegisteredCourse } from "./registeredCourseModel";
 
 export const courseRouter = Router();
 
 // List of all available published courses
 courseRouter.get("/", async (req: Request, res: Response) => {
-    console.log("jere");
     try {
-        const queryResult = await Course.find({
+        const userEmail = req.body["email"];
+
+        const allPublishedCourses = await Course.find({
             isPublished: true,
         }).exec();
 
-        console.log(queryResult);
-        res.status(200).json({ courses: queryResult });
+        const allRegisteredCourses = await RegisteredCourse.findOne({
+            email: userEmail,
+        })
+            .select("courses")
+            .exec();
+
+        var finalizedCourses: JSON[] = [];
+
+        for (let i = 0; i < allPublishedCourses.length; i++) {
+            let publishedCourse = JSON.stringify(allPublishedCourses[i]);
+            let publishedCourseJson = JSON.parse(publishedCourse);
+
+            if (
+                allRegisteredCourses!["courses"].includes(
+                    publishedCourseJson["_id"]
+                )
+            ) {
+                publishedCourseJson["isRegistered"] = true;
+            } else {
+                publishedCourseJson["isRegistered"] = false;
+            }
+
+            finalizedCourses.push(publishedCourseJson);
+        }
+
+        res.status(200).json({ courses: finalizedCourses });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
