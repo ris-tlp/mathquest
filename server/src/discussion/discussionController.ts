@@ -4,10 +4,10 @@ import { DiscussionReply } from "./discussionReplyModel";
 import { User } from "../user/userModel";
 
 // /api/courses/discussions
-export const discussionController = Router();
+export const discussionRouter = Router();
 
 // Get all threads in a course
-discussionController.post("/threads/", async (req: Request, res: Response) => {
+discussionRouter.post("/threads/", async (req: Request, res: Response) => {
     try {
         const courseID = req.body.courseID;
 
@@ -54,7 +54,7 @@ discussionController.post("/threads/", async (req: Request, res: Response) => {
 });
 
 // Get all replies of a specific thread
-discussionController.post("/replies/", async (req: Request, res: Response) => {
+discussionRouter.post("/replies/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
         const queryResult = await DiscussionReply.find({
@@ -73,7 +73,7 @@ discussionController.post("/replies/", async (req: Request, res: Response) => {
 });
 
 // Create a thread in a course
-discussionController.post("/threads/", async (req: Request, res: Response) => {
+discussionRouter.post("/threads/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
 
@@ -95,7 +95,7 @@ discussionController.post("/threads/", async (req: Request, res: Response) => {
 });
 
 // Create a reply in a thread
-discussionController.post("/replies/", async (req: Request, res: Response) => {
+discussionRouter.post("/replies/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
 
