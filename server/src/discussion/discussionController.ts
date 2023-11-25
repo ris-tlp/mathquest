@@ -1,38 +1,60 @@
 import { Request, Response, Router } from "express";
 import { DiscussionThread } from "./discussionThreadModel";
 import { DiscussionReply } from "./discussionReplyModel";
+import { User } from "../user/userModel";
 
 // /api/courses/discussions
-export const discussionController = Router();
+export const discussionRouter = Router();
 
 // Get all threads in a course
-discussionController.post(
-    "/getAllThreads",
-    async (req: Request, res: Response) => {
-        try {
-            const courseID = req.body.courseID;
+discussionRouter.post("/getAllThreads", async (req: Request, res: Response) => {
+    try {
+        const courseID = req.body.courseID;
 
-            const queryResult = await DiscussionThread.find({
-                courseId: courseID,
-            })
-                .select("-courseId")
-                .exec();
+        // await new DiscussionThread({
+        //     courseId: courseID,
+        //     title: "This is a new title with a timestamp.",
+        //     body: "This is a new body of a thread with a timestamp",
+        //     createdByEmail: "ashwini@mathquest.com"
+        // }).save()
 
-            if (queryResult) {
-                res.status(200).json({ threads: queryResult });
-            } else {
-                res.status(404).json({
-                    error: "Discussion Threads not found.",
-                });
+        // console.log(courseID);
+
+        const queryResult = await DiscussionThread.find({
+            courseId: courseID,
+        })
+            .select("-courseId")
+            .exec();
+
+        if (queryResult) {
+            var finalizedThreads: JSON[] = [];
+
+            // Big(O of lmfao)
+            for (let i = 0; i < queryResult.length; i++) {
+                let thread = JSON.stringify(queryResult[i]);
+                let threadJson = JSON.parse(thread);
+
+                const user = await User.findOne({
+                    email: threadJson.createdByEmail,
+                }).exec();
+                threadJson.user = user;
+
+                finalizedThreads.push(threadJson);
             }
-        } catch (error) {
-            res.status(500).json({ error: "Internal Server Error" });
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ threads: finalizedThreads });
+        } else {
+            res.status(404).json({ error: "Discussion Threads not found." });
         }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
     }
-);
+});
 
 // Get all replies of a specific thread
-discussionController.post("/replies/", async (req: Request, res: Response) => {
+discussionRouter.post("/replies/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
         const queryResult = await DiscussionReply.find({
@@ -51,33 +73,30 @@ discussionController.post("/replies/", async (req: Request, res: Response) => {
 });
 
 // Create a thread in a course
-discussionController.post(
-    "/createThread",
-    async (req: Request, res: Response) => {
+discussionRouter.post("/createThread", async (req: Request, res: Response) => {
+    try {
+        const body = req.body;
+        console.log("here", body);
         try {
-            const body = req.body;
-            console.log("here", body);
-            try {
-                const newThread = await new DiscussionThread({
-                    courseId: body?.courseID,
-                    createdByEmail: body?.email,
-                    title: body.title,
-                    body: body.body,
-                }).save();
+            const newThread = await new DiscussionThread({
+                courseId: body?.courseID,
+                createdByEmail: body?.email,
+                title: body.title,
+                body: body.body,
+            }).save();
 
-                console.log(newThread);
-                res.status(201).json({ thread: newThread });
-            } catch (error) {
-                res.status(400).json({ error: "Missing information" });
-            }
+            console.log(newThread);
+            res.status(201).json({ thread: newThread });
         } catch (error) {
-            res.status(500).json({ error: "Internal Server Error" });
+            res.status(400).json({ error: "Missing information" });
         }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
     }
-);
+});
 
 // Create a reply in a thread
-discussionController.post("/replies/", async (req: Request, res: Response) => {
+discussionRouter.post("/replies/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
 

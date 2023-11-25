@@ -1,3 +1,4 @@
+import { timeStamp } from "console";
 import { Schema, Types, model } from "mongoose";
 
 interface IDiscussionReply {
@@ -6,11 +7,14 @@ interface IDiscussionReply {
     body: string;
 }
 
-const discussionReplySchema = new Schema<IDiscussionReply>({
-    threadId: { type: Schema.Types.ObjectId, required: true },
-    createdByEmail: { type: String, required: true },
-    body: { type: String, required: true },
-});
+const discussionReplySchema = new Schema<IDiscussionReply>(
+    {
+        threadId: { type: Schema.Types.ObjectId, required: true },
+        createdByEmail: { type: String, required: true },
+        body: { type: String, required: true },
+    },
+    { timestamps: true }
+);
 
 export const DiscussionReply = model<IDiscussionReply>(
     "DiscussionReply",
