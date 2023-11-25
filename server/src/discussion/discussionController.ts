@@ -9,13 +9,22 @@ export const discussionController = Router();
 discussionController.post("/threads/", async (req: Request, res: Response) => {
     try {
         const courseID = req.body.courseID;
-        console.log(courseID);
+
+        // await new DiscussionThread({
+        //     courseId: courseID,
+        //     title: "This is a new title with a timestamp.",
+        //     body: "This is a new body of a thread with a timestamp",
+        //     createdByEmail: "ashwini@mathquest.com"
+        // }).save()
+
+        // console.log(courseID);
+
         const queryResult = await DiscussionThread.find({
             courseId: courseID,
         })
             .select("-courseId")
             .exec();
-        console.log(queryResult);
+
         if (queryResult) {
             res.status(200).json({ threads: queryResult });
         } else {
