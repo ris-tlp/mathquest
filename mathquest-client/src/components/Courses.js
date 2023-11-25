@@ -3,24 +3,63 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { createPortal } from "react-dom";
 import RegisterCourseModal from "./RegisterCourseModal";
+import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
+  const navigate=useNavigate();
   const [offeredCourses, setOfferedCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
   useEffect(() => {
     fetchOfferedCourses();
   }, []);
 
   const fetchOfferedCourses = async () => {
-    const data = await fetch("http://localhost:8000/api/courses");
+    const data = await fetch(CONNECTION_STRING+PORT+"/api/courses");
     const json = await data.json();
-
+    console.log(json.courses)
     setOfferedCourses(json?.courses);
+   
+  };
+
+  const openModel = (i) => {
+    
+    const selectedCourse = offeredCourses[i];
+    sessionStorage.setItem("SelectedCourse",selectedCourse?._id);
+    setSelectedCourse(selectedCourse);
+    setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
+    setSelectedCourse(null);
   };
+
+  const user = useSelector((store) => {
+    return store.user;
+    
+  });
+
+  const courseRegistration=async()=>{
+    const data = await fetch(CONNECTION_STRING+PORT+"/api/courses/registered/new", {
+      method: "POST",
+      body: JSON.stringify({
+        email : user.email,
+        courseName: selectedCourse.courseName
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
+    const json = await data.json();
+    navigate('/dashboard');
+  }
 
   return (
     <div className="bg-slate-900 font-mono">
@@ -33,9 +72,9 @@ const Courses = () => {
           </h1>
           <div className="flex flex-wrap justify-center">
             {offeredCourses.length > 0 &&
-              offeredCourses.map((c) => {
+              offeredCourses.map((c, index) => {
                 return (
-                  <div>
+                  <div key={c.courseName}>
                     <div className="my-10 mx-8 w-72 h-[530px] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
                       <img
                         className="w-[100%] h-[200px]"
@@ -55,31 +94,29 @@ const Courses = () => {
                         </p>
 
                         <button
-                          onClick={() => setShowModal(true)}
+                          onClick={() => openModel(index)}
                           className="text-white text-right underline"
                         >
                           View Details
                         </button>
-
-                       
                       </div>
                     </div>
-                    {showModal &&
-                          createPortal(
-                            <RegisterCourseModal
-                              onClose={() => setShowModal(false)}
-                            />,
-                            document.getElementById("modal")
-                          )}
                   </div>
                 );
-                
               })}
           </div>
         </div>
       </section>
-
-      {/* <Footer /> */}
+      {showModal &&
+        createPortal(
+          <RegisterCourseModal
+            data={selectedCourse}
+            onClose={() => setShowModal(false)}
+            handleCourseRegister={()=>courseRegistration()}
+          />,
+          document.getElementById("modal")
+        )}
+      
     </div>
   );
 };

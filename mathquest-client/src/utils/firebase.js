@@ -11,10 +11,10 @@ const firebaseConfig = {
   projectId: "mathquest-2d0ec",
   storageBucket: "mathquest-2d0ec.appspot.com",
   messagingSenderId: "170729430788",
-  appId: "1:170729430788:web:c0549ca8ba72c57144fa51"
+  appId: "1:170729430788:web:c0549ca8ba72c57144fa51",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app)
-const provider = new GoogleAuthProvider()
+export const auth = getAuth(app);
+const provider = new GoogleAuthProvider();

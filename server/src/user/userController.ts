@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { User } from "./userModel";
 
+// /api/users
 export const userRouter = Router();
 
 // Used when a new user signs up through firebase auth
@@ -20,17 +21,28 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
     }
 });
 
-// Returns MongoDB user ID according to Firebase UID
-userRouter.get("/:firebaseId", async (req: Request, res: Response) => {
+userRouter.get("/type", async (req: Request, res: Response) => {
     try {
-        const params = req.params;
-        const query_result = await User.find({
-            firebaseUid: params["firebaseId"],
+        const body = req.body;
+        const queryResult = await User.findOne({ email: body["email"] }).exec();
+
+        res.status(200).json({ type: queryResult!["userType"] });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error." });
+    }
+});
+
+// Returns MongoDB user ID according to Firebase UID
+userRouter.get("/uidfirebase", async (req: Request, res: Response) => {
+    try {
+        const body = req.body;
+        const queryResult = await User.findOne({
+            firebaseUid: body["firebaseId"],
         })
             .select("_id")
             .exec();
 
-        res.status(200).json({ query_result });
+        res.status(200).json({ queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }

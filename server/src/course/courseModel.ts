@@ -6,12 +6,14 @@ interface ICourse {
     courseSyllabus: string;
     passScore: number;
     isPublished: boolean;
+    courseImage: string;
 }
 
 const courseSchema = new Schema<ICourse>({
     courseName: { type: String, required: true, unique: true },
     courseDescription: { type: String, required: false },
     courseSyllabus: { type: String, required: false },
+    courseImage: { type: String },
     passScore: { type: Number, required: false },
     isPublished: { type: Boolean, required: false },
 });

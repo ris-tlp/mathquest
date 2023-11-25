@@ -1,21 +1,16 @@
 import { Schema, Types, model } from "mongoose";
 
 interface IRegisteredCourse {
-    student: Types.ObjectId;
+    email: String;
     courses: [Types.ObjectId];
 }
 
 const registeredCourseSchema = new Schema<IRegisteredCourse>({
-    student: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-        unique: true,
-    },
-    courses: [{ type: Schema.Types.ObjectId, required: true, ref: "Course" }],
+    email: { type: String, required: true },
+    courses: [{ type: String, required: true }],
 });
 
 export const RegisteredCourse = model<IRegisteredCourse>(
-    "RegisteredCourse",
+    "registeredCourse",
     registeredCourseSchema
 );

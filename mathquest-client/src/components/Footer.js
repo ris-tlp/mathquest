@@ -36,7 +36,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className='bg-slate-700 absolute bottom-0' style={footerStyle}>
+    <footer className='bg-slate-700 fixed bottom-0' style={footerStyle}>
       <div pa>
         <h4 className='text-xl cursor-pointer'>Follow Us </h4>
        

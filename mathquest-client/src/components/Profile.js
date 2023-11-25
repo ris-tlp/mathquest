@@ -5,8 +5,14 @@ import Footer from "./Footer";
 
 const Profile = () => {
   const user = useSelector((store) => {
+
+    console.log(sessionStorage.getItem("Anand"))
+
     return store.user;
   });
+
+  console.log(sessionStorage.getItem("Anand"))
+
   return (
     <div className="bg-slate-900">
       <Header />

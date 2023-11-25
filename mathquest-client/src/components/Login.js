@@ -77,6 +77,18 @@ const Login = () => {
       )
         .then((userCrendential) => {
           const user = userCrendential.user;
+
+          
+          dispatch(
+            addUser({
+              uid: user.uid,
+              email: user.email,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+            })
+          );
+
+
         })
         .catch((error) => {
           setErrorMessage(error.code + error.message);

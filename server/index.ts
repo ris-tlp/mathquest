@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+var bodyParser = require("body-parser");
 
 import { userRouter } from "./src/user/userController";
 import { courseRouter } from "./src/course/courseController";
@@ -9,9 +10,11 @@ import { registeredCourseRouter } from "./src/course/registeredCourseController"
 
 dotenv.config();
 const app = express();
+const cors = require("cors");
 
-app.use(express.urlencoded({ extended: true }));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
 // mongoose.connect(
 //     `mongodb://${process.env.MONGODB_IP}:${process.env.MONGODB_PORT}/${process.env.MONGODB_DATABASE}`
 // );
