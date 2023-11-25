@@ -18,9 +18,30 @@ const Courses = () => {
   }, []);
 
   const fetchOfferedCourses = async () => {
-    const data = await fetch(CONNECTION_STRING+PORT+"/api/courses");
+   
+    
+    
+
+
+    const data = await fetch(
+      CONNECTION_STRING + PORT + "/api/courses",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: sessionStorage.getItem('email'),
+        }),
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Access-control-allow-origin": "*",
+          "Access-control-allow-methods": "*",
+        },
+      }
+    );
     const json = await data.json();
+
     console.log(json.courses)
+    
     setOfferedCourses(json?.courses);
    
   };

@@ -5,9 +5,9 @@ import { RegisteredCourse } from "./registeredCourseModel";
 export const courseRouter = Router();
 
 // List of all available published courses
-courseRouter.get("/", async (req: Request, res: Response) => {
+courseRouter.post("/", async (req: Request, res: Response) => {
     try {
-        const userEmail = req.body["email"];
+        const userEmail = req.body.email;
 
         const allPublishedCourses = await Course.find({
             isPublished: true,

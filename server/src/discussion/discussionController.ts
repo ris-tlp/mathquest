@@ -6,15 +6,16 @@ import { DiscussionReply } from "./discussionReplyModel";
 export const discussionController = Router();
 
 // Get all threads in a course
-discussionController.get("/threads/", async (req: Request, res: Response) => {
+discussionController.post("/threads/", async (req: Request, res: Response) => {
     try {
-        const body = req.body;
+        const courseID = req.body.courseID;
+        console.log(courseID);
         const queryResult = await DiscussionThread.find({
-            courseId: body["courseId"],
+            courseId: courseID,
         })
             .select("-courseId")
             .exec();
-
+        console.log(queryResult);
         if (queryResult) {
             res.status(200).json({ threads: queryResult });
         } else {
@@ -26,7 +27,7 @@ discussionController.get("/threads/", async (req: Request, res: Response) => {
 });
 
 // Get all replies of a specific thread
-discussionController.get("/replies/", async (req: Request, res: Response) => {
+discussionController.post("/replies/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
         const queryResult = await DiscussionReply.find({

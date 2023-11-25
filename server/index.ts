@@ -7,6 +7,7 @@ import { userRouter } from "./src/user/userController";
 import { courseRouter } from "./src/course/courseController";
 import { dataInitRouter } from "./src/dataInit/dataInitController";
 import { registeredCourseRouter } from "./src/course/registeredCourseController";
+import { discussionController } from "./src/discussion/discussionController";
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ mongoose.connect(process.env.MONGODB_URI!);
 app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/courses/registered", registeredCourseRouter);
+app.use("/api/courses/discussions/", discussionController);
 
 // Dev API endpoints
 app.use("/api/dev", dataInitRouter);

@@ -78,7 +78,7 @@ const Login = () => {
         .then((userCrendential) => {
           const user = userCrendential.user;
 
-          
+          sessionStorage.setItem('email',user.email)
           dispatch(
             addUser({
               uid: user.uid,
