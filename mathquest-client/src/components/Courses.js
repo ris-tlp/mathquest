@@ -12,7 +12,7 @@ const Courses = () => {
   }, []);
 
   const fetchOfferedCourses = async () => {
-    const data = await fetch("http://localhost:8001/api/courses");
+    const data = await fetch("http://localhost:8000/api/courses");
     const json = await data.json();
 
     setOfferedCourses(json?.courses);
