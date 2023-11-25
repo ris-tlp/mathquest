@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import axios from "axios";
+import { CONNECTION_STRING, PORT } from "../utils/constants";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-
+  const [registeredCourses,setRegisteredCourses]=useState([])
 
   const getRegisteredCourses = async (email) => {
-    const data = await fetch("http://localhost:8014/api/courses/registered/", {
+    const data = await fetch(CONNECTION_STRING+PORT+"/api/courses/registered", {
       method: "POST",
       body: JSON.stringify({
         e: email,
@@ -24,16 +25,18 @@ const Dashboard = () => {
       },
     });
     const json = await data.json();
-    console.log(json?.courses)
-   
+    setRegisteredCourses(json?.courses)
+    
+    
   };
+
 
   const user = useSelector((store) => {
     const u = store.user;
     if(u!=null) getRegisteredCourses(u.email);
+    return u;
   });
 
-  
 
   const onCourseSelect = () => {
     console.log("here");
@@ -42,15 +45,18 @@ const Dashboard = () => {
   return (
     <div className="bg-slate-900 font-mono w-[100vw] h-[100vh]">
       <Header />
-      <div className="py-40 mx-16 font-mono text-black-200  ">
+      <div className="pt-40  mx-16 font-mono text-black-200  ">
         {user && (
           <div>
             <h1 className="text-5xl text-white">
               Welcome {user?.displayName}!
             </h1>
+            <h3 className="text-2xl mt-4 text-white"> Finish off where you left!</h3>
             {/* <h5 className="text-2xl mt-5 text-white">Pick up where you left off!</h5> */}
 
-            <h5 className="text-2xl mt-5 text-white">
+            
+            {registeredCourses.length == 0 && <div>
+              <h5 className="text-2xl mt-5 text-white">
               Seems like you are not registered in a course!
             </h5>
             <h5 className="text-2xl mt-5 text-white">
@@ -63,77 +69,53 @@ const Dashboard = () => {
                 Offered Courses{" "}
               </button>
             </Link>
-            {/* <section className="flex justify-between w-[100%] flex-wrap">
-              
-                <div onClick={onCourseSelect} className="my-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
-                  <img className="rounded-t-lg" src={img1} alt="" />
+              </div>}
 
-                  <div className="p-5">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      Integration
-                    </h5>
 
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      Here are the biggest enterprise technology acquisitions of
-                      2021 so far, in reverse chronological order.
-                    </p>
+              <div className="flex flex-wrap justify-left">
+
+              {registeredCourses.length > 0 &&
+              registeredCourses.map((r, index) => {
+                return (
+                  <div key={r.courseName}>
+                    <div className="my-10 mx-8 w-72 h-[530px] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
+                      <img
+                        className="w-[100%] h-[200px]"
+                        src={r.courseImg}
+                        alt=""
+                      />
+
+                      <div className="p-5">
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          {r.courseName}
+                        </h5>
+                        <p className="mb-3 h-44 font-normal  overflow-y-hidden text-gray-700 dark:text-gray-400">
+                          {r.overview}
+                        </p>
+                        <p className="mb-3 font-bold text-white">
+                          {r.courseInstructor}
+                        </p>
+
+                        {/* <button
+                          onClick={() => openModel(index)}
+                          className="text-white text-right underline"
+                        >
+                          View Details
+                        </button> */}
+                      </div>
+                    </div>
                   </div>
-                </div>
-             
-                <div onClick={onCourseSelect} className="my-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <img
-                    className="rounded-t-lg w-[100%] h-80"
-                    src={img2}
-                    alt=""
-                  />
-
-                  <div className="p-5">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      Calculus
-                    </h5>
-
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      Here are the biggest enterprise technology acquisitions of
-                      2021 so far, in reverse chronological order.
-                    </p>
-                  </div>
-                </div>
-             
-              <div onClick={onCourseSelect} className="my-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <img className="rounded-t-lg w-[100%] h-80" src={img3} alt="" />
-
-                <div className="p-5">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-
-                  <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </div>
+                );
+              })}
               </div>
-
-              <div onClick={onCourseSelect} className="my-10 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <img className="rounded-t-lg w-[100%] h-80" src={img4} alt="" />
-
-                <div className="p-5">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Probability
-                  </h5>
-
-                  <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </div>
-              </div>
-             
-            </section> */}
+            
           </div>
         )}
       </div>
-      <Footer className="absolute bottom-0" />
+
+      
+          <Footer className="fixed bottom-0" /> 
+        
     </div>
   );
 };

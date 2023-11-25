@@ -3,17 +3,22 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { createPortal } from "react-dom";
 import RegisterCourseModal from "./RegisterCourseModal";
+import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
+  const navigate=useNavigate();
   const [offeredCourses, setOfferedCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+
   useEffect(() => {
     fetchOfferedCourses();
   }, []);
 
   const fetchOfferedCourses = async () => {
-    const data = await fetch("http://localhost:8001/api/courses");
+    const data = await fetch(CONNECTION_STRING+PORT+"/api/courses");
     const json = await data.json();
     console.log(json.courses)
     setOfferedCourses(json?.courses);
@@ -21,7 +26,9 @@ const Courses = () => {
   };
 
   const openModel = (i) => {
+    
     const selectedCourse = offeredCourses[i];
+    sessionStorage.setItem("SelectedCourse",selectedCourse?._id);
     setSelectedCourse(selectedCourse);
     setShowModal(true);
   };
@@ -30,6 +37,29 @@ const Courses = () => {
     setShowModal(false);
     setSelectedCourse(null);
   };
+
+  const user = useSelector((store) => {
+    return store.user;
+    
+  });
+
+  const courseRegistration=async()=>{
+    const data = await fetch(CONNECTION_STRING+PORT+"/api/courses/registered/new", {
+      method: "POST",
+      body: JSON.stringify({
+        email : user.email,
+        courseName: selectedCourse.courseName
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
+    const json = await data.json();
+    navigate('/dashboard');
+  }
 
   return (
     <div className="bg-slate-900 font-mono">
@@ -82,6 +112,7 @@ const Courses = () => {
           <RegisterCourseModal
             data={selectedCourse}
             onClose={() => setShowModal(false)}
+            handleCourseRegister={()=>courseRegistration()}
           />,
           document.getElementById("modal")
         )}

@@ -19,7 +19,7 @@ app.use(cors());
 //     `mongodb://${process.env.MONGODB_IP}:${process.env.MONGODB_PORT}/${process.env.MONGODB_DATABASE}`
 // );
 
-// mongoose.connect(process.env.MONGODB_URI!);
+mongoose.connect(process.env.MONGODB_URI!);
 
 // API endpoints
 app.use("/api/users", userRouter);

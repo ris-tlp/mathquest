@@ -7,10 +7,10 @@ import { Course } from "./courseModel";
 export const registeredCourseRouter = Router();
 
 // Get all registered courses
-registeredCourseRouter.get("/", async (req: Request, res: Response) => {
+registeredCourseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const _email = req.body.e;
-        console.log("hello", _email);
+
         // Get corresponding mongo uid for firebase uid
         const user = await User.findOne({ email: _email })
             .select("email")
@@ -27,8 +27,6 @@ registeredCourseRouter.get("/", async (req: Request, res: Response) => {
             courseName: { $in: [...queryResult[0].courses] },
         });
 
-        console.log(queryResult);
-
         res.status(200).json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
@@ -38,35 +36,27 @@ registeredCourseRouter.get("/", async (req: Request, res: Response) => {
 // Register user in a specific course
 registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
     try {
-        const firebaseUid = req.body["firebaseUid"];
+        const email = req.body["email"];
         const courseName = req.body["courseName"];
-        const courseDescription = req.body["courseDescription"];
+        // const courseDescription = req.body["courseDescription"];
 
-        const userId = await User.findOne({ firebaseUid: firebaseUid })
-            .select("_id")
+        const user = await User.findOne({ email: email })
+            .select("email")
             .exec();
 
-        // Need a better way to query a course
-        const courseId = await Course.findOne({
-            courseName: courseName,
-            courseDescription: courseDescription,
-        })
-            .select("_id")
-            .exec();
-
-        const queryResult = await RegisteredCourse.exists({
-            student: userId,
+        const queryResult = await RegisteredCourse.findOne({
+            email: user?.email,
         }).exec();
 
         // Add course to array if already in db
         if (queryResult) {
             RegisteredCourse.updateOne(
-                { _id: queryResult["_id"] },
-                { $addToSet: { courses: courseId } }
+                { email: queryResult.email },
+                { $addToSet: { courses: courseName } }
             ).exec();
         } else {
             const newRegisteration = new RegisteredCourse({
-                student: userId,
+                email: user?.email,
                 courses: [],
             });
         }

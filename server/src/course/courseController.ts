@@ -5,12 +5,13 @@ export const courseRouter = Router();
 
 // List of all available published courses
 courseRouter.get("/", async (req: Request, res: Response) => {
+    console.log("jere");
     try {
         const queryResult = await Course.find({
             isPublished: true,
-        })
-            .select("-isPublished -__v -_id")
-            .exec();
+        }).exec();
+
+        console.log(queryResult);
         res.status(200).json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
