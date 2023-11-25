@@ -22,7 +22,7 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
             .select("courses")
             .populate("courses")
             .exec();
-
+        console.log(queryResult);
         queryResult = await Course.find({
             courseName: { $in: [...queryResult[0].courses] },
         });
@@ -37,7 +37,7 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
 registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
     try {
         const email = req.body["email"];
-        const courseName = req.body["courseName"];
+        const courseId = req.body["courseId"];
         // const courseDescription = req.body["courseDescription"];
 
         const user = await User.findOne({ email: email })
@@ -52,7 +52,7 @@ registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
         if (queryResult) {
             RegisteredCourse.updateOne(
                 { email: queryResult.email },
-                { $addToSet: { courses: courseName } }
+                { $addToSet: { courses: courseId } }
             ).exec();
         } else {
             const newRegisteration = new RegisteredCourse({

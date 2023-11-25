@@ -48,7 +48,7 @@ const Courses = () => {
       method: "POST",
       body: JSON.stringify({
         email : user.email,
-        courseName: selectedCourse.courseName
+        courseId: selectedCourse._id
       }),
       mode: "cors",
       headers: {
