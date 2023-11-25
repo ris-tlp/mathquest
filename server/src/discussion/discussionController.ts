@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { DiscussionThread } from "./discussionThreadModel";
 import { DiscussionReply } from "./discussionReplyModel";
+import { User } from "../user/userModel";
 
 // /api/courses/discussions
 export const discussionController = Router();
@@ -26,7 +27,24 @@ discussionController.post("/threads/", async (req: Request, res: Response) => {
             .exec();
 
         if (queryResult) {
-            res.status(200).json({ threads: queryResult });
+            var finalizedThreads: JSON[] = [];
+
+            // Big(O of lmfao)
+            for (let i = 0; i < queryResult.length; i++) {
+                let thread = JSON.stringify(queryResult[i]);
+                let threadJson = JSON.parse(thread);
+
+                const user = await User.findOne({
+                    email: threadJson.createdByEmail,
+                }).exec();
+                threadJson.user = user;
+
+                finalizedThreads.push(threadJson);
+            }
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ threads: finalizedThreads });
         } else {
             res.status(404).json({ error: "Discussion Threads not found." });
         }

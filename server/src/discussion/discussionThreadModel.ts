@@ -10,7 +10,7 @@ interface IDiscussionThread {
 const discussionThreadSchema = new Schema<IDiscussionThread>(
     {
         courseId: { type: Schema.Types.ObjectId, required: true },
-        createdByEmail: { type: String, required: true },
+        createdByEmail: { type: String, required: true, ref: "User" },
         title: { type: String, required: true },
         body: { type: String, required: true },
     },
