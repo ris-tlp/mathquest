@@ -9,19 +9,24 @@ export const registeredCourseRouter = Router();
 // Get all registered courses
 registeredCourseRouter.post("/", async (req: Request, res: Response) => {
     try {
-        const email = req.body["email"];
-        console.log(email);
+        const email = req.body.email;
 
+        console.log("in here");
         let queryResult = await RegisteredCourse.find({
             email: email,
         })
             .select("courses")
-            .populate("courses")
+
             .exec();
 
         console.log(queryResult);
+        queryResult = await Course.find({
+            _id: { $in: [...queryResult[0].courses] },
+        });
 
-        res.status(200).json({ courses: queryResult });
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }

@@ -7,12 +7,15 @@ interface IDiscussionThread {
     body: string;
 }
 
-const discussionThreadSchema = new Schema<IDiscussionThread>({
-    courseId: { type: Schema.Types.ObjectId, required: true },
-    createdByEmail: { type: String, required: true },
-    title: { type: String, required: true },
-    body: { type: String, required: true },
-});
+const discussionThreadSchema = new Schema<IDiscussionThread>(
+    {
+        courseId: { type: Schema.Types.ObjectId, required: true },
+        createdByEmail: { type: String, required: true, ref: "User" },
+        title: { type: String, required: true },
+        body: { type: String, required: true },
+    },
+    { timestamps: true }
+);
 
 export const DiscussionThread = model<IDiscussionThread>(
     "DiscussionThread",

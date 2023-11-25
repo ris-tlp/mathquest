@@ -1,20 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { Tab, Tabs } from "./Tabs";
 import Overview from "./Overview";
 import Discussion from "./Discussion";
 import Announcements from "./Announcements";
 import Footer from "./Footer";
-
+import { CONNECTION_STRING, PORT } from "../utils/constants";
 const Course = () => {
+  const [discussionThreads, setDisussionThreads] = useState([]);
+
+  useEffect(() => {
+    fetchDiscussionThread();
+  }, []);
+
+  const fetchDiscussionThread = async () => {
+    const data = await fetch(
+      CONNECTION_STRING + PORT + "/api/courses/discussions/getAllThreads",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          courseID: sessionStorage.getItem("courseID"),
+        }),
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Access-control-allow-origin": "*",
+          "Access-control-allow-methods": "*",
+        },
+      }
+    );
+    const json = await data.json();
+    setDisussionThreads(json?.threads);
+  };
+
   return (
-    <div className="bg-slate-900 font-mono w-[100vw]">
+    <div className="bg-slate-900 font-mono w-[100vw] h-[120%]">
       <Header />
 
       <div className="flex">
         <div className="pt-40 ml-10 mr-4 w-8/12 sm:w-[90%]">
-         
-
           <iframe
             className="h-[600px] px-4"
             width="100%"
@@ -45,7 +69,7 @@ const Course = () => {
           </Tab>
           <Tab label="Discussion">
             <div className="py-4">
-              <Discussion />
+              <Discussion data={discussionThreads} />
             </div>
           </Tab>
           <Tab label="Announcements">
@@ -56,7 +80,7 @@ const Course = () => {
         </Tabs>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
