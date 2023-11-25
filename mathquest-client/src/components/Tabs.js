@@ -23,7 +23,7 @@ const Tabs = ({ children }) => {
           </button>
         ))}
       </div>
-      <div className="py-4">
+      <div className="pt-2 py-20 relative">
         {children.map(child => {
           if (child.props.label === activeTab) {
             return <div key={child.props.label}>{child.props.children}</div>;

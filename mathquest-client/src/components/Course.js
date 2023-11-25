@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { Tab, Tabs } from "./Tabs";
 import Overview from "./Overview";
@@ -7,20 +7,19 @@ import Announcements from "./Announcements";
 import Footer from "./Footer";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 const Course = () => {
+  const [discussionThreads, setDisussionThreads] = useState([]);
+
   useEffect(() => {
     fetchDiscussionThread();
-  },[]);
+  }, []);
 
-
-
-  const fetchDiscussionThread=async()=>{
-
+  const fetchDiscussionThread = async () => {
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/discussions/threads",
+      CONNECTION_STRING + PORT + "/api/courses/discussions/getAllThreads",
       {
         method: "POST",
         body: JSON.stringify({
-          courseID: sessionStorage.getItem('courseID'),
+          courseID: sessionStorage.getItem("courseID"),
         }),
         mode: "cors",
         headers: {
@@ -31,11 +30,11 @@ const Course = () => {
       }
     );
     const json = await data.json();
-    console.log(json)
-  }
+    setDisussionThreads(json?.threads);
+  };
 
   return (
-    <div className="bg-slate-900 font-mono w-[100vw]">
+    <div className="bg-slate-900 font-mono w-[100vw] h-[120%]">
       <Header />
 
       <div className="flex">
@@ -70,7 +69,7 @@ const Course = () => {
           </Tab>
           <Tab label="Discussion">
             <div className="py-4">
-              <Discussion />
+              <Discussion data={discussionThreads} />
             </div>
           </Tab>
           <Tab label="Announcements">
@@ -81,7 +80,7 @@ const Course = () => {
         </Tabs>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
