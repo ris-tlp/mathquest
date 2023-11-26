@@ -26,6 +26,7 @@ courseRouter.post("/", async (req: Request, res: Response) => {
             let publishedCourseJson = JSON.parse(publishedCourse);
 
             if (
+                allRegisteredCourses != null &&
                 allRegisteredCourses!["courses"].includes(
                     publishedCourseJson["_id"]
                 )
