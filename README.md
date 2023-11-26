@@ -132,7 +132,7 @@ TO-DO
 | Anand Verma                                    | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Anand](https://www.linkedin.com/in/anandverma08/)                   |
 | Tharun Kumar Reddy Polu	                      | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Tharun](https://www.linkedin.com/in/polu-tharun-kumar-reddy/)        |
 | Omar Khan	                                     | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Omar](https://www.linkedin.com/in/omar-pk/)                   |
-| Ashwini Gour                                   | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Ashwini](https://www.linkedin.com/in/omar-pk/)                   |
+| Ashwini Gour                                   | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Ashwini](https://www.linkedin.com/in/ashwinigour/)                   |
 | Cydni Turner                                   | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Cydni](https://www.linkedin.com/in/cydni-turner-775b82115)                  | 
 
 ## Frequently Asked Questions
