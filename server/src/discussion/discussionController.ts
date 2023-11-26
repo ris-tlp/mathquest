@@ -34,10 +34,20 @@ discussionRouter.post("/getAllThreads", async (req: Request, res: Response) => {
                 let thread = JSON.stringify(queryResult[i]);
                 let threadJson = JSON.parse(thread);
 
+                // Add the user object for each thread
                 const user = await User.findOne({
                     email: threadJson.createdByEmail,
                 }).exec();
                 threadJson.user = user;
+
+                console.log(threadJson._id);
+
+                // Get number of replies
+                const numberOfReplies = await DiscussionReply.countDocuments({
+                    threadId: threadJson._id,
+                });
+
+                threadJson.numberOfReplies = numberOfReplies;
 
                 finalizedThreads.push(threadJson);
             }
