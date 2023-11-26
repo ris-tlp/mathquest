@@ -1,14 +1,14 @@
 import { Schema, Types, model } from "mongoose";
 
 interface IQuizGrade {
-    userID: Types.ObjectId;
+    userID: string;
     quizID: Types.ObjectId;
     score: number;
     attempts: number;
 }
 
 const quizGradeSchema = new Schema<IQuizGrade>({
-    userID: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+    userID: { type: String, required: true },
     quizID: { type: Schema.Types.ObjectId, required: true, ref: "Quiz" },
     score: { type: Number, required: true },
     attempts: { type: Number, required: true },
