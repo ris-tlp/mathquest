@@ -9,8 +9,8 @@ enum QuestionType {
 export interface IQuestion {
     points: number;
     questionType: QuestionType;
-    options: [Types.ObjectId];
     quizID: Types.ObjectId;
+    question: string;
 }
 
 const questionSchema = new Schema<IQuestion>(
@@ -20,8 +20,8 @@ const questionSchema = new Schema<IQuestion>(
             type: String,
             enum: Object.values(QuestionType),
         },
-        options: [{ type: Schema.Types.ObjectId, ref: "QuestionOption" }],
         quizID: { type: Schema.Types.ObjectId, ref: "Quiz" },
+        question: { type: String, required: true },
     },
     { timestamps: true }
 );
