@@ -52,3 +52,23 @@ quizRouter.post("/getQuiz", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+quizRouter.post("/createQuestion", async (req: Request, res: Response) => {
+    try {
+        const question = req.body.question;
+        const options: Array<Object> = req.body.options;
+
+        const questionObj = await new QuizQuestion(question).save();
+
+        for (let i = 0; i < options.length; i++) {
+            const optionObj = await new QuizQuestionOption(options[i]).save();
+        }
+
+        res.status(201).json({
+            newQuestion: questionObj._id,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
