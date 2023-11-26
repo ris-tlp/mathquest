@@ -3,18 +3,41 @@ import { Quiz } from "./quizModel";
 import { QuizQuestion } from "./quizQuestionModel";
 import { QuizQuestionOption } from "./questionOptionModel";
 import mongoose from "mongoose";
-import { responseEncoding } from "axios";
+import { QuizGrade } from "../course/quizGradeModel";
 
+// /api/courses/quizzes
 export const quizRouter = Router();
 
 // Will be used for displaying a list of quizzes for a specific course
 quizRouter.post("/getAllQuizzes", async (req: Request, res: Response) => {
     try {
-        const courseID = req.body.courseID;
+        const courseID = req.body.courseID; // used for fetching quizzes
+        let email: String = ""; // used for seeing if attempted
+
+        // keeping it backward compatible
+        if (req.body.hasOwnProperty("email")) {
+            email = req.body.email;
+        }
 
         const queryResult = await Quiz.find({
             courseID: courseID,
         }).exec();
+
+        let quizzesTakenIds = null;
+
+        // Get all quizzes that have already been attempted
+        if (email) {
+            const quizzesTaken = await QuizGrade.find({
+                email: email,
+            })
+                .select("quizID -_id")
+                .exec();
+
+            // Unpack to array of string ids
+            quizzesTakenIds = quizzesTaken.map((e) => e.quizID.toString());
+        }
+
+        console.log(quizzesTakenIds);
 
         if (queryResult) {
             let finalizedQuizzes = [];
@@ -28,6 +51,15 @@ quizRouter.post("/getAllQuizzes", async (req: Request, res: Response) => {
                 }).exec();
 
                 quizJson.numberOfQuestions = numberOfQuestions;
+
+                if (quizzesTakenIds) {
+                    // Check if the graded quizzes id array contains the current quiz id
+                    if (quizzesTakenIds.includes(quizJson._id)) {
+                        quizJson.hasAttempted = true;
+                    } else {
+                        quizJson.hasAttempted = false;
+                    }
+                }
 
                 finalizedQuizzes.push(quizJson);
             }
