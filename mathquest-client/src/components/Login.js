@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BG, PROFILE_PICTURE } from "../utils/constants";
 import { checkValidData } from "../utils/validate";
 import { GOOLGELOGO } from "../utils/constants";
@@ -25,6 +25,11 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const fullName = useRef(null);
+
+
+  useEffect(()=>{
+    if(sessionStorage.getItem('email')!=null) navigate('/dashboard')
+  },[])
 
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);

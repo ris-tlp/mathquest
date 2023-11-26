@@ -37,8 +37,11 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
+        sessionStorage.setItem('email',email)
+       
       } else {
         dispatch(removeUser());
+       
       }
     });
     return () => unsubscribe();
