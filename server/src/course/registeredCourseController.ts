@@ -35,8 +35,8 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
 // Register user in a specific course
 registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
     try {
-        const email = req.body["email"];
-        const courseId = req.body["courseId"];
+        const email = req.body.email;
+        const courseId = req.body.courseId;
         // const courseDescription = req.body["courseDescription"];
 
         const user = await User.findOne({ email: email })
@@ -60,7 +60,7 @@ registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
             });
         }
 
-        res.status(200).json({});
+        res.status(200).json({ res: "User Registered" });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }

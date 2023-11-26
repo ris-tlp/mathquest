@@ -47,7 +47,7 @@ const Login = () => {
         "/api/users/signup", {
           method: "POST",
           body: JSON.stringify({
-            fullName: name,
+            name: name,
             email:email,
             userType: 'student'
           }),

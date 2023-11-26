@@ -39,7 +39,7 @@ const Courses = () => {
 
   const openModel = (i) => {
     const selectedCourse = offeredCourses[i];
-    sessionStorage.setItem("SelectedCourse", selectedCourse?._id);
+    sessionStorage.setItem("CourseID", selectedCourse?._id);
     setSelectedCourse(selectedCourse);
     setShowModal(true);
   };
