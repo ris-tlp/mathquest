@@ -8,6 +8,7 @@ import { courseRouter } from "./src/course/courseController";
 import { dataInitRouter } from "./src/dataInit/dataInitController";
 import { registeredCourseRouter } from "./src/course/registeredCourseController";
 import { discussionRouter } from "./src/discussion/discussionController";
+import { quizRouter } from "./src/quiz/quizController";
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.use("/api/users", userRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/courses/registered", registeredCourseRouter);
 app.use("/api/courses/discussions/", discussionRouter);
+app.use("/api/courses/quizzes", quizRouter);
 
 // Dev API endpoints
 app.use("/api/dev", dataInitRouter);
