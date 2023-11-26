@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
+import DiscussionThreadReplies from "./DiscussionThreadReplies";
 
 const DiscussionThreads = (props) => {
   const [showAllThreads, setShowAllThread] = useState(true);
 
   const [discussionReplies, setDiscussionReplies] = useState({});
 
+  const childRef = useRef(null);
+
   const handleShowThreads = (threadId) => {
-    console.log(threadId);
+    sessionStorage.setItem("ThreadID", threadId);
 
     fetchAllThreadReplies(threadId);
   };
@@ -68,19 +71,15 @@ const DiscussionThreads = (props) => {
         })}
 
       {!showAllThreads && (
-        <div className="text-black border-2 border-white bg-white rounded-md p-4">
-          <h1 className="text-xl">{discussionReplies.threadInfo.title}</h1>
-
-          <h1>{discussionReplies.threadInfo.body}</h1>
-
-          {discussionReplies.replies.map((e) => {
-            return (
-              <div className="border-2 border-black">
-                <h1>{e.body}</h1>
-                <h1>{e.createdByEmail}</h1>
-              </div>
-            );
-          })}
+        <div>
+          <DiscussionThreadReplies
+            data={discussionReplies}
+            ref={childRef}
+            onFetchCall={() => {
+              fetchAllThreadReplies(sessionStorage.getItem("ThreadID"));
+            }}
+            toggleShowAllThread={()=>setShowAllThread(true)}
+          />
         </div>
       )}
     </div>
