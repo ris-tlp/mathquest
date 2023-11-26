@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Overview = () => {
+const Overview = ({course}) => {
+  console.log(course)
   return (
-    <div>Overview</div>
+    <div>{course.courseDescription}</div>
   )
 }
 
