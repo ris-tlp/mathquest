@@ -64,30 +64,30 @@ courseRouter.post("/", async (req: Request, res: Response) => {
     }
 });
 
-// // Get a course by CourseName
-// courseRouter.get("/:courseName", async (req: Request, res: Response) => {
-//     try {
-//         const params = req.params;
+// Get a course by courseID
+courseRouter.get("/getCourseByID", async (req: Request, res: Response) => {
+    try {
+        const courseID = req.query.courseID;
 
-//         const queryResult = await Course.findOne({
-//             courseName: params["courseName"],
-//         })
-//             .select("-isPublished -__v")
-//             .exec();
+        const queryResult = await Course.findOne({
+            _id: courseID,
+        })
+            .select("-isPublished -__v")
+            .exec();
 
-//         if (!queryResult) {
-//             res.status(404).json({
-//                 error: "Course not found.",
-//             });
-//         } else {
-//             res.status(200).json({
-//                 queryResult,
-//             });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// });
+        if (!queryResult) {
+            res.status(404).json({
+                error: "Course not found.",
+            });
+        } else {
+            res.status(200).json({
+                course: queryResult,
+            });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 // Update a course by CourseId
 // courseRouter.put("/:courseId", async (req: Request, res: Response) => {

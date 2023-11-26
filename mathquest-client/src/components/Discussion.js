@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
+import DiscussionThreads from "./DiscussionThreads";
 
 const Discussion = () => {
   const discussionTitle = useRef();
   const discussionBody = useRef();
+
+
+  const dataLoaded = useRef(false)
   const [discussionThreads, setDisussionThreads] = useState([]);
 
   useEffect(() => {
-    fetchDiscussionThread();
+    if(discussionThreads && !dataLoaded.current){
+      fetchDiscussionThread()
+    }
   }, [discussionThreads]);
 
   const [showCreateDiscussionForm, setShowCreateDiscussionForm] =
@@ -32,8 +38,13 @@ const Discussion = () => {
     const json = await data.json();
 
     let reverseList = json?.threads?.reverse();
+    dataLoaded.current = true
     setDisussionThreads(reverseList);
   };
+
+  const openSelectedDiscussion=(threadId)=>{
+    sessionStorage.setItem('ThreadID',threadId);
+  }
 
   const handlePublishdiscussion = async () => {
     const title = discussionTitle.current.value;
@@ -60,7 +71,9 @@ const Discussion = () => {
       }
     );
     const json = await data.json();
+    dataLoaded.current = true
     setShowCreateDiscussionForm(false);
+    fetchDiscussionThread()
   };
   return (
     <div>
@@ -73,16 +86,30 @@ const Discussion = () => {
         </button>
       )}
 
-      {!showCreateDiscussionForm &&
+      {/* {!showCreateDiscussionForm &&
         discussionThreads.map((e) => {
           return (
-            <div className="h-24 border-2 border-slate-600 bg-white text-black shadow-slate-500 font-mono p-2 rounded-lg">
-              <h1 className="text-lg font-bold">{e.title}</h1>
+            <div onClick={()=>{openSelectedDiscussion(e._id)}} className="h-24 border-2 border-slate-600 bg-white text-black shadow-slate-500 font-mono p-2 rounded-lg flex cursor-pointer">
+              <img className="h-[60px] rounded-xl" src={e.user.image}></img>
+              <div className="mx-4">
+                <h1 className="text-lg font-bold">{e.title}</h1>
+
+
+                <p>Created By: {e.user.name}</p>
+
+                <p>{e.numberOfReplies}</p>
+              </div>
 
               <p></p>
             </div>
           );
-        })}
+        })} */}
+
+
+        {
+          !showCreateDiscussionForm && <DiscussionThreads threads={discussionThreads} />
+        }
+
 
       {showCreateDiscussionForm && (
         <div className="relative ">

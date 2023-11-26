@@ -71,7 +71,7 @@ discussionRouter.post(
             const body = req.body;
 
             const threadInfo = await DiscussionThread.findOne({
-                _id: body["threadId"],
+                _id: req.body.threadId,
             }).exec();
 
             const queryResult = await DiscussionReply.find({
@@ -122,12 +122,12 @@ discussionRouter.post("/createThread", async (req: Request, res: Response) => {
 discussionRouter.post("/createReply/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
-
+        console.log(body);
         try {
             const newReply = await new DiscussionReply({
-                threadId: body["threadId"],
-                createdByEmail: body["email"],
-                body: body["body"],
+                threadId: body.threadId,
+                createdByEmail: body.createdByEmail,
+                body: body.body,
             }).save();
 
             res.status(201).json({ reply: newReply });
