@@ -71,7 +71,7 @@ discussionRouter.post(
             const body = req.body;
 
             const threadInfo = await DiscussionThread.findOne({
-                _id: body["threadId"],
+                _id: req.body.threadId,
             }).exec();
 
             const queryResult = await DiscussionReply.find({
