@@ -7,31 +7,9 @@ import Announcements from "./Announcements";
 import Footer from "./Footer";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 const Course = () => {
-  const [discussionThreads, setDisussionThreads] = useState([]);
 
-  useEffect(() => {
-    fetchDiscussionThread();
-  }, []);
 
-  const fetchDiscussionThread = async () => {
-    const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/discussions/getAllThreads",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          courseID: sessionStorage.getItem("courseID"),
-        }),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Access-control-allow-origin": "*",
-          "Access-control-allow-methods": "*",
-        },
-      }
-    );
-    const json = await data.json();
-    setDisussionThreads(json?.threads);
-  };
+  
 
   return (
     <div className="bg-slate-900 font-mono w-[100vw] h-[120%]">
@@ -69,7 +47,7 @@ const Course = () => {
           </Tab>
           <Tab label="Discussion">
             <div className="py-4">
-              <Discussion data={discussionThreads} />
+              <Discussion  />
             </div>
           </Tab>
           <Tab label="Announcements">
