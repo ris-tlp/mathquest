@@ -36,7 +36,7 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
 registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
     try {
         const email = req.body["email"];
-        const courseId = req.body["courseId"];
+        const courseId = req.body["courseID"];
         // const courseDescription = req.body["courseDescription"];
 
         const user = await User.findOne({ email: email })
@@ -53,14 +53,14 @@ registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
                 { email: queryResult.email },
                 { $addToSet: { courses: courseId } }
             ).exec();
+            res.status(201).json({ result: "User registered" });
         } else {
             const newRegisteration = new RegisteredCourse({
                 email: user?.email,
-                courses: [],
-            });
+                courses: [courseId],
+            }).save();
+            res.status(201).json({ result: newRegisteration });
         }
-
-        res.status(200).json({});
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
