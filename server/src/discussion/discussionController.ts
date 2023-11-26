@@ -69,13 +69,21 @@ discussionRouter.post(
     async (req: Request, res: Response) => {
         try {
             const body = req.body;
+
+            const threadInfo = await DiscussionThread.findOne({
+                _id: body["threadId"],
+            }).exec();
+
             const queryResult = await DiscussionReply.find({
                 threadId: body["threadId"],
             })
                 .select("-threadId")
                 .exec();
             if (queryResult) {
-                res.status(200).json({ replies: queryResult });
+                res.status(200).json({
+                    threadInfo: threadInfo,
+                    replies: queryResult,
+                });
             } else {
                 res.status(404).json({
                     error: "Discussion Threads not found.",
