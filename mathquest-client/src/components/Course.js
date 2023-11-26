@@ -3,9 +3,10 @@ import Header from "./Header";
 import { Tab, Tabs } from "./Tabs";
 import Overview from "./Overview";
 import Discussion from "./Discussion";
-import Announcements from "./Announcements";
+import Announcements from "./QuizContainer";
 import Footer from "./Footer";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
+import QuizContainer from "./QuizContainer";
 const Course = () => {
   const [course, setCourse] = useState({});
 
@@ -77,11 +78,11 @@ const Course = () => {
                   <Discussion />
                 </div>
               </Tab>
-              {/* <Tab label="Announcements">
+              <Tab label="Take Quiz">
             <div className="py-4">
-              <Announcements />
+              <QuizContainer />
             </div>
-          </Tab> */}
+          </Tab>
             </Tabs>
           </div>
         </div>
