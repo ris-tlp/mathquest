@@ -9,7 +9,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
     try {
         const details = req.body;
         const user = new User(details);
-
+        console.log("user", user);
         try {
             await user.save();
             res.status(201).json({ result: "User has been created." });

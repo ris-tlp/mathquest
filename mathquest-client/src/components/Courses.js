@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [offeredCourses, setOfferedCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -18,38 +18,28 @@ const Courses = () => {
   }, []);
 
   const fetchOfferedCourses = async () => {
-   
-    
-    
-
-
-    const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: sessionStorage.getItem('email'),
-        }),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Access-control-allow-origin": "*",
-          "Access-control-allow-methods": "*",
-        },
-      }
-    );
+    const data = await fetch(CONNECTION_STRING + PORT + "/api/courses", {
+      method: "POST",
+      body: JSON.stringify({
+        email: sessionStorage.getItem("email"),
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
     const json = await data.json();
 
-    console.log(json.courses)
-    
+    console.log(json.courses);
+
     setOfferedCourses(json?.courses);
-   
   };
 
   const openModel = (i) => {
-    
     const selectedCourse = offeredCourses[i];
-    sessionStorage.setItem("SelectedCourse",selectedCourse?._id);
+    sessionStorage.setItem("SelectedCourse", selectedCourse?._id);
     setSelectedCourse(selectedCourse);
     setShowModal(true);
   };
@@ -61,26 +51,28 @@ const Courses = () => {
 
   const user = useSelector((store) => {
     return store.user;
-    
   });
 
-  const courseRegistration=async()=>{
-    const data = await fetch(CONNECTION_STRING+PORT+"/api/courses/registered/new", {
-      method: "POST",
-      body: JSON.stringify({
-        email : user.email,
-        courseId: selectedCourse._id
-      }),
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-        "Access-control-allow-origin": "*",
-        "Access-control-allow-methods": "*",
-      },
-    });
+  const courseRegistration = async () => {
+    const data = await fetch(
+      CONNECTION_STRING + PORT + "/api/courses/registered/new",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: user.email,
+          courseId: selectedCourse._id,
+        }),
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Access-control-allow-origin": "*",
+          "Access-control-allow-methods": "*",
+        },
+      }
+    );
     const json = await data.json();
-    navigate('/dashboard');
-  }
+    navigate("/dashboard");
+  };
 
   return (
     <div className="bg-slate-900 font-mono">
@@ -92,7 +84,7 @@ const Courses = () => {
             Our top picks for you!
           </h1>
           <div className="flex flex-wrap justify-center">
-            {offeredCourses.length > 0 &&
+            {offeredCourses &&
               offeredCourses.map((c, index) => {
                 return (
                   <div key={c.courseName}>
@@ -133,11 +125,10 @@ const Courses = () => {
           <RegisterCourseModal
             data={selectedCourse}
             onClose={() => setShowModal(false)}
-            handleCourseRegister={()=>courseRegistration()}
+            handleCourseRegister={() => courseRegistration()}
           />,
           document.getElementById("modal")
         )}
-      
     </div>
   );
 };

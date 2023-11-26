@@ -8,7 +8,7 @@ export const courseRouter = Router();
 courseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const userEmail = req.body.email;
-
+        console.log(userEmail);
         const allPublishedCourses = await Course.find({
             isPublished: true,
         }).exec();
@@ -37,6 +37,8 @@ courseRouter.post("/", async (req: Request, res: Response) => {
 
             finalizedCourses.push(publishedCourseJson);
         }
+
+        console.log(finalizedCourses);
 
         res.status(200).json({ courses: finalizedCourses });
     } catch (error) {

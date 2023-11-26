@@ -7,7 +7,7 @@ enum UserType {
 }
 
 export interface IUser {
-    name: string;
+    fullName: string;
     email: string;
     userType: UserType;
     firebaseUid: string;
@@ -16,22 +16,15 @@ export interface IUser {
 }
 
 const userSchema = new Schema<IUser>({
-    name: { type: String, required: false },
+    fullName: { type: String, required: false },
     email: { type: String, required: true },
     userType: {
         type: String,
         enum: Object.values(UserType),
         default: UserType.STUDENT,
     },
-    firebaseUid: { type: String, required: true, unique: true },
-    image: { type: String, required: true, unique: true },
-    // registeredCourses: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         required: true,
-    //         ref: "registeredCourses",
-    //     },
-    // ],
+    firebaseUid: { type: String, required: false, unique: true },
+    image: { type: String, required: false, unique: true },
 });
 
 export const User = model<IUser>("User", userSchema);
