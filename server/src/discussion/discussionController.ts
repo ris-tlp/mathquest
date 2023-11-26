@@ -107,9 +107,9 @@ discussionRouter.post("/createReply/", async (req: Request, res: Response) => {
 
         try {
             const newReply = await new DiscussionReply({
-                threadId: body["threadId"],
-                createdByEmail: body["email"],
-                body: body["body"],
+                threadId: body.threadId,
+                createdByEmail: body.email,
+                body: body.body,
             }).save();
 
             res.status(201).json({ reply: newReply });

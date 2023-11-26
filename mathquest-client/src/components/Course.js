@@ -7,9 +7,25 @@ import Announcements from "./Announcements";
 import Footer from "./Footer";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 const Course = () => {
+  const [course,setCourse]=useState({})
 
 
+  useEffect(()=>{
+
+    
+    fetchCourseDetails();
+
+  },[])
   
+  const fetchCourseDetails=async()=>{
+
+    const courseID = sessionStorage.getItem('courseID')
+    const data = await fetch(CONNECTION_STRING+PORT+'/api/courses/getCourseByID'+'?courseID='+courseID)
+    const json = await data.json()
+
+    setCourse(json?.course)
+
+  }
 
   return (
     <div className="bg-slate-900 font-mono w-[100vw] h-[120%]">
@@ -50,11 +66,11 @@ const Course = () => {
               <Discussion  />
             </div>
           </Tab>
-          <Tab label="Announcements">
+          {/* <Tab label="Announcements">
             <div className="py-4">
               <Announcements />
             </div>
-          </Tab>
+          </Tab> */}
         </Tabs>
       </div>
 
