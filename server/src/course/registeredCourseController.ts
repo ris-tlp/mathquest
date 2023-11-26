@@ -53,11 +53,13 @@ registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
                 { email: queryResult.email },
                 { $addToSet: { courses: courseId } }
             ).exec();
+            res.status(201).json({ result: "User registered" });
         } else {
             const newRegisteration = new RegisteredCourse({
                 email: user?.email,
-                courses: [],
-            });
+                courses: [courseId],
+            }).save();
+            res.status(201).json({ result: newRegisteration });
         }
 
         res.status(200).json({ res: "User Registered" });

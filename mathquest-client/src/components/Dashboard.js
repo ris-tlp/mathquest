@@ -53,7 +53,7 @@ const Dashboard = () => {
             <h1 className="text-5xl text-white">
               Welcome {user?.displayName}!
             </h1>
-            <p>{registeredCourses}</p>
+           
             {registeredCourses && (
               <h3 className="text-2xl mt-4 text-white">
                 {" "}
@@ -82,7 +82,7 @@ const Dashboard = () => {
             )}
 
             <div className="flex flex-wrap justify-left">
-              {registeredCourses?.length > 0 &&
+              {registeredCourses  &&
                 registeredCourses.map((r, index) => {
                   return (
                     <div key={r.courseName}>
