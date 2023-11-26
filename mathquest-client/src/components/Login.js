@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import Footer from "./Footer";
+import { CONNECTION_STRING, PORT } from "../utils/constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,15 +29,45 @@ const Login = () => {
 
 
   useEffect(()=>{
-    if(sessionStorage.getItem('email')!=null) navigate('/dashboard')
+    console.log(sessionStorage.getItem('email'))
+
+    if(sessionStorage.getItem('email')!=undefined) navigate('/dashboard')
   },[])
 
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
   };
 
+  const signUpUser=async(name, email)=>{
+
+   
+    const data = await fetch(
+      CONNECTION_STRING +
+        PORT +
+        "/api/users/signup", {
+          method: "POST",
+          body: JSON.stringify({
+            name: name,
+            email:email,
+            userType: 'student'
+          }),
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8",
+            "Access-control-allow-origin": "*",
+            "Access-control-allow-methods": "*",
+          },
+        }
+       
+    );
+    const json = await data.json();
+    sessionStorage.setItem('email',email)  
+    navigate("/dashboard");   
+
+  }
+
   const handleButtonclick = () => {
-    const message = checkValidData(email.current.value, password.current.value);
+    const message = checkValidData(email.current.value, password.current.value, fullName?.current?.value);
     setErrorMessage(message);
     if (message) return;
 
@@ -64,7 +95,15 @@ const Login = () => {
                 })
               );
 
-              navigate("/dashboard");
+
+
+
+              signUpUser(displayName, email);
+
+
+
+
+              
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -92,13 +131,13 @@ const Login = () => {
               photoURL: user.photoURL,
             })
           );
-
-
+          sessionStorage.setItem('email',email)  
+          navigate("/dashboard");
         })
         .catch((error) => {
           setErrorMessage(error.code + error.message);
         });
-      navigate("/dashboard");
+     
     }
   };
 
@@ -141,7 +180,7 @@ const Login = () => {
             type="text"
             placeholder="Enter Full Name"
             minLength="8"
-            maxLength="20"
+            maxLength="30"
             ref={fullName}
             className="p-2 my-4 h-14 w-full bg-gray-700 rounded-lg"
           />

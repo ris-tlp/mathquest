@@ -16,6 +16,9 @@ const Header = () => {
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
+        sessionStorage.removeItem("email")
+        sessionStorage.removeItem('ThreadID')
+        sessionStorage.removeItem('CourseID')
         navigate("/");
       })
       .catch((error) => {});

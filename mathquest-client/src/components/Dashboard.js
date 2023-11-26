@@ -28,21 +28,21 @@ const Dashboard = () => {
       }
     );
     const json = await data.json();
-    
+
     setRegisteredCourses(json?.courses);
-    console.log(registeredCourses)
+    console.log(registeredCourses);
   };
 
   const user = useSelector((store) => {
     return store.user;
   });
 
-
-  useEffect(()=>{
-   getRegisteredCourses(sessionStorage.getItem('email'))
-  },[])
-  
-
+  useEffect(() => {
+    if (sessionStorage.getItem("email") == undefined) {
+      navigate("/");
+    }
+    getRegisteredCourses(sessionStorage.getItem("email"));
+  }, []);
 
   return (
     <div className="bg-slate-900 font-mono w-[100vw] h-[100vh]">
@@ -53,13 +53,17 @@ const Dashboard = () => {
             <h1 className="text-5xl text-white">
               Welcome {user?.displayName}!
             </h1>
-            <h3 className="text-2xl mt-4 text-white">
-              {" "}
-              Finish off where you left!
-            </h3>
+           
+            {registeredCourses && (
+              <h3 className="text-2xl mt-4 text-white">
+                {" "}
+                Finish off where you left!
+              </h3>
+            )}
+
             {/* <h5 className="text-2xl mt-5 text-white">Pick up where you left off!</h5> */}
 
-            {registeredCourses?.length == 0 && (
+            {!registeredCourses && (
               <div>
                 <h5 className="text-2xl mt-5 text-white">
                   Seems like you are not registered in a course!
@@ -70,7 +74,7 @@ const Dashboard = () => {
 
                 <Link to="/all-courses">
                   {" "}
-                  <button className="rounded-lg border-2 border-white text-white h-12 p-2 my-8 w-60  ">
+                  <button  className="rounded-lg border-2 border-white text-white h-12 p-2 my-8 w-60  ">
                     Offered Courses{" "}
                   </button>
                 </Link>
@@ -78,7 +82,7 @@ const Dashboard = () => {
             )}
 
             <div className="flex flex-wrap justify-left">
-              {registeredCourses?.length > 0 &&
+              {registeredCourses  &&
                 registeredCourses.map((r, index) => {
                   return (
                     <div key={r.courseName}>
@@ -93,16 +97,20 @@ const Dashboard = () => {
                           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             {r.courseName}
                           </h5>
-                          
+
                           {/* <p className="mb-3 font-bold text-white">
                             {r.courseInstructor}
                           </p> */}
 
-                          
-                          <button onClick={()=>{
-                            sessionStorage.setItem("courseID",r._id);
-                            navigate('/course')
-                          }} className="text-white float-right underline">View Course &gt;</button>
+                          <button
+                            onClick={() => {
+                              sessionStorage.setItem("courseID", r._id);
+                              navigate("/course");
+                            }}
+                            className="text-white float-right underline"
+                          >
+                            View Course &gt;
+                          </button>
 
                           {/* <button
                           onClick={() => openModel(index)}
