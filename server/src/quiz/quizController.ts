@@ -16,9 +16,26 @@ quizRouter.post("/getAllQuizzes", async (req: Request, res: Response) => {
             courseID: courseID,
         }).exec();
 
-        res.status(200)
-            .setHeader("Content-Type", "application/json")
-            .json({ result: queryResult });
+        if (queryResult) {
+            let finalizedQuizzes = [];
+
+            for (let i = 0; i < queryResult.length; i++) {
+                let quiz = JSON.stringify(queryResult[i]);
+                let quizJson = JSON.parse(quiz);
+
+                const numberOfQuestions = await QuizQuestion.countDocuments({
+                    quizID: queryResult[i]._id,
+                }).exec();
+
+                quizJson.numberOfQuestions = numberOfQuestions;
+
+                finalizedQuizzes.push(quizJson);
+            }
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ result: finalizedQuizzes });
+        }
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
