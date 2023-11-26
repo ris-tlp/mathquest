@@ -3,7 +3,7 @@
 ![mathquest-home](https://github.com/ris-tlp/mathquest/assets/62342666/bba6443e-b2e8-483c-8c8b-c4920edc2cf2)
 
 ## Contents
-* [Overview](https://github.com/ris-tlp/mathquest/edit/main/README.md#overview) <br>
+* [Overview](https://github.com/ris-tlp/mathquest#overview)<br>
 * [How to get started with MathQuest](https://github.com/ris-tlp/mathquest#how-to-get-started-with-mathquest)<br>
 * [Features](https://github.com/ris-tlp/mathquest#features)<br>
 * [High-Level System Architecture](https://github.com/ris-tlp/mathquest#high-level-system-architecture)<br>
@@ -133,7 +133,7 @@ TO-DO
 | Tharun Kumar Reddy Polu	                      | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Tharun](https://www.linkedin.com/in/polu-tharun-kumar-reddy/)        |
 | Omar Khan	                                     | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Omar](https://www.linkedin.com/in/omar-pk/)                   |
 | Ashwini Gour                                   | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Ashwini](https://www.linkedin.com/in/omar-pk/)                   |
-| Cydni Turner                                   | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Cydni]()                  | 
+| Cydni Turner                                   | [![Linkedin](https://i.stack.imgur.com/gVE0j.png) Cydni](https://www.linkedin.com/in/cydni-turner-775b82115)                  | 
 
 ## Frequently Asked Questions
 __1. What types of math courses does MathQuest offer?__<br>
