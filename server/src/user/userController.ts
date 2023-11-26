@@ -8,7 +8,12 @@ export const userRouter = Router();
 userRouter.post("/signup", async (req: Request, res: Response) => {
     try {
         const details = req.body;
-        const user = new User(details);
+
+        const user = new User({
+            name: details.name,
+            email: details.email,
+            userType: details.userType,
+        });
 
         try {
             await user.save();

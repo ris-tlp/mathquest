@@ -23,7 +23,7 @@ const userSchema = new Schema<IUser>({
         enum: Object.values(UserType),
         default: UserType.STUDENT,
     },
-    firebaseUid: { type: String, unique: true },
+    firebaseUid: { type: String },
     image: { type: String, unique: true },
     // registeredCourses: [
     //     {
