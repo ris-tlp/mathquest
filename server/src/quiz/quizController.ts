@@ -58,6 +58,17 @@ quizRouter.post("/getQuiz", async (req: Request, res: Response) => {
                         as: "options",
                     },
                 },
+                {
+                    $project: {
+                        points: 1,
+                        questionType: 1,
+                        quizID: 1,
+                        question: 1,
+                        "options._id": 1,
+                        "options.content": 1,
+                        "options.questionID": 1,
+                    },
+                },
             ]).exec();
             res.status(200)
                 .setHeader("Content-Type", "application/json")
