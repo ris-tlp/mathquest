@@ -54,23 +54,28 @@ discussionRouter.post("/getAllThreads", async (req: Request, res: Response) => {
 });
 
 // Get all replies of a specific thread
-discussionRouter.post("/replies/", async (req: Request, res: Response) => {
-    try {
-        const body = req.body;
-        const queryResult = await DiscussionReply.find({
-            threadId: body["threadId"],
-        })
-            .select("-threadId")
-            .exec();
-        if (queryResult) {
-            res.status(200).json({ replies: queryResult });
-        } else {
-            res.status(404).json({ error: "Discussion Threads not found." });
+discussionRouter.post(
+    "/getAllReplies/",
+    async (req: Request, res: Response) => {
+        try {
+            const body = req.body;
+            const queryResult = await DiscussionReply.find({
+                threadId: body["threadId"],
+            })
+                .select("-threadId")
+                .exec();
+            if (queryResult) {
+                res.status(200).json({ replies: queryResult });
+            } else {
+                res.status(404).json({
+                    error: "Discussion Threads not found.",
+                });
+            }
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
         }
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
     }
-});
+);
 
 // Create a thread in a course
 discussionRouter.post("/createThread", async (req: Request, res: Response) => {
@@ -96,7 +101,7 @@ discussionRouter.post("/createThread", async (req: Request, res: Response) => {
 });
 
 // Create a reply in a thread
-discussionRouter.post("/replies/", async (req: Request, res: Response) => {
+discussionRouter.post("/createReply/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
 
