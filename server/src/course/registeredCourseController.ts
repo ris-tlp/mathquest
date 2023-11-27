@@ -8,19 +8,18 @@ export const registeredCourseRouter = Router();
 registeredCourseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const email = req.body.email;
-
-        console.log("in here");
+        console.log("email", email);
         let queryResult = await RegisteredCourse.find({
             email: email,
         })
             .select("courses")
-
             .exec();
 
-        console.log(queryResult);
         queryResult = await Course.find({
             _id: { $in: [...queryResult[0].courses] },
         });
+
+        console.log(queryResult);
 
         res.status(200).json({ courses: queryResult });
     } catch (error) {

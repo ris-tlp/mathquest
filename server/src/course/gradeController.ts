@@ -13,6 +13,8 @@ gradeRouter.post("/gradeQuiz", async (req: Request, res: Response) => {
         const quizID = req.body.quizID;
         const email = req.body.email;
 
+        console.log(req.body);
+
         /*  in the form of 
         [
             {
@@ -21,6 +23,7 @@ gradeRouter.post("/gradeQuiz", async (req: Request, res: Response) => {
             }
         ]
         */
+
         const answers = req.body.answers;
         let totalPoints = 0;
 
@@ -45,13 +48,16 @@ gradeRouter.post("/gradeQuiz", async (req: Request, res: Response) => {
             }
         }
 
+        console.log("total Points", totalPoints);
         const gradedQuiz = new QuizGrade({
             email: email,
             quizID: quizID,
             score: totalPoints,
-        }).save();
+        });
 
-        res.status(201).json(gradedQuiz);
+        await gradedQuiz.save();
+
+        res.status(201).json({ score: totalPoints });
     } catch (error) {
         res.status(500);
     }
