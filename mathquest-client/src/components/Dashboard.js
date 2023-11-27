@@ -45,7 +45,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-slate-900 font-mono w-[100vw] h-[100vh]">
+    <div className="bg-slate-900 font-mono w-[100vw] h-[200vh]">
       <Header />
       <div className="pt-40  mx-16 font-mono text-black-200  ">
         {user && (
