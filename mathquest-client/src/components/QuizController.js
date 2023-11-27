@@ -5,6 +5,7 @@ const QuizController = (props) => {
   const [quiz, setQuiz] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [submitedAnswers, setSubmittedAnswers] = useState([]);
+  const [quizScore, setQuizScore]=useState(null)
   useEffect(() => {
     fetchQuiz(props.quizID);
     console.log(props.quiz);
@@ -38,13 +39,41 @@ const QuizController = (props) => {
   };
 
   const handleOptionClick = (questionID, optionID, option) => {
-    submitedAnswers[questionID] = optionID;
+    //submitedAnswers[questionID] = optionID;
+
+    let obj = {
+      questionID: questionID,
+      optionSelectedID: optionID,
+    };
 
     let ans = submitedAnswers;
-    ans.push([questionID, optionID]);
+    ans.push(obj);
     setSubmittedAnswers(ans);
 
     setSelectedOption(option);
+  };
+
+  const handleSubmit = async () => {
+    const data = await fetch(
+      CONNECTION_STRING + PORT + "/api/courses/quizzes/grades/gradeQuiz",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: sessionStorage.getItem('email'),
+          quizID: props.quizID,
+          answers: submitedAnswers
+        }),
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Access-control-allow-origin": "*",
+          "Access-control-allow-methods": "*",
+        },
+      }
+    );
+
+    const json = await data.json()
+    setQuizScore(json.score)
   };
 
   return (
@@ -54,7 +83,7 @@ const QuizController = (props) => {
         Duration : {props.quiz.duration} minutes
       </p>
 
-      {currentQuestion < quiz.length && (
+      {currentQuestion < quiz.length && !quizScore && (
         <div>
           <div>
             {
@@ -92,7 +121,12 @@ const QuizController = (props) => {
               </div>
             }
           </div>
+        </div>
+      )}
 
+      {currentQuestion < quiz.length - 1 && (
+        <div>
+          {" "}
           <button
             className="border-2 bg-white float-right font-bold p-2 rounded-lg"
             onClick={handleSubmitQuiz}
@@ -102,9 +136,28 @@ const QuizController = (props) => {
         </div>
       )}
 
-      {currentQuestion == quiz.length && (
-        <h1>Quiz submiited</h1>
+      {currentQuestion == quiz.length - 1 &&  !quizScore && (
+        <div>
+          {" "}
+          <button
+            className="border-2 bg-white float-right font-bold p-2 rounded-lg"
+            onClick={handleSubmit}
+          >
+            SUBMIT QUIZ
+          </button>
+        </div>
       )}
+
+      {quizScore && <div className="">
+        
+            
+            <div className="border-2 bg-white font-bold text-2xl h-20 p-4 rounded-md">
+
+            <h1>Congratulations!!! You scored {quizScore}!!</h1>
+            </div>
+
+            <button onClick={props.closeSelectedQuiz} className="border-2 bg-white my-4 p-4 rounded-lg cursor-pointer font-bold">Go Back to All Quiz</button>
+        </div>}
     </div>
   );
 };

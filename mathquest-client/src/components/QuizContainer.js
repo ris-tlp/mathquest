@@ -69,7 +69,10 @@ const QuizContainer = () => {
             })}
         </div>
       ) : (
-        <div>{quiz && <QuizController quizID={selectedQuizID} quiz={quiz}  />}</div>
+        <div>{quiz && <QuizController quizID={selectedQuizID} quiz={quiz} closeSelectedQuiz={()=>{
+          console.log("here")  
+          setShowSelectedQuiz(false)
+        }}  />}</div>
       )}
     </div>
   );
