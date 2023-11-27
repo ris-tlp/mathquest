@@ -33,9 +33,12 @@ const Course = () => {
       <Header />
 
       {course && (
-        <div>
+        <div className="p-6">
+          <h1 className="pt-40 ml-10 text-3xl mb-10 text-white">
+            {course.courseName}
+          </h1>
           <div className="flex">
-            <div className="pt-40 ml-10 mr-4 w-8/12 sm:w-[90%]">
+            <div className=" mr-4  ml-10 w-8/12 sm:w-[90%]">
               <iframe
                 className="h-[600px] px-4"
                 width="100%"
@@ -47,21 +50,16 @@ const Course = () => {
               ></iframe>
             </div>
 
-            <div className="pt-40 mr-4 w-4/12 sm:hidden">
+            <div className=" mr-4 w-4/12 sm:hidden">
               <div className="w-[100%]  border-2 border-stone-800 p-8">
                 <h3 className="text-2xl font-bold text-white p-4">
                   What you'll learn
                 </h3>
-              <ul className="list-disc text-white">
-
-              {course.whatYouWillLearn?.map((e) => {
-                  return  <li>{e}</li>
-                    
-                   
-                 
-                })}
-              </ul>
-                
+                <ul className="list-disc text-white">
+                  {course.whatYouWillLearn?.map((e) => {
+                    return <li>{e}</li>;
+                  })}
+                </ul>
               </div>
             </div>
           </div>
@@ -79,10 +77,10 @@ const Course = () => {
                 </div>
               </Tab>
               <Tab label="Take Quiz">
-            <div className="py-4">
-              <QuizContainer />
-            </div>
-          </Tab>
+                <div className="py-4">
+                  <QuizContainer />
+                </div>
+              </Tab>
             </Tabs>
           </div>
         </div>

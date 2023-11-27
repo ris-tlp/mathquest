@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
+import QuizController from "./QuizController";
 
 const QuizContainer = () => {
   const [allQuiz, setAllQuiz] = useState([]);
@@ -8,6 +9,8 @@ const QuizContainer = () => {
   }, []);
 
   const [showSelectedQuiz, setShowSelectedQuiz] = useState(false);
+  const [selectedQuizID, setSelectedQuizID]=useState(null)
+  const [quiz, setQuiz] = useState([])
 
   const fetchQuizzes = async () => {
     const courseID = sessionStorage.getItem("courseID");
@@ -30,34 +33,44 @@ const QuizContainer = () => {
     setAllQuiz(json.result);
   };
 
-  const handleStartQuiz = (quizID) => {
+  const handleStartQuiz = (quizID, quiz) => {
     sessionStorage.setItem("quizID", quizID);
     setShowSelectedQuiz(true);
+    setQuiz(quiz)
+    setSelectedQuizID(quizID)
   };
+
+  
 
   return (
     <div>
-      {allQuiz &&
-        allQuiz.map((e, index) => {
-          return (
-            <div className=" border-2 border-slate-600 bg-white text-black shadow-slate-500 font-mono p-2 rounded-lg flex cursor-pointer">
-              <div className="mx-4 w-[100%]">
-                <h3 className="text-sm font-bold">Quiz {index + 1}</h3>
-                <h1 className="text-lg font-bold">{e.summary}</h1>
+      {!showSelectedQuiz ? (
+        <div>
+          {allQuiz &&
+            allQuiz.map((e, index) => {
+              return (
+                <div className=" border-2 border-slate-600 bg-white text-black shadow-slate-500 font-mono p-2 rounded-lg flex cursor-pointer">
+                  <div className="mx-4 w-[100%]">
+                    <h3 className="text-sm font-bold">Quiz {index + 1}</h3>
+                    <h1 className="text-lg font-bold">{e.summary}</h1>
 
-                <p>{e.duration} minutes</p>
-                <p>Attemmpts left: {e.numberOfAttempts}</p>
+                    <p>{e.duration} minutes</p>
+                    <p>Attemmpts left: {e.numberOfAttempts}</p>
 
-                <button
-                  className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl"
-                  onClick={handleStartQuiz(e._id)}
-                >
-                  Start Quiz
-                </button>
-              </div>
-            </div>
-          );
-        })}
+                    <button
+                      className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl"
+                      onClick={() => handleStartQuiz(e._id, e)}
+                    >
+                      Start Quiz
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      ) : (
+        <div>{quiz && <QuizController quizID={selectedQuizID} quiz={quiz}  />}</div>
+      )}
     </div>
   );
 };

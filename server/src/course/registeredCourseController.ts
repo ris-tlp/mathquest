@@ -2,8 +2,6 @@ import { Request, Response, Router } from "express";
 import { RegisteredCourse } from "./registeredCourseModel";
 import { User } from "../user/userModel";
 import { Course } from "./courseModel";
-
-// api/courses/registered
 export const registeredCourseRouter = Router();
 
 // Get all registered courses
@@ -24,9 +22,7 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
             _id: { $in: [...queryResult[0].courses] },
         });
 
-        res.status(200)
-            .setHeader("Content-Type", "application/json")
-            .json({ courses: queryResult });
+        res.status(200).json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
@@ -61,8 +57,6 @@ registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
             }).save();
             res.status(201).json({ result: newRegisteration });
         }
-
-        res.status(200).json({ res: "User Registered" });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
