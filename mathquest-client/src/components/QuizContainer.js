@@ -20,6 +20,7 @@ const QuizContainer = () => {
         method: "POST",
         body: JSON.stringify({
           courseID: courseID,
+          email: sessionStorage.getItem('email')
         }),
         mode: "cors",
         headers: {
@@ -57,19 +58,29 @@ const QuizContainer = () => {
                     <p>{e.duration} minutes</p>
                     <p>Attemmpts left: {e.numberOfAttempts}</p>
 
-                    <button
+                    {!e.hasAttempted && <button
                       className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl"
                       onClick={() => handleStartQuiz(e._id, e)}
                     >
                       Start Quiz
-                    </button>
+                    </button>}
+
+                    {e.hasAttempted && <button disabled
+                      className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl "
+                     
+                    >
+                      Quiz Completed
+                    </button>}
                   </div>
                 </div>
               );
             })}
         </div>
       ) : (
-        <div>{quiz && <QuizController quizID={selectedQuizID} quiz={quiz}  />}</div>
+        <div>{quiz && <QuizController quizID={selectedQuizID} quiz={quiz} closeSelectedQuiz={()=>{
+          fetchQuizzes()
+          setShowSelectedQuiz(false)
+        }}  />}</div>
       )}
     </div>
   );

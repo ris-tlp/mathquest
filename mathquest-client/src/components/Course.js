@@ -42,7 +42,7 @@ const Course = () => {
               <iframe
                 className="h-[600px] px-4"
                 width="100%"
-                src="https://www.youtube.com/embed/5zi5eG5Ui-Y?si=PbLAE9ieALFQ7izX"
+                src={course.courseVideoURL}
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay;  picture-in-picture;"
