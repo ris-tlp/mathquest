@@ -30,9 +30,12 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
           ECR_REPOSITORY: mathquest-docker-repo
+          REGISTRY_ALIAS: v7l2f1v7
           IMAGE_TAG: ${{ github.sha }}
         working-directory: server/
 
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "$ECR_REGISTRY"
+          echo "$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG"
+          docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
