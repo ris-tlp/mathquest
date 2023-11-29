@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { Course } from "./courseModel";
 import { RegisteredCourse } from "./registeredCourseModel";
 
+/// api/courses
 export const courseRouter = Router();
 
 // List of all available published courses
@@ -44,6 +45,30 @@ courseRouter.post("/", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// Get all courses that a teacher is the creator of
+courseRouter.post(
+    "/teachers/getAllCourses/",
+    async (req: Request, res: Response) => {
+        try {
+            const email = req.body.email;
+
+            const teacherCourses = await Course.find({ email: email }).exec();
+
+            if (teacherCourses) {
+                res.status(200)
+                    .setHeader("Content-Type", "application/json")
+                    .json({ courses: teacherCourses });
+            } else {
+                res.status(404)
+                    .setHeader("Content-Type", "application/json")
+                    .json({ courses: {} });
+            }
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
 
 // Create a course
 courseRouter.post("/", async (req: Request, res: Response) => {
