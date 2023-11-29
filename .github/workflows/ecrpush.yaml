@@ -26,8 +26,8 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         env:
-          ECR_REGISTRY: public.ecr.aws/v7l2f1v7/mathquest-docker-repo
-          ECR_REPOSITORY: mathquest-docker-repo
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: omarkhan27/mathquest-docker-repo
           IMAGE_TAG: api
         working-directory: server/
 
