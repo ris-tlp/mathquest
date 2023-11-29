@@ -8,7 +8,7 @@ export const userRouter = Router();
 userRouter.post("/signup", async (req: Request, res: Response) => {
     try {
         const details = req.body;
-        console.log(details);
+
         const user = new User({
             name: details.name,
             email: details.email,
@@ -33,6 +33,53 @@ userRouter.get("/type", async (req: Request, res: Response) => {
 
         res.status(200).json({ type: queryResult!["userType"] });
     } catch (error) {
+        res.status(500).json({ error: "Internal Server Error." });
+    }
+});
+
+// Add a set of skills to your profile
+userRouter.post("/addProfileSkills", async (req: Request, res: Response) => {
+    try {
+        // in the form of [skill1, skill2]
+        const skills = req.body.skills;
+        const email = req.body.email;
+
+        const updateResult = await User.updateOne(
+            { email: email },
+            { $addToSet: { skills: { $each: skills } } },
+            { upsert: true }
+        ).exec();
+
+        const user = await User.findOne({ emai: email }).exec();
+
+        res.status(201)
+            .setHeader("Content-Type", "application/json")
+            .json({ result: user });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error." });
+    }
+});
+
+// Remove skills from profile
+userRouter.post("/deleteProfileSkills", async (req: Request, res: Response) => {
+    try {
+        // in the form of [skill1, skill2]
+        const skills = req.body.skills;
+        const email = req.body.email;
+
+        const updateResult = await User.updateOne(
+            { email: email },
+            { $pull: { skills: { $in: skills } } },
+            { upsert: true }
+        ).exec();
+
+        const user = await User.findOne({ email: email }).exec();
+
+        res.status(201)
+            .setHeader("Content-Type", "application/json")
+            .json({ result: user });
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "Internal Server Error." });
     }
 });

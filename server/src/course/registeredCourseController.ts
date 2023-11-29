@@ -8,7 +8,7 @@ export const registeredCourseRouter = Router();
 registeredCourseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const email = req.body.email;
-        console.log("email", email);
+
         let queryResult = await RegisteredCourse.find({
             email: email,
         })
@@ -19,7 +19,7 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
             _id: { $in: [...queryResult[0].courses] },
         });
 
-        console.log(queryResult);
+        console.log("query result", queryResult);
 
         res.status(200).json({ courses: queryResult });
     } catch (error) {
@@ -32,7 +32,6 @@ registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
     try {
         const email = req.body.email;
         const courseId = req.body.courseId;
-        // const courseDescription = req.body["courseDescription"];
 
         const user = await User.findOne({ email: email })
             .select("email")
@@ -44,19 +43,20 @@ registeredCourseRouter.post("/new", async (req: Request, res: Response) => {
 
         // Add course to array if already in db
         if (queryResult) {
-            RegisteredCourse.updateOne(
+            await RegisteredCourse.updateOne(
                 { email: queryResult.email },
                 { $addToSet: { courses: courseId } }
             ).exec();
             res.status(201).json({ result: "User registered" });
         } else {
-            const newRegisteration = new RegisteredCourse({
+            const newRegisteration = await new RegisteredCourse({
                 email: user?.email,
                 courses: [courseId],
             }).save();
             res.status(201).json({ result: newRegisteration });
         }
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

@@ -121,7 +121,11 @@ const Login = () => {
       )
         .then((userCrendential) => {
           const user = userCrendential.user;
-
+          if(password.current.value.slice(0,7)=="Teacher"){
+            sessionStorage.setItem('userType',"teacher")
+          }else {
+            sessionStorage.setItem('userType',"student")
+          }
           sessionStorage.setItem('email',user.email)
           dispatch(
             addUser({
@@ -141,19 +145,19 @@ const Login = () => {
     }
   };
 
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const name = result.user.displayName;
-        const email = result.user.email;
-        const profilePic = result.user.photoURL;
-        navigate("/dashboard");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const googleSignIn = () => {
+  //   const provider = new GoogleAuthProvider();
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       const name = result.user.displayName;
+  //       const email = result.user.email;
+  //       const profilePic = result.user.photoURL;
+  //       navigate("/dashboard");
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   return (
     <div className="font-mono">
@@ -210,14 +214,14 @@ const Login = () => {
             {isSignIn ? "SIGN IN" : "SIGN UP"}
           </span>
         </button>
-        <p className="text-center">---------- OR ---------- </p>
+        {/* <p className="text-center">---------- OR ---------- </p>
         <button
           className="p-4 my-4 bg-rose-600 w-full rounded-lg cursor-pointer flex justify-center"
           onClick={googleSignIn}
         >
           <img className="w-8 mx-4" src={GOOLGELOGO}></img>
           <span className="text-center  text-[20px]">SIGN IN WITH GOOGLE</span>
-        </button>
+        </button> */}
         {isSignIn && (
           <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
             <u>New to MathQuest? Sign up now</u>

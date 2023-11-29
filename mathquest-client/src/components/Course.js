@@ -1,3 +1,5 @@
+// Importing necessary React components and hooks and
+// other components used in the application
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { Tab, Tabs } from "./Tabs";
@@ -8,9 +10,11 @@ import Footer from "./Footer";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 import QuizContainer from "./QuizContainer";
 const Course = () => {
+  // State to store course details
   const [course, setCourse] = useState({});
 
   useEffect(() => {
+    // Call fetchCourseDetails when the component mounts
     fetchCourseDetails();
   }, []);
 
@@ -18,21 +22,21 @@ const Course = () => {
     const courseID = sessionStorage.getItem("courseID");
     const data = await fetch(
       CONNECTION_STRING +
-        PORT +
-        "/api/courses/getCourseByID" +
-        "?courseID=" +
-        courseID
-    );
+      PORT +
+      "/api/courses/getCourseByID" +
+      "?courseID=" +
+      courseID
+    ); // Fetch course details from the API
     const json = await data.json();
-    setCourse(json?.course);
-    console.log(course);
+
+    setCourse(json?.course); // Update the course state with the fetched data
   };
 
   return (
-    <div className="bg-slate-900 font-mono w-[100vw] h-[120%]">
+    <div className="bg-slate-900 font-mono w-[100vw] h-[120%] ">
       <Header />
 
-      {course && (
+      {course && ( // Render the following content only if course details are available
         <div className="p-6">
           <h1 className="pt-40 ml-10 text-3xl mb-10 text-white">
             {course.courseName}
@@ -57,7 +61,7 @@ const Course = () => {
                 </h3>
                 <ul className="list-disc text-white">
                   {course.whatYouWillLearn?.map((e) => {
-                    return <li>{e}</li>;
+                    return <li>{e}</li>; // Display a list of what the user will learn
                   })}
                 </ul>
               </div>

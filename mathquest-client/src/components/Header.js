@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LOGO from "../images/logo-black.png";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { auth } from "../utils/firebase";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [userType, setUserType]=useState('student')
   const user = useSelector((store) => {
     return store.user;
   });
@@ -19,16 +20,17 @@ const Header = () => {
         sessionStorage.removeItem("email")
         sessionStorage.removeItem('ThreadID')
         sessionStorage.removeItem('CourseID')
+        sessionStorage.removeItem('userType')
         navigate("/");
       })
       .catch((error) => {});
   };
 
-  const profileHandler = () => {
-    navigate("/profile");
-  };
+ 
 
   useEffect(() => {
+
+    if(sessionStorage.getItem('userType')=='teacher') setUserType('teacher') 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
@@ -61,7 +63,7 @@ const Header = () => {
 
       <div className="flex">
         <Link to="/all-courses">
-          {user && (
+          {user && userType!=='teacher' && (
             <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
               Available Courses
             </button>
