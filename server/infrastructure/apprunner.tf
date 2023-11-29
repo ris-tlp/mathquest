@@ -10,7 +10,7 @@ resource "aws_apprunner_service" "mathquest-api" {
       image_configuration {
         port = "8000"
       }
-      image_identifier      = "public.ecr.aws/v7l2f1v7/mathquest-docker-repo:latest"
+      image_identifier      = "public.ecr.aws/v7l2f1v7/mathquest-docker-repo:4f91d67e7dca04f045f271339ee0e258b5a41ca9"
       image_repository_type = "ECR_PUBLIC"
     }
     auto_deployments_enabled = false
