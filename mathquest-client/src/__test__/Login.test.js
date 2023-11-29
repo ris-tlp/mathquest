@@ -5,7 +5,7 @@ import Login from '../components/Login';
 import appStore from '../utils/appStore';
 import {signUpUser} from '../components/Login';;
 
-test('renders login page', async () =>{
+test('renders login page', async () =>{ 
     render(<Provider store={appStore}><BrowserRouter><Login/></BrowserRouter></Provider>);
     
     //get background image

@@ -24,8 +24,8 @@ const Course = () => {
         courseID
     );
     const json = await data.json();
-
     setCourse(json?.course);
+    console.log(course);
   };
 
   return (
@@ -46,7 +46,7 @@ const Course = () => {
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay;  picture-in-picture;"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
             </div>
 
