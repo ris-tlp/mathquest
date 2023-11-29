@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import DiscussionThreadReplies from "./DiscussionThreadReplies";
 
 const DiscussionThreads = (props) => {
@@ -17,7 +17,7 @@ const DiscussionThreads = (props) => {
 
   const fetchAllThreadReplies = async (threadId) => {
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/discussions/getAllReplies",
+      BASE_URL + "/api/courses/discussions/getAllReplies",
       {
         method: "POST",
         body: JSON.stringify({

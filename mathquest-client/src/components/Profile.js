@@ -5,13 +5,8 @@ import Footer from "./Footer";
 
 const Profile = () => {
   const user = useSelector((store) => {
-
-    console.log(sessionStorage.getItem("Anand"))
-
     return store.user;
   });
-
-  console.log(sessionStorage.getItem("Anand"))
 
   return (
     <div className="bg-slate-900">
@@ -31,7 +26,10 @@ const Profile = () => {
           <div class="border-t border-gray-200 text-center">
             <dl>
               <div class="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 text-center">
-                <img className="rounded-full h-[150px] text-center m-auto" src={user?.photoURL}></img>
+                <img
+                  className="rounded-full h-[150px] text-center m-auto"
+                  src={user?.photoURL}
+                ></img>
               </div>
               <div class="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-lg font-medium text-gray-500">Full name</dt>
@@ -48,10 +46,10 @@ const Profile = () => {
               <div class="bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-lg font-medium text-gray-500">Email address</dt>
                 <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
-                 {user?.email}
+                  {user?.email}
                 </dd>
               </div>
-             
+
               <div class="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-lg font-medium text-gray-500">About</dt>
                 <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
@@ -64,7 +62,7 @@ const Profile = () => {
           </div>
         </div>
       )}
-<div className="pt-20"></div>
+      <div className="pt-20"></div>
       <Footer />
     </div>
   );

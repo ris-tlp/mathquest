@@ -1,10 +1,10 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAllThread}, ref) => {
     const replyBody=useRef('replyBody')
     const discussionReplies = data;
     
-    console.log(onFetchCall)
+  
 
     useImperativeHandle(ref, () => ({
         // Expose parent function to parent component
@@ -13,7 +13,7 @@ const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAll
 
     const publishThreadReply=async()=>{
         const data = await fetch(
-            CONNECTION_STRING + PORT + "/api/courses/discussions/createReply/",
+            BASE_URL + "/api/courses/discussions/createReply/",
             {
               method: "POST",
               body: JSON.stringify({

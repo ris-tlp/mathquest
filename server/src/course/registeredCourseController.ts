@@ -19,8 +19,6 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
             _id: { $in: [...queryResult[0].courses] },
         });
 
-        console.log("query result", queryResult);
-
         res.status(200).json({ courses: queryResult });
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });

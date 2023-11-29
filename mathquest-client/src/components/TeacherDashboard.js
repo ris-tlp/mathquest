@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import InstructorManageCourseDetail from "./InstructorManageCourseDetail";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 
-const TeacherDashboard = ({ course , showManageCourse}) => {
-  console.log(course);
+const TeacherDashboard = ({ course, showManageCourse }) => {
   const [Course, setCourse] = useState(course);
   const [editCourseName, setEditCourseName] = useState(false);
   const [editDesc, setEditCourseDesc] = useState(false);
@@ -50,45 +49,35 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
       ],
     };
 
-    setCourse(newCourse)
-
-  
+    setCourse(newCourse);
     setManageCourse(false);
     setEditCourseName(false);
     setEditCourseDesc(false);
     setEditInstrucotrCourseDesc(false);
     setEditOverview(false);
     setEditWhatYourLearn(false);
-
-    updateCourse(newCourse)
+    updateCourse(newCourse);
   };
 
-
-  const updateCourse=async(course)=>{
-
+  const updateCourse = async (course) => {
     const data = await fetch(
-        CONNECTION_STRING + PORT + "/api/courses/updateCourse",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            course: course,
-            courseID: course._id
-          }),
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json; charset=UTF-8",
-            "Access-control-allow-origin": "*",
-            "Access-control-allow-methods": "*",
-          },
-        }
-      );
-      const json = await data.json();
-  
-      console.log(json)
-    };
-
-
- 
+      CONNECTION_STRING + PORT + "/api/courses/updateCourse",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          course: course,
+          courseID: course._id,
+        }),
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Access-control-allow-origin": "*",
+          "Access-control-allow-methods": "*",
+        },
+      }
+    );
+    const json = await data.json();
+  };
 
   return (
     <div className="bg-white w-9/12 p-4 rounded-lg my-4">
@@ -185,7 +174,6 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
           </section>
         </form>
 
-
         {!manageCourse && (
           <button
             onClick={showManageCourse}
@@ -193,7 +181,7 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
           >
             Dashboard
           </button>
-        )}        
+        )}
         {!manageCourse && (
           <button
             onClick={handleManageDetails}

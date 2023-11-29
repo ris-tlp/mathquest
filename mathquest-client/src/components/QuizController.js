@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 
 const QuizController = (props) => {
   const [quiz, setQuiz] = useState([]);
@@ -8,28 +8,24 @@ const QuizController = (props) => {
   const [quizScore, setQuizScore] = useState(null);
   useEffect(() => {
     fetchQuiz(props.quizID);
-    console.log(props.quiz);
   }, []);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   //fetching quiz based upon quiz ID
   const fetchQuiz = async () => {
-    const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/quizzes/getQuiz",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          quizID: props.quizID,
-        }),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Access-control-allow-origin": "*",
-          "Access-control-allow-methods": "*",
-        },
-      }
-    );
+    const data = await fetch(BASE_URL + "/api/courses/quizzes/getQuiz", {
+      method: "POST",
+      body: JSON.stringify({
+        quizID: props.quizID,
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
     const json = await data.json();
     setQuiz(json?.questions);
   };
@@ -55,7 +51,7 @@ const QuizController = (props) => {
 
   const handleSubmit = async () => {
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/quizzes/grades/gradeQuiz",
+      BASE_URL + "/api/courses/quizzes/grades/gradeQuiz",
       {
         method: "POST",
         body: JSON.stringify({
