@@ -105,6 +105,23 @@ courseRouter.post(
     }
 );
 
+courseRouter.post("/updateCourse", async (req: Request, res: Response) => {
+    try {
+        const course = req.body.course;
+        const courseID = req.body.courseID;
+
+        const updatedCourse = await Course.findByIdAndUpdate(courseID, course, {
+            new: true,
+        }).exec();
+
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ updatedCourse });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error " });
+    }
+});
+
 // Create a course
 courseRouter.post("/", async (req: Request, res: Response) => {
     try {
@@ -149,31 +166,3 @@ courseRouter.get("/getCourseByID", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
-// Update a course by CourseId
-// courseRouter.put("/:courseId", async (req: Request, res: Response) => {
-//     try {
-//         const params = req.params;
-//         const body = req.body;
-
-//         const filter = { _id: params["courseId"] };
-//         const update = { ...body };
-
-//         try {
-//             const queryResult = await Course.findOneAndUpdate(filter, update, {
-//                 new: true,
-//             });
-
-//             res.status(200).json({
-//                 result: "Course updated.",
-//                 newCourse: queryResult,
-//             });
-//         } catch (error) {
-//             res.status(404).json({
-//                 error: "Document not found by the courseId specified.",
-//             });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// });
