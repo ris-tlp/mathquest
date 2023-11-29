@@ -37,8 +37,6 @@ quizRouter.post("/getAllQuizzes", async (req: Request, res: Response) => {
             quizzesTakenIds = quizzesTaken.map((e) => e.quizID.toString());
         }
 
-        console.log(quizzesTakenIds);
-
         if (queryResult) {
             let finalizedQuizzes = [];
 

@@ -8,6 +8,7 @@ export const registeredCourseRouter = Router();
 registeredCourseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const email = req.body.email;
+
         console.log("email", email);
         let queryResult = await RegisteredCourse.find({
             email: email,
@@ -19,7 +20,7 @@ registeredCourseRouter.post("/", async (req: Request, res: Response) => {
             _id: { $in: [...queryResult[0].courses] },
         });
 
-        console.log(queryResult);
+        console.log("query result", queryResult);
 
         res.status(200).json({ courses: queryResult });
     } catch (error) {
