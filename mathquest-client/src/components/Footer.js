@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 // const Footer = () => {
 //   return (
@@ -7,47 +7,45 @@ import React from 'react'
 // }
 
 const Footer = () => {
- 
   const footerStyle = {
-   
-    color: '#fff',
-    padding: '20px',
-    textAlign: 'center',
-   
+    color: "#fff",
+    padding: "20px",
+    textAlign: "center",
+
     bottom: 0,
-    width: '100%',
+    width: "100%",
   };
 
   const socialListStyle = {
-    listStyle: 'none',
+    listStyle: "none",
     padding: 0,
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
   };
 
   const socialLinkStyle = {
-    margin: '0 10px',
-    color: '#fff',
-    textDecoration: 'none',
-    listStyle: 'none',
+    margin: "0 10px",
+    color: "#fff",
+    textDecoration: "none",
+    listStyle: "none",
     padding: 0,
-    display: 'flex',
-    justifyContent: 'center'
+    display: "flex",
+    justifyContent: "center",
   };
 
   return (
-    <footer className='bg-slate-700 fixed bottom-0' style={footerStyle}>
+    <footer className="bg-slate-700 fixed bottom-0" style={footerStyle}>
       <div pa>
-        <h4 className='text-xl cursor-pointer'>Follow Us </h4>
-       
-        <ul style = {socialLinkStyle} >
+        <h4 className="text-xl cursor-pointer">Follow Us </h4>
+
+        <ul style={socialLinkStyle}>
           <li>
             <a
               href="https://www.facebook.com/"
               target="_blank"
               rel="noopener noreferrer"
               style={socialLinkStyle}
-              className='text-sm'
+              className="text-sm"
             >
               Facebook
             </a>
@@ -58,7 +56,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={socialLinkStyle}
-              className='text-sm'
+              className="text-sm"
             >
               LinkedIn
             </a>
@@ -69,14 +67,12 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={socialLinkStyle}
-              className='text-sm'
+              className="text-sm"
             >
               Instagram
             </a>
           </li>
         </ul>
-
-       
       </div>
       {/* Add other footer content here */}
     </footer>
