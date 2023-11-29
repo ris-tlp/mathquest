@@ -24,17 +24,19 @@ quizRouter.post("/getAllQuizzes", async (req: Request, res: Response) => {
         }).exec();
 
         let quizzesTakenIds = null;
+        let quizzesGrade = null;
 
         // Get all quizzes that have already been attempted
         if (email) {
             const quizzesTaken = await QuizGrade.find({
                 email: email,
             })
-                .select("quizID -_id")
+                .select("quizID score -_id")
                 .exec();
 
             // Unpack to array of string ids
             quizzesTakenIds = quizzesTaken.map((e) => e.quizID.toString());
+            quizzesGrade = quizzesTaken.map((e) => e.score.toString());
         }
 
         if (queryResult) {
@@ -54,6 +56,7 @@ quizRouter.post("/getAllQuizzes", async (req: Request, res: Response) => {
                     // Check if the graded quizzes id array contains the current quiz id
                     if (quizzesTakenIds.includes(quizJson._id)) {
                         quizJson.hasAttempted = true;
+                        quizJson.grade = quizzesGrade![i];
                     } else {
                         quizJson.hasAttempted = false;
                     }

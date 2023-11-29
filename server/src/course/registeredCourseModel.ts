@@ -6,7 +6,7 @@ interface IRegisteredCourse {
 }
 
 const registeredCourseSchema = new Schema<IRegisteredCourse>({
-    email: { type: String, required: true },
+    email: { type: String, required: true, ref: "User", refPath: "email" },
     courses: [{ type: Schema.Types.ObjectId, required: true, ref: "Course" }],
 });
 

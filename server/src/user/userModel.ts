@@ -12,6 +12,7 @@ export interface IUser {
     userType: UserType;
     firebaseUid: string;
     image: string;
+    skills: [string];
     // registeredCourses: Array<string>;
 }
 
@@ -25,6 +26,7 @@ const userSchema = new Schema<IUser>({
     },
     firebaseUid: { type: String },
     image: { type: String, unique: true },
+    skills: [{ type: String }],
     // registeredCourses: [
     //     {
     //         type: Schema.Types.ObjectId,
