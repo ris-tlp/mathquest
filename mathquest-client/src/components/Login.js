@@ -123,6 +123,8 @@ const Login = () => {
           const user = userCrendential.user;
           if(password.current.value.slice(0,7)=="Teacher"){
             sessionStorage.setItem('userType',"teacher")
+          }else {
+            sessionStorage.setItem('userType',"student")
           }
           sessionStorage.setItem('email',user.email)
           dispatch(
