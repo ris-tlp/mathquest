@@ -1,3 +1,4 @@
+// Import necessary dependencies from React and other modules
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -7,17 +8,21 @@ import { CONNECTION_STRING, PORT } from "../utils/constants";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+// Define the Courses functional component
 const Courses = () => {
   const navigate = useNavigate();
   const [offeredCourses, setOfferedCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
+  // Effect hook to fetch offered courses when the component mounts
   useEffect(() => {
     fetchOfferedCourses();
   }, []);
 
+  // Asynchronous function to fetch offered courses from the server
   const fetchOfferedCourses = async () => {
+    // Fetch data from the server using the provided connection details
     const data = await fetch(CONNECTION_STRING + PORT + "/api/courses", {
       method: "POST",
       body: JSON.stringify({
@@ -37,6 +42,7 @@ const Courses = () => {
     setOfferedCourses(json?.courses);
   };
 
+  // Function to open the registration modal for a selected course
   const openModel = (i) => {
     const selectedCourse = offeredCourses[i];
     sessionStorage.setItem("CourseID", selectedCourse?._id);
@@ -44,16 +50,20 @@ const Courses = () => {
     setShowModal(true);
   };
 
+  // Function to close the registration modal
   const closeModal = () => {
     setShowModal(false);
     setSelectedCourse(null);
   };
 
+  // Select user information from the Redux store
   const user = useSelector((store) => {
     return store.user;
   });
 
+  // Asynchronous function to register the user for the selected course
   const courseRegistration = async () => {
+    // Fetch data from the server to register the user for the course
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/registered/new",
       {
@@ -71,9 +81,11 @@ const Courses = () => {
       }
     );
     const json = await data.json();
+    // Navigate to the dashboard page after course registration
     navigate("/dashboard");
   };
 
+  // JSX code for the Courses component
   return (
     <div className="bg-slate-900 font-mono">
       <Header />
@@ -127,10 +139,12 @@ const Courses = () => {
             onClose={() => setShowModal(false)}
             handleCourseRegister={() => courseRegistration()}
           />,
+          // Attach the modal to the element with the id "modal"
           document.getElementById("modal")
         )}
     </div>
   );
 };
 
+// Export the Courses component as the default export
 export default Courses;

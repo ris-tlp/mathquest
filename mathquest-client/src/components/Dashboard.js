@@ -1,3 +1,4 @@
+// Import necessary dependencies from React and other modules
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
@@ -7,11 +8,14 @@ import Footer from "./Footer";
 //import axios from "axios";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 
+// Define the Dashboard component
 const Dashboard = () => {
   const navigate = useNavigate();
   const [registeredCourses, setRegisteredCourses] = useState([]);
 
+  // Define a function to fetch registered courses for a given email
   const getRegisteredCourses = async (email) => {
+    // Make a fetch request to the server to get registered courses
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/registered",
       {
@@ -28,33 +32,40 @@ const Dashboard = () => {
       }
     );
     const json = await data.json();
-
+    
+    // Update the state with the fetched courses
     setRegisteredCourses(json?.courses);
     console.log(registeredCourses);
   };
 
+  // Use the useSelector hook to get user information from the Redux store
   const user = useSelector((store) => {
     return store.user;
   });
 
+  // Set up an effect to run when the component mounts
   useEffect(() => {
     if (sessionStorage.getItem("email") == undefined) {
       navigate("/");
     }
+    // Fetch registered courses for the logged-in user
     getRegisteredCourses(sessionStorage.getItem("email"));
-  }, []);
+  }, []); // The empty dependency array ensures the effect runs only once on mount
 
+  // Render the Dashboard component
   return (
     <div className="bg-slate-900 font-mono w-[100vw] h-[200vh]">
       <Header />
       <div className="pt-40  mx-16 font-mono text-black-200  ">
         {user && (
           <div>
+            {/* Render a welcome message with the user's display name */}
             <h1 className="text-5xl text-white">
               Welcome {user?.displayName}!
             </h1>
            
             {registeredCourses && (
+              // Render a message if the user has no registered courses
               <h3 className="text-2xl mt-4 text-white">
                 {" "}
                 Finish off where you left!
@@ -65,6 +76,7 @@ const Dashboard = () => {
 
             {!registeredCourses && (
               <div>
+                {/* Render a message if the user has no registered courses */}
                 <h5 className="text-2xl mt-5 text-white">
                   Seems like you are not registered in a course!
                 </h5>
@@ -81,6 +93,7 @@ const Dashboard = () => {
               </div>
             )}
 
+            {/* Render the list of registered courses */}
             <div className="flex flex-wrap justify-left">
               {registeredCourses  &&
                 registeredCourses.map((r, index) => {
@@ -133,4 +146,5 @@ const Dashboard = () => {
   );
 };
 
+// Export the Dashboard component
 export default Dashboard;
