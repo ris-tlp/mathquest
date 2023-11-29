@@ -13,5 +13,7 @@ test('renders login page', async () =>{
 
     expect(backgroundImg).toHaveAttribute('src', 'https://img.freepik.com/free-vector/hand-drawn-scientific-formulas-chalkboard_23-2148496321.jpg?w=740&t=st=1700597908~exp=1700598508~hmac=de3355e4b570207e444a6af9d965e3262c63e0ad716e4a91b22b0ed39a88d509');
     expect(screen.getByRole("heading")).toHaveTextContent(/Sign In/); 
+
+    //mock sign in and register
 });
 
