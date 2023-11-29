@@ -121,7 +121,9 @@ const Login = () => {
       )
         .then((userCrendential) => {
           const user = userCrendential.user;
-
+          if(password.current.value.slice(0,7)=="Teacher"){
+            sessionStorage.setItem('userType',"teacher")
+          }
           sessionStorage.setItem('email',user.email)
           dispatch(
             addUser({
@@ -141,19 +143,19 @@ const Login = () => {
     }
   };
 
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const name = result.user.displayName;
-        const email = result.user.email;
-        const profilePic = result.user.photoURL;
-        navigate("/dashboard");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const googleSignIn = () => {
+  //   const provider = new GoogleAuthProvider();
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       const name = result.user.displayName;
+  //       const email = result.user.email;
+  //       const profilePic = result.user.photoURL;
+  //       navigate("/dashboard");
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   return (
     <div className="font-mono">

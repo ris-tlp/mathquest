@@ -5,7 +5,7 @@ const QuizController = (props) => {
   const [quiz, setQuiz] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [submitedAnswers, setSubmittedAnswers] = useState([]);
-  const [quizScore, setQuizScore]=useState(null)
+  const [quizScore, setQuizScore] = useState(null);
   useEffect(() => {
     fetchQuiz(props.quizID);
     console.log(props.quiz);
@@ -13,7 +13,8 @@ const QuizController = (props) => {
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
-  const fetchQuiz = async (quizID) => {
+  //fetching quiz based upon quiz ID
+  const fetchQuiz = async () => {
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/quizzes/getQuiz",
       {
@@ -38,9 +39,8 @@ const QuizController = (props) => {
     setCurrentQuestion(currentQuestion + 1);
   };
 
+  //Handling every selected option on quiz
   const handleOptionClick = (questionID, optionID, option) => {
-    //submitedAnswers[questionID] = optionID;
-
     let obj = {
       questionID: questionID,
       optionSelectedID: optionID,
@@ -59,9 +59,9 @@ const QuizController = (props) => {
       {
         method: "POST",
         body: JSON.stringify({
-          email: sessionStorage.getItem('email'),
+          email: sessionStorage.getItem("email"),
           quizID: props.quizID,
-          answers: submitedAnswers
+          answers: submitedAnswers,
         }),
         mode: "cors",
         headers: {
@@ -72,8 +72,8 @@ const QuizController = (props) => {
       }
     );
 
-    const json = await data.json()
-    setQuizScore(json.score)
+    const json = await data.json();
+    setQuizScore(json.score);
   };
 
   return (
@@ -136,7 +136,7 @@ const QuizController = (props) => {
         </div>
       )}
 
-      {currentQuestion == quiz.length - 1 &&  !quizScore && (
+      {currentQuestion == quiz.length - 1 && !quizScore && (
         <div>
           {" "}
           <button
@@ -148,16 +148,20 @@ const QuizController = (props) => {
         </div>
       )}
 
-      {quizScore && <div className="">
-        
-            
-            <div className="border-2 bg-white font-bold text-2xl h-20 p-4 rounded-md">
-
+      {quizScore && (
+        <div className="">
+          <div className="border-2 bg-white font-bold text-2xl h-20 p-4 rounded-md">
             <h1>Congratulations!!! You scored {quizScore}!!</h1>
-            </div>
+          </div>
 
-            <button onClick={props.closeSelectedQuiz} className="border-2 bg-white my-4 p-4 rounded-lg cursor-pointer font-bold">Go Back to All Quiz</button>
-        </div>}
+          <button
+            onClick={props.closeSelectedQuiz}
+            className="border-2 bg-white my-4 p-4 rounded-lg cursor-pointer font-bold"
+          >
+            Go Back to All Quiz
+          </button>
+        </div>
+      )}
     </div>
   );
 };

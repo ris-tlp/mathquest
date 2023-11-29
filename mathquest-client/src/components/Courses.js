@@ -32,7 +32,7 @@ const Courses = () => {
     });
     const json = await data.json();
 
-    console.log(json.courses);
+    
 
     setOfferedCourses(json?.courses);
   };
