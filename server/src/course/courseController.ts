@@ -204,3 +204,39 @@ courseRouter.post(
         }
     }
 );
+
+courseRouter.post(
+    "/changeRequestStatus",
+    async (req: Request, res: Response) => {
+        try {
+            const courseID = req.body.courseID;
+            const newStatus = req.body.newStatus;
+
+            const updatedStatus = await Course.findByIdAndUpdate(
+                courseID,
+                { requestStatus: newStatus },
+                { new: true }
+            ).exec();
+
+            if (newStatus === "accepted") {
+                const publishCourse = await Course.findByIdAndUpdate(
+                    courseID,
+                    { isPublished: true },
+                    { new: true }
+                ).exec();
+
+                res.status(200)
+                    .setHeader("Content-Type", "application/json")
+                    .json({
+                        results: publishCourse,
+                    });
+            }
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ result: updatedStatus });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
