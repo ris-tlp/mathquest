@@ -18,7 +18,7 @@ const InstructorManageCourseDetail = forwardRef(({
         {editEntry && !textarea && (
           <input
             type="text"
-            value={labelValue}
+            defaultValue={labelValue}
             ref={childRef}
             className="border-2 border-gray-900 rounded-md w-[80%] p-2"
           ></input>
@@ -26,7 +26,7 @@ const InstructorManageCourseDetail = forwardRef(({
         {editEntry && textarea && (
           <textarea
             type="text"
-            value={labelValue}
+            defaultValue={labelValue}
             ref={childRef}
             className="border-2 border-gray-900 rounded-md h-20 w-[80%] p-2"
           ></textarea>

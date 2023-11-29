@@ -76,6 +76,11 @@ const Dashboard = () => {
     }
   }, []);
 
+  const handleCourse=()=>{
+    setManageCourse(false)
+    getCourseForTeacher(sessionStorage.getItem('email'))
+  }
+
   return (
     <div className="bg-slate-900 font-mono w-[100vw] h-[200vh]">
       <Header />
@@ -166,20 +171,24 @@ const Dashboard = () => {
 
               {course && !manageCourse && userType == "teacher" && (
                 <div className="w-80 h-40 bg-white text-black rounded-lg m-4 bg-gradient-to-b from-blue-100 to-gray-900">
-                  <h1 className="text-3xl text-slate-900 p-4 font-bold">
+                  <h1 className="text-2xl text-slate-900 p-4 font-bold">
                     {course.courseName}
                   </h1>
-                  <button onClick={()=>setManageCourse(true)} className="h-12 float-right border-2 m-4 p-2 rounded-lg bg-slate-900 text-white">
+                  <button
+                    onClick={() => setManageCourse(true)}
+                    className="h-12 float-right border-2 m-4 p-2 rounded-lg bg-slate-900 text-white"
+                  >
                     Manage Course
                   </button>
                 </div>
               )}
 
-
-              {manageCourse && userType == "teacher" && <TeacherDashboard course={course} />
-                
-              }  
-
+              {manageCourse && userType == "teacher" && (
+                <TeacherDashboard
+                  course={course}
+                  showManageCourse={handleCourse}
+                />
+              )}
             </div>
           </div>
         )}

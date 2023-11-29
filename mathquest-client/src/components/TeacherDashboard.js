@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import InstructorManageCourseDetail from "./InstructorManageCourseDetail";
+import { CONNECTION_STRING, PORT } from "../utils/constants";
 
-const TeacherDashboard = ({ course }) => {
+const TeacherDashboard = ({ course , showManageCourse}) => {
   console.log(course);
   const [Course, setCourse] = useState(course);
   const [editCourseName, setEditCourseName] = useState(false);
@@ -31,15 +32,16 @@ const TeacherDashboard = ({ course }) => {
   const finalizeDetails = () => {
     const newCourse = {
       courseDescription: courseDescRef.current.value,
-      courseDuration: course.courseDuration,
-      courseId: course.courseId,
-      courseImg: course.courseImg,
+      courseDuration: Course.courseDuration,
+      courseId: Course.courseId,
+      courseImg: Course.courseImg,
       courseName: courseNameRef.current.value,
-      courseVideoURL: course.courseVideoURL,
-      instructorDescription: course.instructorDescRef,
-      instructorImage: course.instructorImage,
-      isPublished: course.isPublished,
+      courseVideoURL: Course.courseVideoURL,
+      instructorDescription: instructorDescRef.current.value,
+      instructorImage: Course.instructorImage,
+      isPublished: Course.isPublished,
       overview: courseOverviewRef.current.value,
+      _id: Course._id,
       whatYouWillLearn: [
         wyl1.current.value,
         wyl2.current.value,
@@ -50,14 +52,44 @@ const TeacherDashboard = ({ course }) => {
 
     setCourse(newCourse)
 
-    console.log(newCourse)
+  
     setManageCourse(false);
     setEditCourseName(false);
     setEditCourseDesc(false);
     setEditInstrucotrCourseDesc(false);
     setEditOverview(false);
     setEditWhatYourLearn(false);
+
+    updateCourse(newCourse)
   };
+
+
+  const updateCourse=async(course)=>{
+
+    const data = await fetch(
+        CONNECTION_STRING + PORT + "/api/courses/updateCourse",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            course: course,
+            courseID: course._id
+          }),
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8",
+            "Access-control-allow-origin": "*",
+            "Access-control-allow-methods": "*",
+          },
+        }
+      );
+      const json = await data.json();
+  
+      console.log(json)
+    };
+
+
+ 
+
   return (
     <div className="bg-white w-9/12 p-4 rounded-lg my-4">
       <div>
@@ -129,7 +161,7 @@ const TeacherDashboard = ({ course }) => {
                 <input
                   type="text"
                   ref={wyl2}
-                  value={Course.whatYouWillLearn[1]}
+                  defaultValue={Course.whatYouWillLearn[1]}
                   className="border-2 border-gray-900 rounded-md w-[80%] p-2 my-4"
                 ></input>
               )}
@@ -137,7 +169,7 @@ const TeacherDashboard = ({ course }) => {
                 <input
                   type="text"
                   ref={wyl3}
-                  value={Course.whatYouWillLearn[2]}
+                  defaultValue={Course.whatYouWillLearn[2]}
                   className="border-2 border-gray-900 rounded-md w-[80%] p-2 my-4"
                 ></input>
               )}
@@ -145,7 +177,7 @@ const TeacherDashboard = ({ course }) => {
                 <input
                   type="text"
                   ref={wyl4}
-                  value={Course.whatYouWillLearn[3]}
+                  defaultValue={Course.whatYouWillLearn[3]}
                   className="border-2 border-gray-900 rounded-md w-[80%] p-2 my-4"
                 ></input>
               )}
@@ -153,6 +185,15 @@ const TeacherDashboard = ({ course }) => {
           </section>
         </form>
 
+
+        {!manageCourse && (
+          <button
+            onClick={showManageCourse}
+            className="bg-slate-800 text-white h-14 rounded-lg font-bold p-4 "
+          >
+            Dashboard
+          </button>
+        )}        
         {!manageCourse && (
           <button
             onClick={handleManageDetails}
