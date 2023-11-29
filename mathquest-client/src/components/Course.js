@@ -33,7 +33,7 @@ const Course = () => {
   };
 
   return (
-    <div className="bg-slate-900 font-mono w-[100vw] h-[120%]">
+    <div className="bg-slate-900 font-mono w-[100vw] h-[120%] ">
       <Header />
 
       {course && ( // Render the following content only if course details are available

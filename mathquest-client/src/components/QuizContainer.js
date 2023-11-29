@@ -50,7 +50,7 @@ const QuizContainer = () => {
           {allQuiz &&
             allQuiz.map((e, index) => {
               return (
-                <div className=" border-2 border-slate-600 bg-white text-black shadow-slate-500 font-mono p-2 rounded-lg flex cursor-pointer">
+                <div className=" border-2 border-slate-600 bg-white text-black shadow-slate-500 font-mono p-2 rounded-lg flex cursor-pointer ">
                   <div className="mx-4 w-[100%]">
                     <h3 className="text-sm font-bold">Quiz {index + 1}</h3>
                     <h1 className="text-lg font-bold">{e.summary}</h1>
