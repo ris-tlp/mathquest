@@ -10,6 +10,7 @@ import { registeredCourseRouter } from "./src/course/registeredCourseController"
 import { discussionRouter } from "./src/discussion/discussionController";
 import { quizRouter } from "./src/quiz/quizController";
 import { gradeRouter } from "./src/course/gradeController";
+import { courseRequestRouter } from "./src/course/courseRequestController";
 
 dotenv.config();
 const app = express();
@@ -31,6 +32,7 @@ app.use("/api/courses/registered", registeredCourseRouter);
 app.use("/api/courses/discussions/", discussionRouter);
 app.use("/api/courses/quizzes", quizRouter);
 app.use("/api/courses/quizzes/grades", gradeRouter);
+app.use("/api/courses/requests", courseRequestRouter);
 
 // Dev API endpoints
 app.use("/api/dev", dataInitRouter);
