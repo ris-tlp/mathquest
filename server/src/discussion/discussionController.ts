@@ -11,15 +11,6 @@ discussionRouter.post("/getAllThreads", async (req: Request, res: Response) => {
     try {
         const courseID = req.body.courseID;
 
-        // await new DiscussionThread({
-        //     courseId: courseID,
-        //     title: "This is a new title with a timestamp.",
-        //     body: "This is a new body of a thread with a timestamp",
-        //     createdByEmail: "ashwini@mathquest.com"
-        // }).save()
-
-        // console.log(courseID);
-
         const queryResult = await DiscussionThread.find({
             courseId: courseID,
         })
@@ -99,7 +90,7 @@ discussionRouter.post(
 discussionRouter.post("/createThread", async (req: Request, res: Response) => {
     try {
         const body = req.body;
-        console.log("here", body);
+
         try {
             const newThread = await new DiscussionThread({
                 courseId: body?.courseID,
@@ -108,7 +99,6 @@ discussionRouter.post("/createThread", async (req: Request, res: Response) => {
                 body: body.body,
             }).save();
 
-            console.log(newThread);
             res.status(201).json({ thread: newThread });
         } catch (error) {
             res.status(400).json({ error: "Missing information" });
@@ -122,7 +112,7 @@ discussionRouter.post("/createThread", async (req: Request, res: Response) => {
 discussionRouter.post("/createReply/", async (req: Request, res: Response) => {
     try {
         const body = req.body;
-        console.log(body);
+
         try {
             const newReply = await new DiscussionReply({
                 threadId: body.threadId,

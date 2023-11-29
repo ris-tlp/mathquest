@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import DiscussionThreads from "./DiscussionThreads";
 
 // Functional component for the Discussion feature
@@ -29,7 +29,7 @@ const Discussion = () => {
   // Function to fetch discussion threads from the server
   const fetchDiscussionThread = async () => {
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/discussions/getAllThreads",
+      BASE_URL + "/api/courses/discussions/getAllThreads",
       {
         method: "POST",
         body: JSON.stringify({
@@ -64,7 +64,7 @@ const Discussion = () => {
     const courseID = sessionStorage.getItem("courseID");
 
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/discussions/createThread",
+      BASE_URL + "/api/courses/discussions/createThread",
       {
         method: "POST",
         body: JSON.stringify({

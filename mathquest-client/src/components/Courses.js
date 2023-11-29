@@ -4,7 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { createPortal } from "react-dom";
 import RegisterCourseModal from "./RegisterCourseModal";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,7 @@ const Courses = () => {
   // Asynchronous function to fetch offered courses from the server
   const fetchOfferedCourses = async () => {
     // Fetch data from the server using the provided connection details
-    const data = await fetch(CONNECTION_STRING + PORT + "/api/courses", {
+    const data = await fetch(BASE_URL + "/api/courses", {
       method: "POST",
       body: JSON.stringify({
         email: sessionStorage.getItem("email"),
@@ -65,7 +65,7 @@ const Courses = () => {
   const courseRegistration = async () => {
     // Fetch data from the server to register the user for the course
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/registered/new",
+      BASE_URL + "/api/courses/registered/new",
       {
         method: "POST",
         body: JSON.stringify({
