@@ -4,7 +4,6 @@
 *.tfstate.*
 **/.terraform/*
 # Logs
-.env
 
 logs
 *.log
