@@ -166,3 +166,22 @@ courseRouter.get("/getCourseByID", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// hides a course from all published courses
+courseRouter.post("/hideCourse", async (req: Request, res: Response) => {
+    try {
+        const courseID = req.body.courseID;
+
+        const updatedCourse = await Course.findByIdAndUpdate(
+            courseID,
+            { isPublished: false },
+            { new: true }
+        ).exec();
+
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ result: updatedCourse });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
