@@ -20,6 +20,7 @@ const Header = () => {
         sessionStorage.removeItem("email")
         sessionStorage.removeItem('ThreadID')
         sessionStorage.removeItem('CourseID')
+        sessionStorage.removeItem('userType')
         navigate("/");
       })
       .catch((error) => {});
