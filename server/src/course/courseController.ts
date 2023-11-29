@@ -185,3 +185,22 @@ courseRouter.post("/hideCourse", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+courseRouter.post(
+    "/filterCoursesByStatus",
+    async (req: Request, res: Response) => {
+        try {
+            const requiredStatus = req.body.requiredStatus;
+
+            const filteredCourses = await Course.find({
+                requestStatus: requiredStatus,
+            }).exec();
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ filteredCourses });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
