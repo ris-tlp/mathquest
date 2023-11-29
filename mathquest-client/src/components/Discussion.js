@@ -2,23 +2,31 @@ import React, { useEffect, useRef, useState } from "react";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 import DiscussionThreads from "./DiscussionThreads";
 
+// Functional component for the Discussion feature
 const Discussion = () => {
+  // Refs to store references to title and body input fields
   const discussionTitle = useRef();
   const discussionBody = useRef();
 
-
+  // Ref to track if data has been loaded from the server
   const dataLoaded = useRef(false)
+  // State to store discussion threads and trigger re-renders
   const [discussionThreads, setDisussionThreads] = useState([]);
 
+  // Effect hook to fetch discussion threads when the component mounts or when discussionThreads state changes
   useEffect(() => {
+    // Check if discussionThreads has been initialized and data hasn't been loaded yet
     if(discussionThreads && !dataLoaded.current){
+      // Fetch discussion threads from the server
       fetchDiscussionThread()
     }
   }, [discussionThreads]);
 
+  // State to manage the visibility of the discussion form
   const [showCreateDiscussionForm, setShowCreateDiscussionForm] =
     useState(false);
 
+  // Function to fetch discussion threads from the server
   const fetchDiscussionThread = async () => {
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/discussions/getAllThreads",
@@ -37,15 +45,18 @@ const Discussion = () => {
     );
     const json = await data.json();
 
+    // Reverse the order of threads and update state
     let reverseList = json?.threads?.reverse();
     dataLoaded.current = true
     setDisussionThreads(reverseList);
   };
 
+  // Function to set the selected discussion thread in session storage
   const openSelectedDiscussion=(threadId)=>{
     sessionStorage.setItem('ThreadID',threadId);
   }
 
+  // Function to handle publishing a new discussion thread
   const handlePublishdiscussion = async () => {
     const title = discussionTitle.current.value;
     const body = discussionBody.current.value;
