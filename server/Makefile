@@ -3,3 +3,9 @@ mongo-up:
 
 mongo-start:
 	docker start mongodb
+
+docker-build:
+	docker build -t api .
+
+docker-run:
+	docker run -p 8000:8000 api
