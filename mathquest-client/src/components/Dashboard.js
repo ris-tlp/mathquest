@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
-import axios from "axios";
+//import axios from "axios";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 
 const Dashboard = () => {

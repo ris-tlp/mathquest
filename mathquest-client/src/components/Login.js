@@ -162,7 +162,7 @@ const Login = () => {
         <img
           className="w-screen lg:h-[120vh] md:h-screen brightness-50 sm:h-full md:h-full sm:hidden"
           src={BG}
-          alt="logo"
+          alt="background"
         />
       </div>
 
