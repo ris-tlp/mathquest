@@ -51,3 +51,25 @@ courseRequestRouter.get(
         }
     }
 );
+
+courseRequestRouter.post(
+    "/changeRequestStatus",
+    async (req: Request, res: Response) => {
+        try {
+            const requestID = req.body.requestID;
+            const newStatus = req.body.newStatus;
+
+            const updatedStatus = await CourseRequest.findByIdAndUpdate(
+                requestID,
+                { requestStatus: newStatus },
+                { new: true }
+            ).exec();
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ result: updatedStatus });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
