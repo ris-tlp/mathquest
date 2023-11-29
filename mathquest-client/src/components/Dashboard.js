@@ -1,3 +1,4 @@
+// Import necessary dependencies from React and other modules
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
@@ -8,6 +9,7 @@ import Footer from "./Footer";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 import TeacherDashboard from "./TeacherDashboard";
 
+// Define the Dashboard component
 const Dashboard = () => {
   const navigate = useNavigate();
   const [registeredCourses, setRegisteredCourses] = useState([]);
@@ -15,7 +17,9 @@ const Dashboard = () => {
   const [course, setCourse] = useState(null);
   const [manageCourse, setManageCourse] = useState(false);
 
+  // Define a function to fetch registered courses for a given email
   const getRegisteredCourses = async (email) => {
+    // Make a fetch request to the server to get registered courses
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/registered",
       {
@@ -32,10 +36,12 @@ const Dashboard = () => {
       }
     );
     const json = await data.json();
-
+    
+    // Update the state with the fetched courses
     setRegisteredCourses(json?.courses);
   };
 
+  // Use the useSelector hook to get user information from the Redux store
   const user = useSelector((store) => {
     return store.user;
   });
@@ -87,6 +93,7 @@ const Dashboard = () => {
       <div className="pt-40  mx-16 font-mono text-black-200  ">
         {user && (
           <div>
+            {/* Render a welcome message with the user's display name */}
             <h1 className="text-5xl text-white">
               Welcome {user?.displayName}!
             </h1>
@@ -199,4 +206,5 @@ const Dashboard = () => {
   );
 };
 
+// Export the Dashboard component
 export default Dashboard;
