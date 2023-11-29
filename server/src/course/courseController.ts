@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
 import { Course } from "./courseModel";
 import { RegisteredCourse } from "./registeredCourseModel";
+import path from "path";
+import { User } from "../user/userModel";
 
 /// api/courses
 export const courseRouter = Router();
@@ -66,6 +68,39 @@ courseRouter.post(
             }
         } catch (error) {
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
+
+courseRouter.post(
+    "/teachers/getRegisteredUsers/",
+    async (req: Request, res: Response) => {
+        try {
+            const courseID = req.body.courseID;
+
+            const registeredUsers = await RegisteredCourse.find({
+                courses: {
+                    $in: [courseID],
+                },
+            })
+                .select("email -_id")
+                .exec();
+
+            // Unpack from [{id1,id2}] to [id1, id2]
+            let unpackedRegisteredIds = registeredUsers.map((e) =>
+                e.email.toString()
+            );
+
+            const userInfo = await User.find({
+                email: { $in: unpackedRegisteredIds },
+            })
+                .select("name email image")
+                .exec();
+
+            res.status(200).json({ userInfo });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+            console.log(error);
         }
     }
 );
