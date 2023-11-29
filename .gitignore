@@ -2,6 +2,7 @@
 **tmp
 *.tfstate
 *.tfstate.*
+**/.terraform/*
 # Logs
 .env
 
