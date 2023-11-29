@@ -5,13 +5,14 @@ import { Course } from "./courseModel";
 /// api/courses/requests
 export const courseRequestRouter = Router();
 
-courseRequestRouter.get(
+courseRequestRouter.post(
     "/getAllRequests",
     async (req: Request, res: Response) => {
         try {
+            const statusRequired = req.body.statusRequired;
             const courseRequests = await CourseRequest.aggregate([
                 {
-                    $match: { requestStatus: RequestStatus.PENDING },
+                    $match: { requestStatus: statusRequired },
                 },
                 {
                     $lookup: {

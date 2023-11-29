@@ -100,6 +100,19 @@ userRouter.get("/uidfirebase", async (req: Request, res: Response) => {
     }
 });
 
+userRouter.post("/getAllUsersOfType", async (req: Request, res: Response) => {
+    try {
+        const userType = req.body.userType;
+        const users = await User.find({
+            userType: userType,
+        }).exec();
+
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ userType: users });
+    } catch (error) {}
+});
+
 // not needed anymore
 
 // userRouter.get("/:userEmail", async (req: Request, res: Response) => {
