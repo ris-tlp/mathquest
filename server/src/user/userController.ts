@@ -13,6 +13,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
             name: details.name,
             email: details.email,
             userType: details.userType,
+            image: details.image,
         });
 
         try {

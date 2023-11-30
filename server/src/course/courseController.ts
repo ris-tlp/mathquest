@@ -11,7 +11,7 @@ export const courseRouter = Router();
 courseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const userEmail = req.body.email;
-        console.log(userEmail);
+
         const allPublishedCourses = await Course.find({
             isPublished: true,
         }).exec();
@@ -166,3 +166,77 @@ courseRouter.get("/getCourseByID", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// hides a course from all published courses
+courseRouter.post("/hideCourse", async (req: Request, res: Response) => {
+    try {
+        const courseID = req.body.courseID;
+
+        const updatedCourse = await Course.findByIdAndUpdate(
+            courseID,
+            { isPublished: false },
+            { new: true }
+        ).exec();
+
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ result: updatedCourse });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+courseRouter.post(
+    "/filterCoursesByStatus",
+    async (req: Request, res: Response) => {
+        try {
+            const requiredStatus = req.body.requiredStatus;
+
+            const filteredCourses = await Course.find({
+                requestStatus: requiredStatus,
+            }).exec();
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ filteredCourses });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
+
+courseRouter.post(
+    "/changeRequestStatus",
+    async (req: Request, res: Response) => {
+        try {
+            const courseID = req.body.courseID;
+            const newStatus = req.body.newStatus;
+
+            const updatedStatus = await Course.findByIdAndUpdate(
+                courseID,
+                { requestStatus: newStatus },
+                { new: true }
+            ).exec();
+
+            if (newStatus === "accepted") {
+                const publishCourse = await Course.findByIdAndUpdate(
+                    courseID,
+                    { isPublished: true },
+                    { new: true }
+                ).exec();
+
+                res.status(200)
+                    .setHeader("Content-Type", "application/json")
+                    .json({
+                        results: publishCourse,
+                    });
+            }
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ result: updatedStatus });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);

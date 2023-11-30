@@ -13,8 +13,6 @@ gradeRouter.post("/gradeQuiz", async (req: Request, res: Response) => {
         const quizID = req.body.quizID;
         const email = req.body.email;
 
-        console.log(req.body);
-
         /*  in the form of 
         [
             {
@@ -48,7 +46,6 @@ gradeRouter.post("/gradeQuiz", async (req: Request, res: Response) => {
             }
         }
 
-        console.log("total Points", totalPoints);
         const gradedQuiz = new QuizGrade({
             email: email,
             quizID: quizID,

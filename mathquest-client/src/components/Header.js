@@ -70,7 +70,7 @@ const Header = () => {
       {/* Container for navigation links and user actions */}
       <div className="flex">
         <Link to="/all-courses">
-          {user && userType !== 'teacher' && (
+          {user && userType=='student' && (
             <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
               Available Courses
             </button>

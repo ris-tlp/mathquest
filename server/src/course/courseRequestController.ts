@@ -5,13 +5,14 @@ import { Course } from "./courseModel";
 /// api/courses/requests
 export const courseRequestRouter = Router();
 
-courseRequestRouter.get(
+courseRequestRouter.post(
     "/getAllRequests",
     async (req: Request, res: Response) => {
         try {
+            const statusRequired = req.body.statusRequired;
             const courseRequests = await CourseRequest.aggregate([
                 {
-                    $match: { requestStatus: RequestStatus.PENDING },
+                    $match: { requestStatus: statusRequired },
                 },
                 {
                     $lookup: {
@@ -64,6 +65,23 @@ courseRequestRouter.post(
                 { requestStatus: newStatus },
                 { new: true }
             ).exec();
+
+            // publish the course if it has been accepted
+            if (newStatus === "accepted") {
+                const courseID = updatedStatus?.courseId;
+                const publishCourse = await Course.findByIdAndUpdate(
+                    courseID,
+                    { isPublished: true },
+                    { new: true }
+                ).exec();
+
+                res.status(200)
+                    .setHeader("Content-Type", "application/json")
+                    .json({
+                        result: updatedStatus,
+                        updatedCourse: publishCourse,
+                    });
+            }
 
             res.status(200)
                 .setHeader("Content-Type", "application/json")

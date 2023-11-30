@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import QuizController from "./QuizController";
 
 const QuizContainer = () => {
@@ -19,7 +19,7 @@ const QuizContainer = () => {
   const fetchQuizzes = async () => {
     const courseID = sessionStorage.getItem("courseID");
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/quizzes/getAllQuizzes",
+      BASE_URL + "/api/courses/quizzes/getAllQuizzes",
       {
         method: "POST",
         body: JSON.stringify({

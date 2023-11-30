@@ -1,5 +1,10 @@
 import { Schema, Types, model } from "mongoose";
 
+export enum RequestStatus {
+    PENDING = "pending",
+    ACCEPTED = "accepted",
+    REJECTED = "rejected",
+}
 interface ICourse {
     courseName: string;
     courseDescription: string;
@@ -15,6 +20,7 @@ interface ICourse {
     instructorDescription: string;
     whatYouWillLearn: [string];
     courseVideoUrl: string;
+    requestStatus: RequestStatus;
 }
 
 const courseSchema = new Schema<ICourse>({
@@ -32,6 +38,11 @@ const courseSchema = new Schema<ICourse>({
     instructorDescription: { type: String, required: false },
     whatYouWillLearn: [{ type: String, required: false }],
     courseVideoUrl: { type: String, required: false },
+    requestStatus: {
+        type: String,
+        enum: Object.values(RequestStatus),
+        default: RequestStatus.ACCEPTED,
+    },
 });
 
 export const Course = model<ICourse>("Course", courseSchema);

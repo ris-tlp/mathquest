@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 // Importing constants from an external file.
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 // Importing a component for discussion thread replies.
+import { BASE_URL } from "../utils/constants";
 import DiscussionThreadReplies from "./DiscussionThreadReplies";
 
 // Defining a functional component named DiscussionThreads and passing in props.
@@ -22,7 +23,7 @@ const DiscussionThreads = (props) => {
   // Async function to fetch all replies for a given thread.
   const fetchAllThreadReplies = async (threadId) => {
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/discussions/getAllReplies",
+      BASE_URL + "/api/courses/discussions/getAllReplies",
       {
         method: "POST",
         body: JSON.stringify({

@@ -12,14 +12,10 @@ const RegisterCourseModal = ({ data, onClose, handleCourseRegister }) => {
 
             <h3 className="text-xl">What you will learn!</h3>
             <ul className="list-disc text-black px-8 border-2 m-4 border-black">
-
               {data.whatYouWillLearn?.map((e) => {
-                  return  <li>{e}</li>
-                    
-                   
-                 
-                })}
-              </ul>
+                return <li>{e}</li>;
+              })}
+            </ul>
           </div>
           <div className="w-4/12 mx-auto sm:w-full">
             <img src={data.instructorImage} className="border-4" />
@@ -41,7 +37,7 @@ const RegisterCourseModal = ({ data, onClose, handleCourseRegister }) => {
           onClick={handleCourseRegister}
           disabled={data.isRegistered}
         >
-          { data.isRegistered? "Registered" : "Register" }
+          {data.isRegistered ? "Registered" : "Register"}
         </button>
       </div>
     </div>

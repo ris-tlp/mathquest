@@ -2,11 +2,7 @@ import React, { useRef, useState } from "react";
 import InstructorManageCourseDetail from "./InstructorManageCourseDetail";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 
-// Functional component for the teacher's dashboard
-const TeacherDashboard = ({ course , showManageCourse}) => {
-  console.log(course);
-
-  // State variables for managing the course details
+const TeacherDashboard = ({ course, showManageCourse }) => {
   const [Course, setCourse] = useState(course);
   const [editCourseName, setEditCourseName] = useState(false);
   const [editDesc, setEditCourseDesc] = useState(false);
@@ -57,17 +53,14 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
       ],
     };
 
-    setCourse(newCourse)
-
-  
+    setCourse(newCourse);
     setManageCourse(false);
     setEditCourseName(false);
     setEditCourseDesc(false);
     setEditInstrucotrCourseDesc(false);
     setEditOverview(false);
     setEditWhatYourLearn(false);
-
-    updateCourse(newCourse)
+    updateCourse(newCourse);
   };
 
   // Async function to update course details on the server
@@ -192,7 +185,6 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
           </section>
         </form>
 
-
         {!manageCourse && (
           <button
             onClick={showManageCourse}
@@ -200,7 +192,7 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
           >
             Dashboard
           </button>
-        )}        
+        )}
         {!manageCourse && (
           <button
             onClick={handleManageDetails}
