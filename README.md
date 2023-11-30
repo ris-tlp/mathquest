@@ -44,7 +44,9 @@ Key features of MathQuest LMS include:
 * Administrative capabilities: Admins can approve/reject course requests, manage instructors, and moderate content.<br>
 
 ## High Level System Architecture
-<img src="https://github.com/ris-tlp/mathquest/assets/62342666/665fc681-e46e-4b31-91d9-95f5900546e8" width="800" height="1000">
+<!-- <img src="https://github.com/ris-tlp/mathquest/assets/62342666/665fc681-e46e-4b31-91d9-95f5900546e8" width="800" height="1000"> -->
+
+<img src="https://github.com/ris-tlp/mathquest/assets/62342666/53dcd444-0c85-47f5-a041-835908ec24f4" width="1000" height="550">
 
 ## Technology Stack
 | Engineering Activity                             |	Selected Tool(s)  |
