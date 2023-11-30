@@ -28,7 +28,7 @@ __MathQuest__ is an online learning management system designed specifically to d
    ```
    to check that everything was installed properly. These commands should display your current version of node.js and npm.
 2. Install IDE.
-   If you don't have an IDE previously installed on your idea, VSCode is recommended for this project. Download the [Visual Studio Code Installer](https://code.visualstudio.com/docs?dv=win).
+   If you don't have an IDE previously installed on your machine, VSCode is recommended for this project. Download the [Visual Studio Code Installer](https://code.visualstudio.com/docs?dv=win).
 3. Next steps.
    Refer to the __Development Setup__ section. This section of the ReadMe contains information on running the application once the required installations are complete. 
    
