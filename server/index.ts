@@ -13,7 +13,7 @@ import { gradeRouter } from "./src/course/gradeController";
 import { courseRequestRouter } from "./src/course/courseRequestController";
 
 dotenv.config();
-const app = express();
+export const app = express();
 const cors = require("cors");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +37,6 @@ app.use("/api/courses/requests", courseRequestRouter);
 // Dev API endpoints
 app.use("/api/dev", dataInitRouter);
 
-app.listen(process.env.PORT, () => {
+export const server = app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
