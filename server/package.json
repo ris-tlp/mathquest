@@ -8,8 +8,7 @@
     "start": "node dist/index.js",
     "build": "npx tsc",
     "prepare": "cd .. && husky install server/.husky",
-    "test": "jest"
-  },
+    "test": "jest --forceExit --detectOpenHandles --runInBand --coverage"  },
   "lint-staged": {
     "**/*.ts": [
       "npx prettier --write"
