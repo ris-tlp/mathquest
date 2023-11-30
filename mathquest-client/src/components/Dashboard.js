@@ -11,6 +11,8 @@ import TeacherDashboard from "./TeacherDashboard";
 import RegisteredUsers from "./RegisteredUsers";
 import StudentRegisteredCourses from "./StudentRegisteredCourses";
 import AdminDashboard from "./AdminDashboard";
+import Discussion from "./Discussion";
+import QuizContainer from "./QuizContainer";
 
 // Define the Dashboard component
 const Dashboard = () => {
@@ -64,6 +66,7 @@ const Dashboard = () => {
     const json = await data.json();
 
     setCourse(json.courses[0]);
+    sessionStorage.setItem('CourseID',json.courses[0]._id)
     fetchAllRegisteredStudents(json.courses[0]._id);
   };
 
@@ -186,10 +189,16 @@ const Dashboard = () => {
               </div>
 
               {manageCourse && userType == "teacher" && (
+                <div>
                 <TeacherDashboard
                   course={course}
                   showManageCourse={handleCourse}
                 />
+
+                <Discussion />
+                <h1 className="text-3xl text-white my-4">Course Quizzes</h1>
+                <QuizContainer />
+                </div>
               )}
 
               {!manageCourse && userType == "teacher" && (

@@ -17,7 +17,7 @@ const QuizContainer = () => {
 
   // Function to fetch quizzes for the current course
   const fetchQuizzes = async () => {
-    const courseID = sessionStorage.getItem("courseID");
+    const courseID = sessionStorage.getItem("CourseID");
     const data = await fetch(
       BASE_URL + "/api/courses/quizzes/getAllQuizzes",
       {

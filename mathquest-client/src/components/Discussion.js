@@ -9,16 +9,16 @@ const Discussion = () => {
   const discussionBody = useRef();
 
   // Ref to track if data has been loaded from the server
-  const dataLoaded = useRef(false)
+  const dataLoaded = useRef(false);
   // State to store discussion threads and trigger re-renders
   const [discussionThreads, setDisussionThreads] = useState([]);
 
   // Effect hook to fetch discussion threads when the component mounts or when discussionThreads state changes
   useEffect(() => {
     // Check if discussionThreads has been initialized and data hasn't been loaded yet
-    if(discussionThreads && !dataLoaded.current){
+    if (discussionThreads && !dataLoaded.current) {
       // Fetch discussion threads from the server
-      fetchDiscussionThread()
+      fetchDiscussionThread();
     }
   }, [discussionThreads]);
 
@@ -33,7 +33,7 @@ const Discussion = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          courseID: sessionStorage.getItem("courseID"),
+          courseID: sessionStorage.getItem("CourseID"),
         }),
         mode: "cors",
         headers: {
@@ -47,21 +47,21 @@ const Discussion = () => {
 
     // Reverse the order of threads and update state
     let reverseList = json?.threads?.reverse();
-    dataLoaded.current = true
+    dataLoaded.current = true;
     setDisussionThreads(reverseList);
   };
 
   // Function to set the selected discussion thread in session storage
-  const openSelectedDiscussion=(threadId)=>{
-    sessionStorage.setItem('ThreadID',threadId);
-  }
+  const openSelectedDiscussion = (threadId) => {
+    sessionStorage.setItem("ThreadID", threadId);
+  };
 
   // Function to handle publishing a new discussion thread
   const handlePublishdiscussion = async () => {
     const title = discussionTitle.current.value;
     const body = discussionBody.current.value;
     const email = sessionStorage.getItem("email");
-    const courseID = sessionStorage.getItem("courseID");
+    const courseID = sessionStorage.getItem("CourseID");
 
     // Fetch API to create a new discussion thread
     const data = await fetch(
@@ -83,11 +83,11 @@ const Discussion = () => {
       }
     );
     const json = await data.json();
-    dataLoaded.current = true
+    dataLoaded.current = true;
 
     // Hide the discussion form and fetch updated discussion threads
     setShowCreateDiscussionForm(false);
-    fetchDiscussionThread()
+    fetchDiscussionThread();
   };
 
   // JSX for the Discussion component
@@ -102,33 +102,9 @@ const Discussion = () => {
         </button>
       )}
 
-
-      
-
-      {/* {!showCreateDiscussionForm &&
-        discussionThreads.map((e) => {
-          return (
-            <div onClick={()=>{openSelectedDiscussion(e._id)}} className="h-24 border-2 border-slate-600 bg-white text-black shadow-slate-500 font-mono p-2 rounded-lg flex cursor-pointer">
-              <img className="h-[60px] rounded-xl" src={e.user.image}></img>
-              <div className="mx-4">
-                <h1 className="text-lg font-bold">{e.title}</h1>
-
-
-                <p>Created By: {e.user.name}</p>
-
-                <p>{e.numberOfReplies}</p>
-              </div>
-
-              <p></p>
-            </div>
-          );
-        })} */}
-
-
-        {
-          !showCreateDiscussionForm && <DiscussionThreads threads={discussionThreads} />
-        }
-
+      {!showCreateDiscussionForm && (
+        <DiscussionThreads threads={discussionThreads} />
+      )}
 
       {showCreateDiscussionForm && (
         <div className="relative ">

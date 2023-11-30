@@ -19,7 +19,7 @@ const Course = () => {
   }, []);
 
   const fetchCourseDetails = async () => {
-    const courseID = sessionStorage.getItem("courseID");
+    const courseID = sessionStorage.getItem("CourseID");
     const data = await fetch(
       BASE_URL +
       "/api/courses/getCourseByID" +
