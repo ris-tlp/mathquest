@@ -62,17 +62,28 @@ Key features of MathQuest LMS include:
 ## API Endpoints
 Anything within `<angular brackets>` is a parameter.
 
-| Endpoint                                 | Description                                                        | Type             |
-|------------------------------------------|--------------------------------------------------------------------|------------------|
-| `/api/users/login`                       | Authenticates a user for the MathQuest system.                      | `POST`            |
-| `/api/users/signup`                      | Create a new user.                                                 | `POST`           |
-| `/api/users/<userId>`                    | Fetches user information through a User ID.                        | `GET`           |
-| `/api/dev`                                |                                                                           | `GET`           |
-| `/api/courses`                            |                                                                      | `GET`           |
-| `/api/courses/registered`                 |                                                                       | `GET`           |
-| `/api/courses/registered/new`             |                                                                  | `GET`           |
-| `/api/courses/discussions/`               |                                                                   | `GET`           |
-| `/api/courses/discussions/createThread`  |                                                                       | `POST`           |
+| Endpoint                                          | Description                                                        | Type             |
+|---------------------------------------------------|--------------------------------------------------------------------|------------------|
+| `/api/users/login`                                | Authenticates a user for the MathQuest system.                     |                  |
+| `/api/users/signup`                               | Create a new user.                                                 |                  |
+| `/api/users/<userId>`                             | Fetches user information through a User ID.                        |                  |
+| `/api/courses`                                    |                                                                    |                  |
+| `/api/courses/teachers/getAllCourses`             |                                                                    |                  |
+| `/api/courses/registered/getRegisteredUsers`      |                                                                    |                  |
+| `/api/courses/getCourseByID`                      |                                                                    |                  |
+| `/api/courses/hideCourse`                         |                                                                    |                  |
+| `/api/courses/filterCoursesByStatus`              |                                                                    |                  |
+| `/api/courses/changeRequestStatus`                |                                                                    |                  |
+| `/api/courses/quizzes/grades/gradeQuiz`           |                                                                    |                  |
+| `/api/courses/registered`                         |                                                                    |                  |
+| `/api/courses/registered/new`                     |                                                                    |                  |
+| `/api/courses/discussions/getAllThreads`          |                                                                    |                  |
+| `/api/courses/discussions/getAllReplies`          |                                                                    |                  |
+| `/api/courses/discussions/createThread`           |                                                                    |                  |
+| `/api/courses/discussions/createReply`            |                                                                    |                  |
+| `/api/courses/quizzes/getAllQuizzes`              |                                                                    |                  |
+| `/api/courses/quizzes/getQuiz`                    |                                                                    |                  |
+
 
 ## Development Setup
 
