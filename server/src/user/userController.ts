@@ -13,6 +13,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
             name: details.name,
             email: details.email,
             userType: details.userType,
+            image: details.image,
         });
 
         try {
@@ -98,6 +99,19 @@ userRouter.get("/uidfirebase", async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
+});
+
+userRouter.post("/getAllUsersOfType", async (req: Request, res: Response) => {
+    try {
+        const userType = req.body.userType;
+        const users = await User.find({
+            userType: userType,
+        }).exec();
+
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ userType: users });
+    } catch (error) {}
 });
 
 // not needed anymore

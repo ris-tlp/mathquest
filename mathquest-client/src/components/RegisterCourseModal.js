@@ -12,14 +12,10 @@ const RegisterCourseModal = ({ data, onClose, handleCourseRegister }) => {
 
             <h3 className="text-xl">What you will learn!</h3>
             <ul className="list-disc text-black px-8 border-2 m-4 border-black">
-
               {data.whatYouWillLearn?.map((e) => {
-                  return  <li>{e}</li>
-                    
-                   
-                 
-                })}
-              </ul>
+                return <li>{e}</li>;
+              })}
+            </ul>
           </div>
           <div className="w-4/12 mx-auto sm:w-full">
             <img src={data.instructorImage} className="border-4" />
@@ -34,13 +30,14 @@ const RegisterCourseModal = ({ data, onClose, handleCourseRegister }) => {
         >
           Close
         </button>
-
+        
+        {/* Register button with conditional rendering based on whether the user is already registered */}
         <button
           className="h-10 border-2 border-black rounded-lg bg-slate-900 text-white w-40 md:float-right lg:float-right xl:float-right md:mx-10 lg:mx-10 xl:mx-10 sm:w-full sm:mt-1 disabled:bg-slate-600 "
           onClick={handleCourseRegister}
           disabled={data.isRegistered}
         >
-          { data.isRegistered? "Registered" : "Register" }
+          {data.isRegistered ? "Registered" : "Register"}
         </button>
       </div>
     </div>

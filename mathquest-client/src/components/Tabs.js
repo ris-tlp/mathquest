@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 
+// Tabs component: Manages the state of active tab and renders tabs and content
 const Tabs = ({ children }) => {
+  // State to track the active tab
   const [activeTab, setActiveTab] = useState(children[0].props.label);
 
+  // Click handler for tab buttons
   const handleClick = (e, newActiveTab) => {
     e.preventDefault();
     setActiveTab(newActiveTab);
@@ -35,6 +38,7 @@ const Tabs = ({ children }) => {
   );
 };
 
+// Tab component: Represents an individual tab with its content
 const Tab = ({ label, children }) => {
   return (
     <div label={label} className="hidden">
@@ -42,4 +46,6 @@ const Tab = ({ label, children }) => {
     </div>
   );
 };
+
+// Export Tabs and Tab components for external use
 export { Tabs, Tab };

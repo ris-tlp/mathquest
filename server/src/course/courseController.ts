@@ -11,7 +11,7 @@ export const courseRouter = Router();
 courseRouter.post("/", async (req: Request, res: Response) => {
     try {
         const userEmail = req.body.email;
-        console.log(userEmail);
+
         const allPublishedCourses = await Course.find({
             isPublished: true,
         }).exec();
@@ -105,6 +105,23 @@ courseRouter.post(
     }
 );
 
+courseRouter.post("/updateCourse", async (req: Request, res: Response) => {
+    try {
+        const course = req.body.course;
+        const courseID = req.body.courseID;
+
+        const updatedCourse = await Course.findByIdAndUpdate(courseID, course, {
+            new: true,
+        }).exec();
+
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ updatedCourse });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error " });
+    }
+});
+
 // Create a course
 courseRouter.post("/", async (req: Request, res: Response) => {
     try {
@@ -150,30 +167,76 @@ courseRouter.get("/getCourseByID", async (req: Request, res: Response) => {
     }
 });
 
-// Update a course by CourseId
-// courseRouter.put("/:courseId", async (req: Request, res: Response) => {
-//     try {
-//         const params = req.params;
-//         const body = req.body;
+// hides a course from all published courses
+courseRouter.post("/hideCourse", async (req: Request, res: Response) => {
+    try {
+        const courseID = req.body.courseID;
 
-//         const filter = { _id: params["courseId"] };
-//         const update = { ...body };
+        const updatedCourse = await Course.findByIdAndUpdate(
+            courseID,
+            { isPublished: false },
+            { new: true }
+        ).exec();
 
-//         try {
-//             const queryResult = await Course.findOneAndUpdate(filter, update, {
-//                 new: true,
-//             });
+        res.status(200)
+            .setHeader("Content-Type", "application/json")
+            .json({ result: updatedCourse });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
-//             res.status(200).json({
-//                 result: "Course updated.",
-//                 newCourse: queryResult,
-//             });
-//         } catch (error) {
-//             res.status(404).json({
-//                 error: "Document not found by the courseId specified.",
-//             });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// });
+courseRouter.post(
+    "/filterCoursesByStatus",
+    async (req: Request, res: Response) => {
+        try {
+            const requiredStatus = req.body.requiredStatus;
+
+            const filteredCourses = await Course.find({
+                requestStatus: requiredStatus,
+            }).exec();
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ filteredCourses });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
+
+courseRouter.post(
+    "/changeRequestStatus",
+    async (req: Request, res: Response) => {
+        try {
+            const courseID = req.body.courseID;
+            const newStatus = req.body.newStatus;
+
+            const updatedStatus = await Course.findByIdAndUpdate(
+                courseID,
+                { requestStatus: newStatus },
+                { new: true }
+            ).exec();
+
+            if (newStatus === "accepted") {
+                const publishCourse = await Course.findByIdAndUpdate(
+                    courseID,
+                    { isPublished: true },
+                    { new: true }
+                ).exec();
+
+                res.status(200)
+                    .setHeader("Content-Type", "application/json")
+                    .json({
+                        results: publishCourse,
+                    });
+            }
+
+            res.status(200)
+                .setHeader("Content-Type", "application/json")
+                .json({ result: updatedStatus });
+        } catch (error) {
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);
