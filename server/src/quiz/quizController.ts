@@ -116,36 +116,36 @@ quizRouter.post("/getQuiz", async (req: Request, res: Response) => {
 });
 
 // Used for creating a new quiz question along with its options
-quizRouter.post("/createQuestion", async (req: Request, res: Response) => {
-    try {
-        const question = req.body.question;
-        const options: Array<Object> = req.body.options;
+// quizRouter.post("/createQuestion", async (req: Request, res: Response) => {
+//     try {
+//         const question = req.body.question;
+//         const options: Array<Object> = req.body.options;
 
-        const questionObj = await new QuizQuestion(question).save();
+//         const questionObj = await new QuizQuestion(question).save();
 
-        for (let i = 0; i < options.length; i++) {
-            const optionObj = await new QuizQuestionOption(options[i]).save();
-        }
+//         for (let i = 0; i < options.length; i++) {
+//             const optionObj = await new QuizQuestionOption(options[i]).save();
+//         }
 
-        res.status(201).setHeader("Content-Type", "application/json").json({
-            newQuestion: questionObj._id,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
+//         res.status(201).setHeader("Content-Type", "application/json").json({
+//             newQuestion: questionObj._id,
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ error: "Internal Server Error" });
+//     }
+// });
 
-// User for creating a quiz without the questions, just the parameters like duration and due date
-quizRouter.post("/createQuiz", async (req: Request, res: Response) => {
-    try {
-        const quiz = req.body.quiz;
-        const quizObj = await new Quiz(quiz).save();
+// // User for creating a quiz without the questions, just the parameters like duration and due date
+// quizRouter.post("/createQuiz", async (req: Request, res: Response) => {
+//     try {
+//         const quiz = req.body.quiz;
+//         const quizObj = await new Quiz(quiz).save();
 
-        res.status(201).setHeader("Content-Type", "application/json").json({
-            newQuiz: quizObj._id,
-        });
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
+//         res.status(201).setHeader("Content-Type", "application/json").json({
+//             newQuiz: quizObj._id,
+//         });
+//     } catch (error) {
+//         res.status(500).json({ error: "Internal Server Error" });
+//     }
+// });
