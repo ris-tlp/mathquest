@@ -1,10 +1,14 @@
+// Import necessary modules from Mongoose
 import { Schema, Types, model } from "mongoose";
 
+// Enum to define possible values for request status
 export enum RequestStatus {
     PENDING = "pending",
     ACCEPTED = "accepted",
     REJECTED = "rejected",
 }
+
+// Interface representing the structure of a course
 interface ICourse {
     courseName: string;
     courseDescription: string;
@@ -23,6 +27,7 @@ interface ICourse {
     requestStatus: RequestStatus;
 }
 
+// Create a Mongoose schema for the course
 const courseSchema = new Schema<ICourse>({
     courseName: { type: String, required: true, unique: true },
     courseDescription: { type: String, required: false },
@@ -45,4 +50,5 @@ const courseSchema = new Schema<ICourse>({
     },
 });
 
+// Create a Mongoose model for the course using the schema
 export const Course = model<ICourse>("Course", courseSchema);
