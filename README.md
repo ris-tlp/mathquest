@@ -20,7 +20,17 @@ __MathQuest__ is an online learning management system designed specifically to d
 
 
 ## How to get started with MathQuest
-TO-DO
+Student Flow:
+
+![Student Flow](https://github.com/ris-tlp/mathquest/assets/62342666/6e51a4c1-d15c-46b1-99a0-fcb0c2c66786)
+
+Instructor Flow:
+
+![Instructor Flow](https://github.com/ris-tlp/mathquest/assets/62342666/cfa4afff-d5aa-4e35-9bef-21d2e9a16888)
+
+Admin Flow:
+
+![Admin Flow](https://github.com/ris-tlp/mathquest/assets/62342666/29f56c6d-ca6c-4d06-a48d-c01e654eda8b)
 
 
 ## Features
