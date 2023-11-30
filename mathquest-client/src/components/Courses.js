@@ -100,7 +100,7 @@ const Courses = () => {
               offeredCourses.map((c, index) => {
                 return (
                   <div key={c.courseName}>
-                    <div className="my-10 mx-8 w-72 h-[530px] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
+                    <div className="my-10 mx-8 w-72 h-[550px] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
                       <img
                         className="w-[100%] h-[200px]"
                         src={c.courseImg}

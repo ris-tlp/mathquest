@@ -96,6 +96,9 @@ const Dashboard = () => {
     if (sessionStorage.getItem("userType") == "teacher") {
       getCourseForTeacher(sessionStorage.getItem("email"));
       setUserType("teacher");
+    } else if(sessionStorage.getItem("userType") == "admin") {
+      
+      setUserType("admin");
     } else {
       getRegisteredCourses(sessionStorage.getItem("email"));
       setUserType("student");
@@ -193,7 +196,7 @@ const Dashboard = () => {
                 <RegisteredUsers registeredUsers={registeredUsers} />
               )}
 
-              {userType == "Admin" && <AdminDashboard />}
+              {userType == "admin" && <AdminDashboard registeredUsers={registeredUsers} />}
             </div>
           </div>
         )}
