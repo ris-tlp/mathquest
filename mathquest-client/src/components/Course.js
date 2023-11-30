@@ -49,7 +49,7 @@ const Course = () => {
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay;  picture-in-picture;"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
             </div>
 

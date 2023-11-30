@@ -214,8 +214,7 @@ courseRouter.post(
                 requestStatus: requiredStatus,
             }).exec();
 
-            res.status(200)
-            .json({ filteredCourses });
+            res.status(200).json({ filteredCourses });
         } catch (error) {
             res.status(500).json({ error: "Internal Server Error" });
         }
