@@ -197,7 +197,7 @@ const Dashboard = () => {
 
                 <Discussion />
                 <h1 className="text-3xl text-white my-4">Course Quizzes</h1>
-                <QuizContainer />
+                <QuizContainer showStartQuiz="false" />
                 </div>
               )}
 

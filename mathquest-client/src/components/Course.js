@@ -49,7 +49,7 @@ const Course = () => {
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay;  picture-in-picture;"
-                allowFullScreen
+               
               ></iframe>
             </div>
 
@@ -81,7 +81,7 @@ const Course = () => {
               </Tab>
               <Tab label="Take Quiz">
                 <div className="py-4">
-                  <QuizContainer />
+                  <QuizContainer showStartQuiz="true" />
                 </div>
               </Tab>
             </Tabs>

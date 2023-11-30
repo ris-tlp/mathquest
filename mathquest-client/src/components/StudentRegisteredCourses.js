@@ -18,7 +18,7 @@ const StudentRegisteredCourses = ({registeredCourses}) => {
 
                 <button
                   onClick={() => {
-                    sessionStorage.setItem("courseID", r._id);
+                    sessionStorage.setItem("CourseID", r._id);
                     navigate("/course");
                   }}
                   className="text-white float-right underline"

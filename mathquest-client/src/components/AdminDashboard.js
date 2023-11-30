@@ -82,14 +82,14 @@ const AdminDashboard = () => {
     setRegisteredUsers(json.userInfo);
   };
 
-  const handleCourseStatus=async(status)=>{
+  const handleCourseStatus=async(status, id)=>{
    
     const data = await fetch(
         BASE_URL + "/api/courses/changeRequestStatus",
         {
           method: "POST",
           body: JSON.stringify({
-            courseID : selectedPendingCourse._id,
+            courseID : id,
             newStatus: status
           }),
           mode: "cors",
@@ -170,8 +170,8 @@ const AdminDashboard = () => {
                 >
                   Back
                 </button>
-                <button className="bg-slate-900 text-white w-36 h-10 mt-8 rounded-md float-right">
-                  Reject Course
+                <button onClick={()=>handleCourseStatus('rejected',selectedCourse._id)} className="bg-slate-900 text-white w-36 h-10 mt-8 rounded-md float-right">
+                  Remove Course
                 </button>
               </div>
               <div className="w-3/12 px-2">
@@ -213,10 +213,10 @@ const AdminDashboard = () => {
                 </button>
 
                 <div className="float-right">
-                <button onClick={()=>handleCourseStatus('accepted')} className="bg-slate-900 text-white w-36 h-10 mt-8 rounded-md mx-2 ">
+                <button onClick={()=>handleCourseStatus('accepted', selectedPendingCourse._id)} className="bg-slate-900 text-white w-36 h-10 mt-8 rounded-md mx-2 ">
                   Approve Course
                 </button>
-                <button  onClick={()=>handleCourseStatus('rejected')} className="bg-slate-900 text-white w-36 h-10 mt-8 rounded-md">
+                <button  onClick={()=>handleCourseStatus('rejected', selectedPendingCourse._id)} className="bg-slate-900 text-white w-36 h-10 mt-8 rounded-md">
                   Reject Course
                 </button>
                 </div>

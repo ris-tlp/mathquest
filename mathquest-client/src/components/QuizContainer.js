@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import QuizController from "./QuizController";
 
-const QuizContainer = () => {
+const QuizContainer = ({ showStartQuiz }) => {
   // State to store all quizzes for the current course
   const [allQuiz, setAllQuiz] = useState([]);
   // Fetch quizzes when component mounts
@@ -18,22 +18,19 @@ const QuizContainer = () => {
   // Function to fetch quizzes for the current course
   const fetchQuizzes = async () => {
     const courseID = sessionStorage.getItem("CourseID");
-    const data = await fetch(
-      BASE_URL + "/api/courses/quizzes/getAllQuizzes",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          courseID: courseID,
-          email: sessionStorage.getItem("email"),
-        }),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Access-control-allow-origin": "*",
-          "Access-control-allow-methods": "*",
-        },
-      }
-    );
+    const data = await fetch(BASE_URL + "/api/courses/quizzes/getAllQuizzes", {
+      method: "POST",
+      body: JSON.stringify({
+        courseID: courseID,
+        email: sessionStorage.getItem("email"),
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
     const json = await data.json();
     setAllQuiz(json.result);
   };
@@ -59,24 +56,29 @@ const QuizContainer = () => {
                     <h1 className="text-lg font-bold">{e.summary}</h1>
 
                     <p>{e.duration} minutes</p>
-                    <p>Attemmpts left: {e.numberOfAttempts}</p>
 
-                    {!e.hasAttempted && (
-                      <button
-                        className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl"
-                        onClick={() => handleStartQuiz(e._id, e)}
-                      >
-                        Start Quiz
-                      </button>
-                    )}
+                    {showStartQuiz == "true" && (
+                      <div>
+                        <p>Attemmpts left: {e.numberOfAttempts}</p>
 
-                    {e.hasAttempted && (
-                      <button
-                        disabled
-                        className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl "
-                      >
-                        Quiz Completed - {e.grade} Marks
-                      </button>
+                        {!e.hasAttempted && (
+                          <button
+                            className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl"
+                            onClick={() => handleStartQuiz(e._id, e)}
+                          >
+                            Start Quiz
+                          </button>
+                        )}
+
+                        {e.hasAttempted && (
+                          <button
+                            disabled
+                            className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl "
+                          >
+                            Quiz Completed - {e.grade} Marks
+                          </button>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
