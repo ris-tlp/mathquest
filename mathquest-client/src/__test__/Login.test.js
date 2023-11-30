@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react';
+//import { userEvent } from '@testing-library/user-event';
+import userEvent from "@testing-library/user-event";
 import { BrowserRouter, Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Login from '../components/Login';
 import appStore from '../utils/appStore';
-import {signUpUser} from '../components/Login';;
+import mockFetch from "../mocks/mockFetch";
+
 
 test('renders login page', async () =>{ 
     render(<Provider store={appStore}><BrowserRouter><Login/></BrowserRouter></Provider>);
@@ -15,5 +18,8 @@ test('renders login page', async () =>{
     expect(screen.getByRole("heading")).toHaveTextContent(/Sign In/); 
 
     //mock sign in and register
+    //const button = screen.getByRole("button");
+    //button.find('button').simulate('click');
+    
 });
 

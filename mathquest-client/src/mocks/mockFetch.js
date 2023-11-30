@@ -24,6 +24,14 @@ const course = {
     },
 };
 
+const signupResponse = {
+    message:{
+        name: 'name',
+        email:'email',
+        userType: 'student'
+    },
+};
+
 export default async function mockFetch(url){
     switch(url){
         case "http://localhost:8000/api/courses/getCourseByID?courseID=null":
@@ -34,6 +42,30 @@ export default async function mockFetch(url){
                 json: async () => course,
             };
         }
+        case "http://localhost:8000/api/courses/registered/new":
+            {
+                return{
+                    ok: true,
+                    status: 200,
+                    json: async () => courseListResponse,
+                };
+            }
+        case "http://localhost:8000/api/courses":
+            {
+                return{
+                    ok: true,
+                    status: 200,
+                    json: async () => courseListResponse,
+                };
+            }
+         case "http://localhost:8000/users/signup":
+            {
+                return{
+                    ok: true,
+                    status: 200,
+                    json: async () => signupResponse,
+                };
+            }
         case "http://localhost:8000/api/courses/registered":
         default: {
             return{
