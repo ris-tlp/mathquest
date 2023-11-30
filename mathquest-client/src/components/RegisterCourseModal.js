@@ -30,7 +30,8 @@ const RegisterCourseModal = ({ data, onClose, handleCourseRegister }) => {
         >
           Close
         </button>
-
+        
+        {/* Register button with conditional rendering based on whether the user is already registered */}
         <button
           className="h-10 border-2 border-black rounded-lg bg-slate-900 text-white w-40 md:float-right lg:float-right xl:float-right md:mx-10 lg:mx-10 xl:mx-10 sm:w-full sm:mt-1 disabled:bg-slate-600 "
           onClick={handleCourseRegister}

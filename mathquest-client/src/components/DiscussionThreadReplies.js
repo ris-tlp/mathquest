@@ -1,4 +1,8 @@
+// Import necessary React hooks and constants
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { CONNECTION_STRING, PORT } from "../utils/constants";
+
+// Define the DiscussionThreadReplies component as a forwardRef
 import { BASE_URL } from "../utils/constants";
 const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAllThread}, ref) => {
     const replyBody=useRef('replyBody')
@@ -10,7 +14,8 @@ const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAll
         // Expose parent function to parent component
         callParentFunction: publishThreadReply,
       }));
-
+    
+    // Define a function to publish a new thread reply
     const publishThreadReply=async()=>{
         const data = await fetch(
             BASE_URL + "/api/courses/discussions/createReply/",
@@ -31,14 +36,15 @@ const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAll
           );
           const json = await data.json();
           replyBody.current.value=""
+          // Call the parent component's onFetchCall function
           onFetchCall();
           
       }
 
-   
+  
+  // Render the component
   return (
     <div>
-
          <button
           onClick={toggleShowAllThread}
           className="text-white font-bold p-4 mb-4 border-2 border-white rounded-lg"
@@ -46,7 +52,7 @@ const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAll
           Go to all discussion &gt;
         </button>
 
-
+      {/* Render discussion thread and its replies */}
       {
         discussionReplies && <div className="text-black border-2 border-white bg-white rounded-md p-4">
         <h1 className="text-2xl">{discussionReplies.threadInfo.title}</h1>
@@ -64,6 +70,7 @@ const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAll
           );
         })}
 
+        {/* Reply form */}
         <div className="text-black">
           <form
             onSubmit={(e) => {
@@ -77,6 +84,7 @@ const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAll
               placeholder="Reply Goes Here"
             ></textarea>
 
+            {/* Button to publish the reply */}
             <button
               onClick={publishThreadReply}
               className="w-[100%] h-10 border-2 bg-slate-400 mt-8 text-xl font-bold rounded-md"
@@ -91,4 +99,5 @@ const DiscussionThreadReplies = forwardRef(  ({ data, onFetchCall, toggleShowAll
   );
 });
 
+// Export the DiscussionThreadReplies component
 export default DiscussionThreadReplies;

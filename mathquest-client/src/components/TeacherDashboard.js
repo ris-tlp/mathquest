@@ -10,6 +10,8 @@ const TeacherDashboard = ({ course, showManageCourse }) => {
   const [editOverview, setEditOverview] = useState(false);
   const [editWhatYourLearn, setEditWhatYourLearn] = useState(false);
   const [manageCourse, setManageCourse] = useState(false);
+
+  // Function to handle initiating course details management
   const handleManageDetails = () => {
     setManageCourse(true);
     setEditCourseName(true);
@@ -19,6 +21,7 @@ const TeacherDashboard = ({ course, showManageCourse }) => {
     setEditWhatYourLearn(true);
   };
 
+  // Refs for input fields to capture course details
   const courseNameRef = useRef();
   const courseDescRef = useRef();
   const courseOverviewRef = useRef();
@@ -28,6 +31,7 @@ const TeacherDashboard = ({ course, showManageCourse }) => {
   const wyl3 = useRef();
   const wyl4 = useRef();
 
+  // Function to finalize and update course details
   const finalizeDetails = () => {
     const newCourse = {
       courseDescription: courseDescRef.current.value,
@@ -59,26 +63,33 @@ const TeacherDashboard = ({ course, showManageCourse }) => {
     updateCourse(newCourse);
   };
 
-  const updateCourse = async (course) => {
-    const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/updateCourse",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          course: course,
-          courseID: course._id,
-        }),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Access-control-allow-origin": "*",
-          "Access-control-allow-methods": "*",
-        },
-      }
-    );
-    const json = await data.json();
-  };
+  // Async function to update course details on the server
+  const updateCourse=async(course)=>{
 
+    const data = await fetch(
+        CONNECTION_STRING + PORT + "/api/courses/updateCourse",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            course: course,
+            courseID: course._id
+          }),
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8",
+            "Access-control-allow-origin": "*",
+            "Access-control-allow-methods": "*",
+          },
+        }
+      );
+      const json = await data.json();
+  
+      console.log(json)
+    };
+
+
+ 
+  // JSX structure for rendering the teacher's dashboard
   return (
     <div className="bg-white w-9/12 p-4 rounded-lg my-4">
       <div>
@@ -203,4 +214,5 @@ const TeacherDashboard = ({ course, showManageCourse }) => {
   );
 };
 
+// Export the TeacherDashboard component as the default export
 export default TeacherDashboard;
