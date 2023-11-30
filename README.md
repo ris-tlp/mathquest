@@ -124,7 +124,7 @@ Run the below command to start the mathquest `server`
 If everything is up and running, you should see the home page of `MathQuest` application running on `localhost`
 
 ## Test Results
-TO-DO
+<img width="1400" height="700" src="https://github.com/ris-tlp/mathquest/assets/62342666/ac929fb6-6c6c-4421-a3d0-bc565da93ba5">
 
 ## Contributor/ Team Members
 | Team Member Name                               |	Linkedin          |
