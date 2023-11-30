@@ -1,8 +1,10 @@
+// Import the React library
 import React from "react";
 
+// Define a functional component named Overview, receiving the 'course' prop
 const Overview = ({ course }) => {
   return (
-    
+    // Main container for course overview
     <div>
       <h1 className="text-white text-2xl">{course.courseName}</h1>
       <p className="text-white my-2">{course.courseDescription}</p>
@@ -23,4 +25,5 @@ const Overview = ({ course }) => {
   );
 };
 
+// Export the Overview component as the default export
 export default Overview;

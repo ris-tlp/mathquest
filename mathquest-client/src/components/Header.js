@@ -1,3 +1,4 @@
+// Importing necessary dependencies from React and Firebase
 import React, { useEffect, useState } from "react";
 import LOGO from "../images/logo-black.png";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -6,6 +7,7 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 
+// Functional component for the header
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ const Header = () => {
     return store.user;
   });
 
+  // Function to handle user sign-out
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
@@ -23,7 +26,7 @@ const Header = () => {
         sessionStorage.removeItem("userType");
         navigate("/");
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   useEffect(() => {
@@ -32,6 +35,7 @@ const Header = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
+        // Dispatching action to add user to Redux store
         dispatch(
           addUser({
             uid: uid,
@@ -42,11 +46,14 @@ const Header = () => {
         );
         sessionStorage.setItem("email", email);
       } else {
+        // Dispatching action to remove user from Redux store if not authenticated
         dispatch(removeUser());
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, []);// Empty dependency array ensures that the effect runs only once on mount
+
+  // Rendering the header component
   return (
     <div className="absolute w-screen px-8 font-mono bg-gradient-to-b from-black py-2 z-50 flex justify-between">
       <Link to="/dashboard">
@@ -57,6 +64,7 @@ const Header = () => {
         />
       </Link>
 
+      {/* Container for navigation links and user actions */}
       <div className="flex">
         <Link to="/all-courses">
           {user && userType == "student" && (
@@ -65,7 +73,8 @@ const Header = () => {
             </button>
           )}
         </Link>
-
+        
+        {/* Container for sign-out and profile links */}
         {user && (
           <div className="flex p-4">
             <button
@@ -89,4 +98,5 @@ const Header = () => {
   );
 };
 
+// Exporting the Header component
 export default Header;
