@@ -9,7 +9,7 @@ import { auth } from "../utils/firebase";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userType, setUserType]=useState('student')
+  const [userType, setUserType] = useState("student");
   const user = useSelector((store) => {
     return store.user;
   });
@@ -17,20 +17,18 @@ const Header = () => {
   const signOutHandler = () => {
     signOut(auth)
       .then(() => {
-        sessionStorage.removeItem("email")
-        sessionStorage.removeItem('ThreadID')
-        sessionStorage.removeItem('CourseID')
-        sessionStorage.removeItem('userType')
+        sessionStorage.removeItem("email");
+        sessionStorage.removeItem("ThreadID");
+        sessionStorage.removeItem("CourseID");
+        sessionStorage.removeItem("userType");
         navigate("/");
       })
       .catch((error) => {});
   };
 
- 
-
   useEffect(() => {
-
-    if(sessionStorage.getItem('userType')=='teacher') setUserType('teacher') 
+    if (sessionStorage.getItem("userType") == "teacher") setUserType("teacher");
+    if (sessionStorage.getItem("userType") == "admin") setUserType("admin");
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
@@ -42,11 +40,9 @@ const Header = () => {
             photoURL: photoURL,
           })
         );
-        sessionStorage.setItem('email',email)
-       
+        sessionStorage.setItem("email", email);
       } else {
         dispatch(removeUser());
-       
       }
     });
     return () => unsubscribe();
@@ -63,7 +59,7 @@ const Header = () => {
 
       <div className="flex">
         <Link to="/all-courses">
-          {user && userType=='student' && (
+          {user && userType == "student" && (
             <button className="font-bold text-white no-underline hover:underline cursor-pointer h-10 p-6">
               Available Courses
             </button>

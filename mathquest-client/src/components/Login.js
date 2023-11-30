@@ -111,7 +111,7 @@ const Login = () => {
           if (password.current.value.slice(0, 7) == "Teacher") {
             sessionStorage.setItem("userType", "teacher");
           }else if (password.current.value.slice(0, 5) == "Admin") {
-            sessionStorage.setItem("userType", "Admin");
+            sessionStorage.setItem("userType", "admin");
           } else {
             sessionStorage.setItem("userType", "student");
           }
