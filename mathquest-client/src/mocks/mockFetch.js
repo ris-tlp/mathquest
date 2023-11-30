@@ -1,3 +1,4 @@
+// Mock response data for a course list
 const courseListResponse = {
     message: 
        [ {_id: 123,
@@ -33,6 +34,7 @@ const signupResponse = {
 };
 
 export default async function mockFetch(url){
+    // Switch statement to handle different URLs, currently only handling one URL
     switch(url){
         case "http://localhost:8000/api/courses/getCourseByID?courseID=null":
         {
@@ -71,6 +73,7 @@ export default async function mockFetch(url){
             return{
                 ok: true,
                 status: 200,
+                // Simulate converting the response to JSON
                 json: async () => courseListResponse,
             };
         }

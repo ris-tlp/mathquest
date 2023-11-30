@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 
+// QuizController Component
 const QuizController = (props) => {
+  // State variables
   const [quiz, setQuiz] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [submitedAnswers, setSubmittedAnswers] = useState([]);
   const [quizScore, setQuizScore] = useState(null);
+
+  // Effect hook to fetch quiz data when component mounts
   useEffect(() => {
     fetchQuiz(props.quizID);
-    console.log(props.quiz);
   }, []);
 
+  // State variable for tracking the current question
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   //fetching quiz based upon quiz ID
   const fetchQuiz = async () => {
-    const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/quizzes/getQuiz",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          quizID: props.quizID,
-        }),
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Access-control-allow-origin": "*",
-          "Access-control-allow-methods": "*",
-        },
-      }
-    );
+    const data = await fetch(BASE_URL + "/api/courses/quizzes/getQuiz", {
+      method: "POST",
+      body: JSON.stringify({
+        quizID: props.quizID,
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
     const json = await data.json();
     setQuiz(json?.questions);
   };
@@ -53,9 +54,10 @@ const QuizController = (props) => {
     setSelectedOption(option);
   };
 
+  // Handling the final submission of the quiz
   const handleSubmit = async () => {
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/quizzes/grades/gradeQuiz",
+      BASE_URL + "/api/courses/quizzes/grades/gradeQuiz",
       {
         method: "POST",
         body: JSON.stringify({
@@ -75,7 +77,8 @@ const QuizController = (props) => {
     const json = await data.json();
     setQuizScore(json.score);
   };
-
+  
+  // Render JSX
   return (
     <div>
       <h1 className="text-xl text-white">{props.quiz.summary}</h1>

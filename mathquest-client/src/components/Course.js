@@ -7,7 +7,7 @@ import Overview from "./Overview";
 import Discussion from "./Discussion";
 import Announcements from "./QuizContainer";
 import Footer from "./Footer";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import QuizContainer from "./QuizContainer";
 const Course = () => {
   // State to store course details
@@ -19,10 +19,9 @@ const Course = () => {
   }, []);
 
   const fetchCourseDetails = async () => {
-    const courseID = sessionStorage.getItem("courseID");
+    const courseID = sessionStorage.getItem("CourseID");
     const data = await fetch(
-      CONNECTION_STRING +
-      PORT +
+      BASE_URL +
       "/api/courses/getCourseByID" +
       "?courseID=" +
       courseID

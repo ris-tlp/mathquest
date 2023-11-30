@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import QuizController from "./QuizController";
 
 const QuizContainer = () => {
+  // State to store all quizzes for the current course
   const [allQuiz, setAllQuiz] = useState([]);
+  // Fetch quizzes when component mounts
   useEffect(() => {
     fetchQuizzes();
   }, []);
 
+  // State to manage the display of selected quiz
   const [showSelectedQuiz, setShowSelectedQuiz] = useState(false);
-  const [selectedQuizID, setSelectedQuizID]=useState(null)
-  const [quiz, setQuiz] = useState([])
+  const [selectedQuizID, setSelectedQuizID] = useState(null);
+  const [quiz, setQuiz] = useState([]);
 
+  // Function to fetch quizzes for the current course
   const fetchQuizzes = async () => {
-    const courseID = sessionStorage.getItem("courseID");
+    const courseID = sessionStorage.getItem("CourseID");
     const data = await fetch(
-      CONNECTION_STRING + PORT + "/api/courses/quizzes/getAllQuizzes",
+      BASE_URL + "/api/courses/quizzes/getAllQuizzes",
       {
         method: "POST",
         body: JSON.stringify({
           courseID: courseID,
-          email: sessionStorage.getItem('email')
+          email: sessionStorage.getItem("email"),
         }),
         mode: "cors",
         headers: {
@@ -34,14 +38,13 @@ const QuizContainer = () => {
     setAllQuiz(json.result);
   };
 
+  // Function to handle starting a quiz
   const handleStartQuiz = (quizID, quiz) => {
     sessionStorage.setItem("quizID", quizID);
     setShowSelectedQuiz(true);
-    setQuiz(quiz)
-    setSelectedQuizID(quizID)
+    setQuiz(quiz);
+    setSelectedQuizID(quizID);
   };
-
-  
 
   return (
     <div>
@@ -58,29 +61,43 @@ const QuizContainer = () => {
                     <p>{e.duration} minutes</p>
                     <p>Attemmpts left: {e.numberOfAttempts}</p>
 
-                    {!e.hasAttempted && <button
-                      className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl"
-                      onClick={() => handleStartQuiz(e._id, e)}
-                    >
-                      Start Quiz
-                    </button>}
+                    {!e.hasAttempted && (
+                      <button
+                        className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl"
+                        onClick={() => handleStartQuiz(e._id, e)}
+                      >
+                        Start Quiz
+                      </button>
+                    )}
 
-                    {e.hasAttempted && <button disabled
-                      className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl "
-                     
-                    >
-                      Quiz Completed
-                    </button>}
+                    {e.hasAttempted && (
+                      <button
+                        disabled
+                        className="border-2 bg-slate-700 text-white p-2 my-4 rounded-lg shadow-2xl "
+                      >
+                        Quiz Completed - {e.grade} Marks
+                      </button>
+                    )}
                   </div>
                 </div>
               );
             })}
         </div>
       ) : (
-        <div>{quiz && <QuizController quizID={selectedQuizID} quiz={quiz} closeSelectedQuiz={()=>{
-          fetchQuizzes()
-          setShowSelectedQuiz(false)
-        }}  />}</div>
+        // Display QuizController component if a quiz is selected
+        <div>
+          {quiz && (
+            <QuizController
+              quizID={selectedQuizID}
+              quiz={quiz}
+              closeSelectedQuiz={() => {
+                fetchQuizzes();
+
+                setShowSelectedQuiz(false);
+              }}
+            />
+          )}
+        </div>
       )}
     </div>
   );
