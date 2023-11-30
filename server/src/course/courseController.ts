@@ -197,8 +197,7 @@ courseRouter.post(
             }).exec();
 
             res.status(200)
-                .setHeader("Content-Type", "application/json")
-                .json({ filteredCourses });
+            .json({ filteredCourses });
         } catch (error) {
             res.status(500).json({ error: "Internal Server Error" });
         }
@@ -225,16 +224,12 @@ courseRouter.post(
                     { new: true }
                 ).exec();
 
-                res.status(200)
-                    .setHeader("Content-Type", "application/json")
-                    .json({
-                        results: publishCourse,
-                    });
+                res.status(200).json({
+                    results: publishCourse,
+                });
+            } else {
+                res.status(200).json({ result: updatedStatus });
             }
-
-            res.status(200)
-                .setHeader("Content-Type", "application/json")
-                .json({ result: updatedStatus });
         } catch (error) {
             res.status(500).json({ error: "Internal Server Error" });
         }
