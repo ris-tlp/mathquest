@@ -121,7 +121,7 @@ const Login = () => {
           } else {
             sessionStorage.setItem("userType", "student");
           }
-          sessionStorage.setItem("email", user.email);
+          sessionStorage.setItem("email", email.current.value);
           dispatch(
             addUser({
               uid: user.uid,
@@ -130,7 +130,7 @@ const Login = () => {
               photoURL: user.photoURL,
             })
           );
-          sessionStorage.setItem("email", email);
+          sessionStorage.setItem("email", email.current.value);
           navigate("/dashboard");
         })
         .catch((error) => {
