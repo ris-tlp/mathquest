@@ -3,4 +3,4 @@ export const PROFILE_PICTURE = "https://occ-0-2010-2433.1.nflxso.net/dnm/api/v6/
 export const GOOLGELOGO="https://ouch-cdn2.icons8.com/VGHyfDgzIiyEwg3RIll1nYupfj653vnEPRLr0AeoJ8g/rs:fit:456:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvODg2/LzRjNzU2YThjLTQx/MjgtNGZlZS04MDNl/LTAwMTM0YzEwOTMy/Ny5wbmc.png"
 export const CONNECTION_STRING = "http://localhost:"
 export const PORT = "8013"
-export const BASE_URL = "http://localhost:8013"
+export const BASE_URL = "https://dky2vychqq.us-east-1.awsapprunner.com"

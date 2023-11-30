@@ -153,14 +153,14 @@ const Dashboard = () => {
               </div>
             )}
 
-            <div className="">
+            <div className="flex justify-between">
               {registeredCourses && userType == "student" && (
                 <StudentRegisteredCourses
                   registeredCourses={registeredCourses}
                 />
               )}
 
-              <div className="w-9/12">
+              <div>
                 {course && !manageCourse && userType == "teacher" && (
                   <div className="my-10 mx-8 w-72 h-[300px] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 cursor-pointer">
                     <img
