@@ -1,5 +1,6 @@
+// Import necessary dependencies and components from React and other modules
 import React, { useEffect, useRef, useState } from "react";
-import { BG, PROFILE_PICTURE } from "../utils/constants";
+import { BASE_URL, BG, PROFILE_PICTURE } from "../utils/constants";
 import { checkValidData } from "../utils/validate";
 import { GOOLGELOGO } from "../utils/constants";
 import {
@@ -16,9 +17,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import Footer from "./Footer";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
 
+// Functional component for the login page
 const Login = () => {
+  // React hooks for managing state and side effects
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
@@ -27,47 +29,46 @@ const Login = () => {
   const password = useRef(null);
   const fullName = useRef(null);
 
-
+  // useEffect to check if the user is already signed in and redirect to the dashboard
   useEffect(()=>{
     console.log(sessionStorage.getItem('email'))
 
     if(sessionStorage.getItem('email')!=undefined) navigate('/dashboard')
   },[])
 
+  // Function to toggle between sign-in and sign-up mode
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
   };
 
-  const signUpUser=async(name, email)=>{
-
-   
-    const data = await fetch(
-      CONNECTION_STRING +
-        PORT +
-        "/api/users/signup", {
-          method: "POST",
-          body: JSON.stringify({
-            name: name,
-            email:email,
-            userType: 'student'
-          }),
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json; charset=UTF-8",
-            "Access-control-allow-origin": "*",
-            "Access-control-allow-methods": "*",
-          },
-        }
-       
-    );
+  const signUpUser = async (name, email) => {
+    const data = await fetch(BASE_URL + "/api/users/signup", {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        userType: "student",
+        image: PROFILE_PICTURE,
+      }),
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Access-control-allow-origin": "*",
+        "Access-control-allow-methods": "*",
+      },
+    });
     const json = await data.json();
-    sessionStorage.setItem('email',email)  
-    navigate("/dashboard");   
+    sessionStorage.setItem("email", email);
+    navigate("/dashboard");
+  };
 
-  }
-
+  // Function to handle button click (either sign in or sign up)
   const handleButtonclick = () => {
-    const message = checkValidData(email.current.value, password.current.value, fullName?.current?.value);
+    const message = checkValidData(
+      email.current.value,
+      password.current.value,
+      fullName?.current?.value
+    );
     setErrorMessage(message);
     if (message) return;
 
@@ -79,13 +80,13 @@ const Login = () => {
       )
         .then((userCrendential) => {
           const user = userCrendential.user;
-         
+
           updateProfile(user, {
             displayName: fullName.current.value,
             photoURL: PROFILE_PICTURE,
           })
             .then(() => {
-                const { uid, email, displayName, photoURL } = auth.currentUser;
+              const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
                   uid: uid,
@@ -95,15 +96,7 @@ const Login = () => {
                 })
               );
 
-
-
-
               signUpUser(displayName, email);
-
-
-
-
-              
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -121,8 +114,14 @@ const Login = () => {
       )
         .then((userCrendential) => {
           const user = userCrendential.user;
-
-          sessionStorage.setItem('email',user.email)
+          if (password.current.value.slice(0, 7) == "Teacher") {
+            sessionStorage.setItem("userType", "teacher");
+          }else if (password.current.value.slice(0, 5) == "Admin") {
+            sessionStorage.setItem("userType", "admin");
+          } else {
+            sessionStorage.setItem("userType", "student");
+          }
+          sessionStorage.setItem("email", user.email);
           dispatch(
             addUser({
               uid: user.uid,
@@ -131,30 +130,30 @@ const Login = () => {
               photoURL: user.photoURL,
             })
           );
-          sessionStorage.setItem('email',email)  
+          sessionStorage.setItem("email", email);
           navigate("/dashboard");
         })
         .catch((error) => {
           setErrorMessage(error.code + error.message);
         });
-     
     }
   };
 
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const name = result.user.displayName;
-        const email = result.user.email;
-        const profilePic = result.user.photoURL;
-        navigate("/dashboard");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const googleSignIn = () => {
+  //   const provider = new GoogleAuthProvider();
+  //   signInWithPopup(auth, provider)
+  //     .then((result) => {
+  //       const name = result.user.displayName;
+  //       const email = result.user.email;
+  //       const profilePic = result.user.photoURL;
+  //       navigate("/dashboard");
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
+  // JSX structure for the login form
   return (
     <div className="font-mono">
       <Header />
@@ -229,8 +228,6 @@ const Login = () => {
           </p>
         )}
       </form>
-
-      
     </div>
   );
 };

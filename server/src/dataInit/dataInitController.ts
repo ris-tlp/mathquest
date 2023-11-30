@@ -1,10 +1,13 @@
+// Import necessary modules from Express and other custom models
 import { Request, Response, Router } from "express";
 import { Course } from "../course/courseModel";
 import { User, IUser } from "../user/userModel";
 import { RegisteredCourse } from "../course/registeredCourseModel";
 
+// Create an instance of the Express Router
 export const dataInitRouter = Router();
 
+// Endpoint to create user data
 dataInitRouter.get("/createuser", async (req: Request, res: Response) => {
     try {
         let user1 = new User({
@@ -48,6 +51,7 @@ dataInitRouter.get("/createuser", async (req: Request, res: Response) => {
     }
 });
 
+// Endpoint to register a course for a student
 dataInitRouter.get("/registercourse", async (req: Request, res: Response) => {
     // try {
     //     const rc = new RegisteredCourse({
