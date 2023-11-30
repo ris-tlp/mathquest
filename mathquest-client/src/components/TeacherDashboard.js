@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import InstructorManageCourseDetail from "./InstructorManageCourseDetail";
-import { CONNECTION_STRING, PORT } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 
 const TeacherDashboard = ({ course, showManageCourse }) => {
   const [Course, setCourse] = useState(course);
@@ -67,7 +67,7 @@ const TeacherDashboard = ({ course, showManageCourse }) => {
   const updateCourse=async(course)=>{
 
     const data = await fetch(
-        CONNECTION_STRING + PORT + "/api/courses/updateCourse",
+        BASE_URL + "/api/courses/updateCourse",
         {
           method: "POST",
           body: JSON.stringify({
