@@ -20,8 +20,18 @@ __MathQuest__ is an online learning management system designed specifically to d
 
 
 ## How to get started with MathQuest
-TO-DO
-
+1. Install prerequisites.
+   Before running MathQuest, you need to have node.js and npm. If node isn't already installed, visit the [!download page](https://nodejs.org/en/download/). Download the LTS installer and follow the provided
+   directions. When the installation is complete, run
+   ```bash
+   node -v npm -v
+   ```
+   to check that everything was installed properly. These commands should display your current version of node.js and npm.
+2. Install IDE.
+   If you don't have an IDE previously installed on your idea, VSCode is recommended for this project. Download the [!Visual Studio Code Installer](https://code.visualstudio.com/docs?dv=win).
+3. Next steps.
+   Refer to the __Development Setup__ section. This section of the ReadMe contains information on running the application once the required installations are complete. 
+   
 
 ## Features
 Key features of MathQuest LMS include:
