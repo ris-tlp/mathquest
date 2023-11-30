@@ -20,15 +20,15 @@ __MathQuest__ is an online learning management system designed specifically to d
 
 
 ## How to get started with MathQuest
-Student Flow:
+### Student Flow:
 
 ![Student Flow](https://github.com/ris-tlp/mathquest/assets/62342666/6e51a4c1-d15c-46b1-99a0-fcb0c2c66786)
 
-Instructor Flow:
+### Instructor Flow:
 
 ![Instructor Flow](https://github.com/ris-tlp/mathquest/assets/62342666/cfa4afff-d5aa-4e35-9bef-21d2e9a16888)
 
-Admin Flow:
+### Admin Flow:
 
 ![Admin Flow](https://github.com/ris-tlp/mathquest/assets/62342666/29f56c6d-ca6c-4d06-a48d-c01e654eda8b)
 
@@ -143,7 +143,12 @@ Run the below command to start the mathquest `server`
 If everything is up and running, you should see the home page of `MathQuest` application running on `localhost`
 
 ## Test Results
+
+### Front-End Test Coverage:
 <img width="1400" height="700" src="https://github.com/ris-tlp/mathquest/assets/62342666/ac929fb6-6c6c-4421-a3d0-bc565da93ba5">
+
+### Back-End Test Coverage:
+<img width="1400" height="700" src="https://github.com/ris-tlp/mathquest/assets/62342666/41a4b02e-6afc-46c2-bb5e-d410f3c64e5a">
 
 ## Contributor/ Team Members
 | Team Member Name                               |	Linkedin          |
