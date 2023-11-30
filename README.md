@@ -64,25 +64,23 @@ Anything within `<angular brackets>` is a parameter.
 
 | Endpoint                                          | Description                                                        | Type             |
 |---------------------------------------------------|--------------------------------------------------------------------|------------------|
-| `/api/users/login`                                | Authenticates a user for the MathQuest system.                     |                  |
-| `/api/users/signup`                               | Create a new user.                                                 |                  |
-| `/api/users/<userId>`                             | Fetches user information through a User ID.                        |                  |
-| `/api/courses`                                    |                                                                    |                  |
-| `/api/courses/teachers/getAllCourses`             |                                                                    |                  |
-| `/api/courses/registered/getRegisteredUsers`      |                                                                    |                  |
-| `/api/courses/getCourseByID`                      |                                                                    |                  |
-| `/api/courses/hideCourse`                         |                                                                    |                  |
-| `/api/courses/filterCoursesByStatus`              |                                                                    |                  |
-| `/api/courses/changeRequestStatus`                |                                                                    |                  |
-| `/api/courses/quizzes/grades/gradeQuiz`           |                                                                    |                  |
-| `/api/courses/registered`                         |                                                                    |                  |
-| `/api/courses/registered/new`                     |                                                                    |                  |
-| `/api/courses/discussions/getAllThreads`          |                                                                    |                  |
-| `/api/courses/discussions/getAllReplies`          |                                                                    |                  |
-| `/api/courses/discussions/createThread`           |                                                                    |                  |
-| `/api/courses/discussions/createReply`            |                                                                    |                  |
-| `/api/courses/quizzes/getAllQuizzes`              |                                                                    |                  |
-| `/api/courses/quizzes/getQuiz`                    |                                                                    |                  |
+| `/api/users/login`                                | Authenticates a user for the MathQuest system.                     |               POST   |
+| `/api/users/signup`                               | Creates a new User for the MathQuest system.                                            |          POST        |
+| `/api/courses`                                    |  Gets a list of all available published courses.                                                                 |           POST       |
+| `/api/courses/teachers/getAllCourses`             |  Gets a list of all courses created by a teacher.                                                         |              POST    |
+| `/api/courses/registered/getRegisteredUsers`      |        Gets a list of registered users within a specific course.                                                            |  POST                |
+| `/api/courses/hideCourse`                         |     Hides or un-publishes a course from the list of available courses.                                                           |       POST           |
+| `/api/courses/filterCoursesByStatus`              |     Fetches a list of courses according to their Request Status                                                               |              POST    |
+| `/api/courses/changeRequestStatus`                |     Changes the Request Status of a course.                                                           |            POST      |
+| `/api/courses/quizzes/grades/gradeQuiz`           |   Grades and calculates the total points earned by a student after submitting a quiz.                                                                 |        POST          |
+| `/api/courses/registered`                         |   Gets a list of courses that a student is registered in.                                                                 |   POST               |
+| `/api/courses/registered/new`                     |     Registers a student in a new course.                                                               |         POST         |
+| `/api/courses/discussions/getAllThreads`          |   Gets a list of threads created by students within a specific course. |          POST        |
+| `/api/courses/discussions/getAllReplies`          |  Get a list of replies created by students in a specific thread.                                                                  |               POST   |
+| `/api/courses/discussions/createThread`           |  Creates a new thread within a course.                                                                  |      POST            |
+| `/api/courses/discussions/createReply`            |    Creates a new reply to an existing thread.                                                                |       POST           |
+| `/api/courses/quizzes/getAllQuizzes`              |   Gets a list of quizzes for a specific course.                                                       |            POST      |
+| `/api/courses/quizzes/getQuiz`                    |     Gets a specific quiz, all questions and their options for a specific course.                                                              |   POST               |
 
 
 ## Development Setup
