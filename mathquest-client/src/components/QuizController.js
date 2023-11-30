@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 
+// QuizController Component
 const QuizController = (props) => {
+  // State variables
   const [quiz, setQuiz] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [submitedAnswers, setSubmittedAnswers] = useState([]);
   const [quizScore, setQuizScore] = useState(null);
+
+  // Effect hook to fetch quiz data when component mounts
   useEffect(() => {
     fetchQuiz(props.quizID);
     console.log(props.quiz);
   }, []);
 
+  // State variable for tracking the current question
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   //fetching quiz based upon quiz ID
@@ -53,6 +58,7 @@ const QuizController = (props) => {
     setSelectedOption(option);
   };
 
+  // Handling the final submission of the quiz
   const handleSubmit = async () => {
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/quizzes/grades/gradeQuiz",
@@ -75,7 +81,8 @@ const QuizController = (props) => {
     const json = await data.json();
     setQuizScore(json.score);
   };
-
+  
+  // Render JSX
   return (
     <div>
       <h1 className="text-xl text-white">{props.quiz.summary}</h1>

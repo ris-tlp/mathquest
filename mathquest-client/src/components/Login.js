@@ -1,3 +1,4 @@
+// Import necessary dependencies and components from React and other modules
 import React, { useEffect, useRef, useState } from "react";
 import { BG, PROFILE_PICTURE } from "../utils/constants";
 import { checkValidData } from "../utils/validate";
@@ -18,7 +19,9 @@ import { addUser } from "../utils/userSlice";
 import Footer from "./Footer";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 
+// Functional component for the login page
 const Login = () => {
+  // React hooks for managing state and side effects
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
@@ -27,20 +30,20 @@ const Login = () => {
   const password = useRef(null);
   const fullName = useRef(null);
 
-
+  // useEffect to check if the user is already signed in and redirect to the dashboard
   useEffect(()=>{
     console.log(sessionStorage.getItem('email'))
 
     if(sessionStorage.getItem('email')!=undefined) navigate('/dashboard')
   },[])
 
+  // Function to toggle between sign-in and sign-up mode
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
   };
 
+  // Function to sign up a user and update the user profile
   const signUpUser=async(name, email)=>{
-
-   
     const data = await fetch(
       CONNECTION_STRING +
         PORT +
@@ -66,6 +69,7 @@ const Login = () => {
 
   }
 
+  // Function to handle button click (either sign in or sign up)
   const handleButtonclick = () => {
     const message = checkValidData(email.current.value, password.current.value, fullName?.current?.value);
     setErrorMessage(message);
@@ -159,6 +163,7 @@ const Login = () => {
   //     });
   // };
 
+  // JSX structure for the login form
   return (
     <div className="font-mono">
       <Header />

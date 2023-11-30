@@ -63,6 +63,7 @@ const Discussion = () => {
     const email = sessionStorage.getItem("email");
     const courseID = sessionStorage.getItem("courseID");
 
+    // Fetch API to create a new discussion thread
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/discussions/createThread",
       {
@@ -83,9 +84,13 @@ const Discussion = () => {
     );
     const json = await data.json();
     dataLoaded.current = true
+
+    // Hide the discussion form and fetch updated discussion threads
     setShowCreateDiscussionForm(false);
     fetchDiscussionThread()
   };
+
+  // JSX for the Discussion component
   return (
     <div>
       {!showCreateDiscussionForm && (
@@ -163,6 +168,7 @@ const Discussion = () => {
               placeholder="Body Goes Here"
             ></textarea>
 
+            {/* Button to publish the discussion */}
             <button
               onClick={handlePublishdiscussion}
               className="w-[100%] h-10 border-2 bg-slate-400 mt-8 text-xl font-bold rounded-md"
@@ -176,4 +182,5 @@ const Discussion = () => {
   );
 };
 
+// Export the Discussion component
 export default Discussion;

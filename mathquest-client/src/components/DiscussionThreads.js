@@ -1,20 +1,25 @@
+// Importing necessary modules and hooks from React.
 import React, { useRef, useState } from "react";
+// Importing constants from an external file.
 import { CONNECTION_STRING, PORT } from "../utils/constants";
+// Importing a component for discussion thread replies.
 import DiscussionThreadReplies from "./DiscussionThreadReplies";
 
+// Defining a functional component named DiscussionThreads and passing in props.
 const DiscussionThreads = (props) => {
   const [showAllThreads, setShowAllThread] = useState(true);
 
   const [discussionReplies, setDiscussionReplies] = useState({});
 
   const childRef = useRef(null);
-
+  // Function to handle displaying individual thread and fetching its replies.
   const handleShowThreads = (threadId) => {
     sessionStorage.setItem("ThreadID", threadId);
 
     fetchAllThreadReplies(threadId);
   };
-
+  
+  // Async function to fetch all replies for a given thread.
   const fetchAllThreadReplies = async (threadId) => {
     const data = await fetch(
       CONNECTION_STRING + PORT + "/api/courses/discussions/getAllReplies",
@@ -32,7 +37,9 @@ const DiscussionThreads = (props) => {
       }
     );
     const json = await data.json();
+    // Updating state with the fetched discussion replies.
     setDiscussionReplies(json);
+    // Setting the state to hide all threads and show only the selected thread.
     setShowAllThread(false);
   };
 
@@ -76,8 +83,10 @@ const DiscussionThreads = (props) => {
             data={discussionReplies}
             ref={childRef}
             onFetchCall={() => {
+              // Fetching replies when the DiscussionThreadReplies component mounts.
               fetchAllThreadReplies(sessionStorage.getItem("ThreadID"));
             }}
+            // Function to toggle back to showing all threads.
             toggleShowAllThread={()=>setShowAllThread(true)}
           />
         </div>
@@ -86,4 +95,5 @@ const DiscussionThreads = (props) => {
   );
 };
 
+// Exporting the DiscussionThreads component.
 export default DiscussionThreads;

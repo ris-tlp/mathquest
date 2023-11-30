@@ -2,8 +2,11 @@ import React, { useRef, useState } from "react";
 import InstructorManageCourseDetail from "./InstructorManageCourseDetail";
 import { CONNECTION_STRING, PORT } from "../utils/constants";
 
+// Functional component for the teacher's dashboard
 const TeacherDashboard = ({ course , showManageCourse}) => {
   console.log(course);
+
+  // State variables for managing the course details
   const [Course, setCourse] = useState(course);
   const [editCourseName, setEditCourseName] = useState(false);
   const [editDesc, setEditCourseDesc] = useState(false);
@@ -11,6 +14,8 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
   const [editOverview, setEditOverview] = useState(false);
   const [editWhatYourLearn, setEditWhatYourLearn] = useState(false);
   const [manageCourse, setManageCourse] = useState(false);
+
+  // Function to handle initiating course details management
   const handleManageDetails = () => {
     setManageCourse(true);
     setEditCourseName(true);
@@ -20,6 +25,7 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
     setEditWhatYourLearn(true);
   };
 
+  // Refs for input fields to capture course details
   const courseNameRef = useRef();
   const courseDescRef = useRef();
   const courseOverviewRef = useRef();
@@ -29,6 +35,7 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
   const wyl3 = useRef();
   const wyl4 = useRef();
 
+  // Function to finalize and update course details
   const finalizeDetails = () => {
     const newCourse = {
       courseDescription: courseDescRef.current.value,
@@ -63,7 +70,7 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
     updateCourse(newCourse)
   };
 
-
+  // Async function to update course details on the server
   const updateCourse=async(course)=>{
 
     const data = await fetch(
@@ -89,7 +96,7 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
 
 
  
-
+  // JSX structure for rendering the teacher's dashboard
   return (
     <div className="bg-white w-9/12 p-4 rounded-lg my-4">
       <div>
@@ -215,4 +222,5 @@ const TeacherDashboard = ({ course , showManageCourse}) => {
   );
 };
 
+// Export the TeacherDashboard component as the default export
 export default TeacherDashboard;

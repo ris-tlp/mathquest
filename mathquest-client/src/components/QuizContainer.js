@@ -3,15 +3,19 @@ import { CONNECTION_STRING, PORT } from "../utils/constants";
 import QuizController from "./QuizController";
 
 const QuizContainer = () => {
+  // State to store all quizzes for the current course
   const [allQuiz, setAllQuiz] = useState([]);
+  // Fetch quizzes when component mounts
   useEffect(() => {
     fetchQuizzes();
   }, []);
 
+  // State to manage the display of selected quiz
   const [showSelectedQuiz, setShowSelectedQuiz] = useState(false);
   const [selectedQuizID, setSelectedQuizID] = useState(null);
   const [quiz, setQuiz] = useState([]);
 
+  // Function to fetch quizzes for the current course
   const fetchQuizzes = async () => {
     const courseID = sessionStorage.getItem("courseID");
     const data = await fetch(
@@ -34,6 +38,7 @@ const QuizContainer = () => {
     setAllQuiz(json.result);
   };
 
+  // Function to handle starting a quiz
   const handleStartQuiz = (quizID, quiz) => {
     sessionStorage.setItem("quizID", quizID);
     setShowSelectedQuiz(true);
@@ -79,6 +84,7 @@ const QuizContainer = () => {
             })}
         </div>
       ) : (
+        // Display QuizController component if a quiz is selected
         <div>
           {quiz && (
             <QuizController

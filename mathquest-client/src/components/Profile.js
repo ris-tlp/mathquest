@@ -1,18 +1,20 @@
+// Import necessary dependencies from React and other components
 import React from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 import Footer from "./Footer";
 
+// Profile component definition
 const Profile = () => {
+  // Use the useSelector hook to get the 'user' data from the Redux store
   const user = useSelector((store) => {
-
     console.log(sessionStorage.getItem("Anand"))
-
     return store.user;
   });
 
   console.log(sessionStorage.getItem("Anand"))
 
+  // Render the Profile component
   return (
     <div className="bg-slate-900">
       <Header />
@@ -70,4 +72,5 @@ const Profile = () => {
   );
 };
 
+// Export the Profile component
 export default Profile;
