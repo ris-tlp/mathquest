@@ -25,13 +25,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const email = useRef(null);
-  const password = useRef(null);
-  const fullName = useRef(null);
+  const email = useRef();
+  const password = useRef();
+  const fullName = useRef();
 
   // useEffect to check if the user is already signed in and redirect to the dashboard
   useEffect(()=>{
-    console.log(sessionStorage.getItem('email'))
+    password.current.value="";
+    email.current.value="";
 
     if(sessionStorage.getItem('email')!=undefined) navigate('/dashboard')
   },[])
@@ -103,7 +104,7 @@ const Login = () => {
             });
         })
         .catch((error) => {
-          setErrorMessage(error.code + error.message);
+          if(error.message=="Firebase: Error (auth/email-already-in-use).") setErrorMessage("Email already in use!");
         });
       //sign Up
     } else {
@@ -129,12 +130,14 @@ const Login = () => {
               displayName: user.displayName,
               photoURL: user.photoURL,
             })
+
+            
           );
           sessionStorage.setItem("email", email.current.value);
           navigate("/dashboard");
         })
         .catch((error) => {
-          setErrorMessage(error.code + error.message);
+          if(error.message=="Firebase: Error (auth/invalid-login-credentials).") setErrorMessage("Invalid Login Credentails");
         });
     }
   };
@@ -181,6 +184,7 @@ const Login = () => {
             minLength="8"
             maxLength="30"
             ref={fullName}
+            defaultValue=""
             className="p-2 my-4 h-14 w-full bg-gray-700 rounded-lg"
           />
         )}{" "}
