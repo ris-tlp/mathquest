@@ -1,25 +1,24 @@
 # MathQuest - Mathematics Learning Management System
 
-![mathquest-home](https://github.com/ris-tlp/mathquest/assets/62342666/bba6443e-b2e8-483c-8c8b-c4920edc2cf2)
+<!--![mathquest-home](https://github.com/ris-tlp/mathquest/assets/62342666/bba6443e-b2e8-483c-8c8b-c4920edc2cf2)-->
 
-## Contents
+<!--## Contents
 * [Overview](https://github.com/ris-tlp/mathquest#overview)<br>
-* [How to get started with MathQuest](https://github.com/ris-tlp/mathquest#how-to-get-started-with-mathquest)<br>
 * [Features](https://github.com/ris-tlp/mathquest#features)<br>
 * [High-Level System Architecture](https://github.com/ris-tlp/mathquest#high-level-system-architecture)<br>
-* [Technology Stack](https://github.com/ris-tlp/mathquest#technology-stack)<br>
 * [API Endpoints](https://github.com/ris-tlp/mathquest#api-endpoints)<br>
-* [Development Setup](https://github.com/ris-tlp/mathquest#development-setup)<br>
+<!--* [Technology Stack](https://github.com/ris-tlp/mathquest#technology-stack)<br>-->
+<!--* [Development Setup](https://github.com/ris-tlp/mathquest#development-setup)<br>
 * [Test Results](https://github.com/ris-tlp/mathquest#test-results)<br>
 * [Contributors/ Team Members](https://github.com/ris-tlp/mathquest#contributor-team-members)<br>
-* [Frequently Asked Questions](https://github.com/ris-tlp/mathquest#frequently-asked-questions)<br>
-
+* [Frequently Asked Questions](https://github.com/ris-tlp/mathquest#frequently-asked-questions)<br>-->
+<!--* [How to get started with MathQuest](https://github.com/ris-tlp/mathquest#how-to-get-started-with-mathquest)<br>-->
 
 ## Overview
 __MathQuest__ is an online learning management system designed specifically to deliver math courses and curriculum in an asynchronous format, allowing students to learn at their own pace. It provides capabilities for instructors to create course offerings, design quizzes and assignments, grade student work automatically, facilitate text discussions, and continually update course content, while students can browse courses, register, take assessments, participate in discussions with classmates, and track their progress. The system architecture employs a combination of MVC, client-server, and microservices patterns to enable a scalable, extensible, and modular platform that can handle multiple concurrent users.
 
 
-## How to get started with MathQuest
+<!--## How to get started with MathQuest
 ### Student Flow:
 
 ![Student Flow](https://github.com/ris-tlp/mathquest/assets/62342666/6e51a4c1-d15c-46b1-99a0-fcb0c2c66786)
@@ -31,7 +30,7 @@ __MathQuest__ is an online learning management system designed specifically to d
 ### Admin Flow:
 
 ![Admin Flow](https://github.com/ris-tlp/mathquest/assets/62342666/29f56c6d-ca6c-4d06-a48d-c01e654eda8b)
-
+-->
 
 ## Features
 Key features of MathQuest LMS include:
@@ -47,7 +46,7 @@ Key features of MathQuest LMS include:
 <!-- <img src="https://github.com/ris-tlp/mathquest/assets/62342666/665fc681-e46e-4b31-91d9-95f5900546e8" width="800" height="1000"> -->
 
 <img src="https://github.com/ris-tlp/mathquest/assets/62342666/53dcd444-0c85-47f5-a041-835908ec24f4" width="1000" height="550">
-
+<!--
 ## Technology Stack
 | Engineering Activity                             |	Selected Tool(s)  |
 |--------------------------------------------------| -------------------|
@@ -60,8 +59,9 @@ Key features of MathQuest LMS include:
 | Backend	                                         | Node.js            |
 | Database	                                       | MongoDB            |
 | Testing 	                                       | Jest, Karma        |
+-->
 
-## API Endpoints
+<!--## API Endpoints
 Anything within `<angular brackets>` is a parameter.
 
 | Endpoint                                          | Description                                                        | Type             |
@@ -84,8 +84,8 @@ Anything within `<angular brackets>` is a parameter.
 | `/api/courses/quizzes/getAllQuizzes`              |   Gets a list of quizzes for a specific course.                                                       |            POST      |
 | `/api/courses/quizzes/getQuiz`                    |     Gets a specific quiz, all questions and their options for a specific course.                                                              |   POST               |
 
-
-## Development Setup
+-->
+<!--## Development Setup
 
 You need to clone (download) the repository to your local machine using the below command in the terminal
 ```bash
@@ -191,4 +191,4 @@ Ans: MathQuest courses include community discussion forums where you can interac
 Please discuss your concerns with Math Quest Team members before creating a new issue.<br>
 
 _Please `STAR` the repository if you like the content and code_ <br>
-_Also enable the `WATCH` button to keep watching the updates on the repository_
+_Also enable the `WATCH` button to keep watching the updates on the repository_-->
